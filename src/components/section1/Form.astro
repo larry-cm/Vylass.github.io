@@ -1,17 +1,37 @@
+---
+import { db, Users } from 'astro:db';
+
+export const prerender = false
+
+if(Astro.request.method === "POST"){
+const datos = await Astro.request.formData() 
+const [apellido,nombre] = [datos.get("apellido"),datos.get("usuario")]
+if(typeof nombre === "string" && typeof apellido === "string"){
+    await db.insert(Users).values({ user_name:nombre,user_last_name:apellido })
+}
+console.log(await db.select().from(Users));
+}
+
+
+---
+
 <div class="border p-2 px-4 max-h-auto">
     <h2 class="text-lg sm:text-2xl font-semibold text-center">
         Formulario de acceso
     </h2>
-    <form class="text-base flex flex-col mt-4 gap-2" action="">
+    <form class="text-base flex flex-col mt-4 gap-2" method="POST">
         <div>
             <label
                 class="text-sm text-gray-300 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                for="userName">Nombre de usuario</label
+                for="userName">Nombre del Usuario</label
             >
             <input
                 required
-                placeholder="Carlota"
                 type="text"
+                autocomplete="true"
+                min="6"
+                minlength="5"
+                placeholder="Carlota*"
                 class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-black"
                 name="usuario"
                 id="userName"
@@ -21,22 +41,22 @@
         <div>
             <label
                 class="text-sm text-gray-300 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                for="UserPassword">Contraseña</label
+                for="UserPassword">Apellido de un susuario en concreto.</label
             >
             <input
                 required
+                type="text"
                 autocomplete="true"
-                minlength="6"
-                placeholder="Carla*password"
-                type="password"
-                class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-black"
                 min="6"
-                name="contraU"
+                minlength="5"
+                placeholder="Ramirez*"
+                class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-black"
+                name="apellido"
                 id="UserPassword"
             />
         </div>
 
-        <div>
+        <!-- <div>
             <label
                 class="text-sm text-gray-300 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 for="dataBase">Nombre de la Base de Datos</label
@@ -46,10 +66,10 @@
                 placeholder="BaseDeCarlota"
                 type="text"
                 class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-black"
-                name="baseDatos"
+                name="base-datos"
                 id="dataBase"
             />
-        </div>
+        </div> -->
 
         <div class="text-center mt-2">
             <button

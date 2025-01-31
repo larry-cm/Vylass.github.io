@@ -1,5 +1,77 @@
 ---
-import Layout from "@/layouts/Layout.astro";
+import Layout from "../layouts/Layout.astro";
+import {db,Users} from "astro:db"
+
+const usuarios = await db.select().from(Users)
 ---
 
-<Layout title="Bases de datos mysql || FetchToMysql" />
+<Layout title="Bases de datos mysql || FetchToMysql" >
+<h2 class="text-4xl text-slate-200 px-4 my-6">Aqui vamos a tener una tabla para los que esten registrados en mi base de datos.</h2>
+<div class="w-screen flex justify-center px-2">
+    <table class=" min-w-full"> 
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+        </tr>
+        
+    
+        {usuarios.map(
+            ({id,user_name,user_last_name}) => (
+            <tr>
+                <td>{id}</td>
+                <td>{user_name}</td>
+                <td>
+                    <div class="flex items-center justify-between">
+                    {user_last_name}
+                        <i class="flex items-center space-x-4 *:cursor-pointer">
+                            <svg onclick=""  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2">
+                        <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"></path>
+                        <path d="M13.5 6.5l4 4"></path>
+                    </svg>
+                    
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="24" height="24" stroke-width="2"> <path d="M4 7h16"></path> <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path> <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path> <path d="M10 12l4 4m0 -4l-4 4"></path> </svg>
+                        </i> 
+                    </div>
+                </td>
+                
+            </tr>
+        ))}
+    </table>
+</div>
+
+
+</Layout>
+<style>
+    /* Estilo para la tabla */
+    table {
+        border-collapse: collapse;
+    }
+
+    /* Estilo para las celdas */
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border: 1px solid #ddd;
+    }
+ 
+    /* Color de fondo para las celdas de encabezado */
+    th {
+        background-color: #da8907;
+        color: white;
+    }
+
+    /* Estilo general de la tabla */
+    table {
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        color: #ecebeb;  
+    }
+
+    /* Efecto al pasar el ratón sobre las filas */
+    tr:hover {
+        background-color: #ddd;
+        color: black;
+
+    }
+</style>
