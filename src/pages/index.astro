@@ -1,17 +1,16 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Obtencion from "../components/Obtencion.astro";
-import Muestreo from "../components/Muestreo.astro";
+import "@/styles/global.css";
+import Layout from "@/layouts/Layout.astro";
+import Home from "@components/Home.astro";
 ---
 
-<Layout title="Busquedas de mysql || FetchToMysql">
-	<main>
-		<Obtencion>
+<Layout title="Búsquedas de MySQL || FetchToMySQL">
+	<div>
+		<Home>
 			<slot name="guia" />
 			<slot name="form" />
-		</Obtencion>
-		<Muestreo />
-	</main>
+		</Home>
+	</div>
 </Layout>
 
 <style>

@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+
+th,
+    td {
+        padding: 12px;
+        text-align: left;
+        border: 1px solid #ddd;
+    }
+
+    /* Color de fondo para las celdas de encabezado */
+    th {
+        background-color: #da8907;
+        color: white;
+    }
+
+    /* Estilo general de la tabla */
+    table {
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        color: #ecebeb;
+        border-collapse: collapse;
+    }
+
+    /* Efecto al pasar el ratón sobre las filas */

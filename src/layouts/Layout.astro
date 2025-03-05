@@ -1,6 +1,6 @@
 ---
 import Header from "../components/Header.astro";
-import {ViewTransitions} from "astro:transitions";
+import { ClientRouter } from "astro:transitions";
 interface Props {
 	title: string;
 }
@@ -23,11 +23,13 @@ const { title } = Astro.props;
 			content="esta pagina web va a ser mi primera prueba administrando bases de datos"
 		/>
 
-		<ViewTransitions />
+		<ClientRouter />
 	</head>
 	<body>
 		<Header />
-		<slot />
+		<main class="max-w-2xl mx-auto">
+			<slot />
+		</main>
 	</body>
 </html>
 <style is:global>
@@ -45,6 +47,9 @@ const { title } = Astro.props;
 		font-family: system-ui, sans-serif;
 		background: #13151a;
 	}
+	body {
+	}
+
 	.header {
 		background-color: var(--bg);
 
