@@ -1,12 +1,12 @@
 import type { APIRoute } from "astro";
-import { db,Users,eq} from "astro:db";
+import {turso} from '@bd/configTurso'
 export const GET: APIRoute = async () => {
     
-    const data_users = await db.select().from(Users)
-    
+    const tursoUsers = await turso.execute("SELECT * FROM Users");
+    console.log({turso:tursoUsers.rows})
     return new Response(
         JSON.stringify({
-            response:data_users
+            response:tursoUsers.rows
         })
     )
 }

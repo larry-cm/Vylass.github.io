@@ -5,15 +5,15 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro check && astro build",
+    "build": "astro check && astro build --remote",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
     "@astrojs/check": "0.9.4",
-    "@astrojs/cloudflare": "^12.2.3",
-    "@astrojs/db": "0.14.7",
+    "@astrojs/netlify": "^6.2.2",
     "@astrojs/react": "4.2.1",
+    "@libsql/client": "^0.14.0",
     "@tailwindcss/vite": "4.0.9",
     "@types/react": "19.0.10",
     "@types/react-dom": "19.0.4",
@@ -22,8 +22,5 @@
     "react-dom": "19.0.0",
     "tailwindcss": "4.0.9",
     "typescript": "5.8.2"
-  },
-  "devDependencies": {
-    "wrangler": "^3.112.0"
   }
 }

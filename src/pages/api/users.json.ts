@@ -1,5 +1,5 @@
+import { turso } from "@bd/configTurso";
 import type { APIRoute } from "astro";
-import { db,Users} from "astro:db";
 export const POST: APIRoute = async ({ request }) => {
 
   const data = await request.formData()
@@ -15,11 +15,8 @@ export const POST: APIRoute = async ({ request }) => {
     )
   }
   try {
-    await db.insert(Users).values({
-      user_name: name.toString().trim(),
-      user_last_name: lastName.toString().trim(),
-      user_date: new Date(),
-    })
+    
+    await turso.execute(`INSERT INTO Users (user_name, user_last_name, user_date) VALUES ('${name}', '${lastName}', '${new Date().toISOString()}')`)
     return new Response(JSON.stringify({
       message: "¡Guardaste tus datos Wapeton!"
     })

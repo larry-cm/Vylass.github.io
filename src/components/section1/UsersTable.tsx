@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import FieldBTNS from "../react/FieldBtns";
+import FieldBTNS from "@components/react/FieldBtns";
 
 interface User {
     user_id: number;
