@@ -1,27 +1,28 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
-function BtnSql({ children, id, action, control }: { children: any, id: number, action: any, control: { stateValue: boolean, option: 'editar' | 'eliminar' } }) {
-
+function BtnSql({ children, id, control,onSuccess }: { children: any, id: number,  control: { stateValue: boolean, option: 'editar' | 'eliminar',action:any },onSuccess:any }) {
+    const {action,option,stateValue} = control
     const [errorMessage, setErrorMessage] = useState('')
+    
     function resetMessage() {
         action()
         setErrorMessage('')
     }
+
     async function deleteUser() {
         await fetch(`/api/${id}`)
         action()
+        onSuccess()
     }
 
     async function upsetUser(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
         const formData = new FormData(event.target as HTMLFormElement)
-        const res = await fetch(`/api/${id}`, {
-            method: "POST",
-            body: formData
-        })
+        const res = await fetch(`/api/${id}`, {method: "POST",body: formData})
         const { message, response } = await res.json()
         if (response == null) setErrorMessage(message)
         else action()
+        onSuccess()
     }
 
     const manejo = {
@@ -85,35 +86,32 @@ function BtnSql({ children, id, action, control }: { children: any, id: number, 
             <i
                 onClick={action}
                 className="cursor-pointer"
-                title={`${control.option} los datos del usuario con el id ${id}`}>
+                title={`${option} los datos del usuario con el id ${id}`}>
                 {children}
             </i>
-            {control.stateValue && manejo[control.option]}
+            {stateValue && manejo[option]}
         </>
     )
 }
 
 export default function FieldBTNS({ id, onSuccess }: { id: number, onSuccess: any }) {
 
-    const [edit, setEdit] = useState(false)
-    const [trash, setTrash] = useState(false)
+    const [state, setState] = useState({ edit: false, trash: false });
 
-    function updateEdit() {
-        if (trash) setTrash(false)
-        setEdit(editRecent => !editRecent)
-    }
+    function update(option: 'editar' | 'eliminar') {
+        setState(prevState => {
+            if (option === 'editar' && prevState.trash ||
+                option === 'eliminar' && prevState.edit) return { edit: !prevState.edit, trash: !prevState.trash }
+            if(option ==='editar') return { edit: !prevState.edit, trash: prevState.trash }
+            if (option === 'eliminar') return { edit: prevState.edit, trash: !prevState.trash }
+            return prevState
+        })
+     }
 
-    function updateTrash() {
-        if (edit) setEdit(false)
-        setTrash(trashRecent => !trashRecent)
-    }
-
-    useEffect(() => {
-        onSuccess()
-    }, [edit, trash])
+    
     return (
         <span className="flex items-center justify-around  ">
-            <BtnSql id={id} action={updateEdit} control={{ stateValue: edit, option: 'editar' }}>
+            <BtnSql id={id} onSuccess={onSuccess} control={{ stateValue: state.edit, option: 'editar',action:()=>update('editar') }}>
                 <svg
                     viewBox="0 0 24 24"
                     fill="none"
@@ -129,7 +127,7 @@ export default function FieldBTNS({ id, onSuccess }: { id: number, onSuccess: an
                 </svg>
             </BtnSql>
 
-            <BtnSql id={id} action={updateTrash} control={{ stateValue: trash, option: 'eliminar' }}>
+            <BtnSql id={id} onSuccess={onSuccess} control={{ stateValue: state.trash, option: 'eliminar',action:()=>update('eliminar') }}>
                 <svg
                     viewBox="0 0 24 24"
                     fill="none"

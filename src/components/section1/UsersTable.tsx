@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import FieldBTNS from "@components/react/FieldBtns";
-
 interface User {
     user_id: number;
     user_name: string;
@@ -11,10 +10,12 @@ export default function UsersTable() {
     const [usuarios, setUsuarios] = useState<User[]>([])
     const refreshTable = async () => {
         const data_users = await fetch(`/api/getUsers`)
-        const { response } = await data_users.json()
-        setUsuarios( response)
+        const { response } = await data_users.json() as { response: User[] }
+        setUsuarios(() => {
+            response.map(e => e.user_date = new Date(e.user_date))
+            return response
+        })
     }
-
     useEffect(() => {
         refreshTable()
     }, [])
@@ -46,7 +47,7 @@ export default function UsersTable() {
                                             </div>
                                         </td>
                                         <td >
-                                            {user_date?.toDateString()}
+                                            {user_date.toUTCString()}
                                         </td>
                                         <td className="relative">
                                             <FieldBTNS id={user_id} onSuccess={refreshTable} />

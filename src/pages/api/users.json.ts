@@ -7,8 +7,9 @@ export const POST: APIRoute = async ({ request }) => {
   const [name, lastName] = [data.get('nombre'), data.get('apellido')]
   
   if (!name || !lastName ||
-    name.valueOf().toLocaleString().length < 5 || lastName.valueOf().toLocaleString().length < 5 ||
-    name.valueOf().toLocaleString().includes(' ') || lastName.valueOf().toLocaleString().includes(' ') ){
+    name.valueOf().toString().length < 5 || lastName.valueOf().toString().length < 5 ||
+    name.valueOf().toString().match(' ') || lastName.valueOf().toString().match(' ') ||
+    name.valueOf().toString().match(/\d/g) || lastName.valueOf().toString().match(/\d/g)) {
     return new Response(JSON.stringify({
       message: "¡Error de formato en el formulario!"
     })
@@ -22,7 +23,7 @@ export const POST: APIRoute = async ({ request }) => {
     })
     )
   } catch (error) {
-    if (error instanceof Error && error.message.includes('SQLITE_CONSTRAINT_UNIQUE')) {
+    if (error instanceof Error && error.message.includes('UNIQUE')) {
       return new Response(JSON.stringify({ message: "¡Ya existe un usuario con ese nombre!" }))
     }
     return new Response(JSON.stringify({
