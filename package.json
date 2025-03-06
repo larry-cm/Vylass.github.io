@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro check && astro build --remote",
+    "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
     "v:prod": "vercel --prod",
@@ -14,8 +14,8 @@
   "dependencies": {
     "@astrojs/check": "0.9.4",
     "@astrojs/react": "4.2.1",
-    "@astrojs/vercel": "^8.1.1",
-    "@libsql/client": "^0.14.0",
+    "@astrojs/vercel": "8.1.1",
+    "@libsql/client": "0.14.0",
     "@tailwindcss/vite": "4.0.9",
     "@types/react": "19.0.10",
     "@types/react-dom": "19.0.4",
@@ -26,6 +26,6 @@
     "typescript": "5.8.2"
   },
   "devDependencies": {
-    "vercel": "^41.3.1"
+    "vercel": "41.3.1"
   }
 }

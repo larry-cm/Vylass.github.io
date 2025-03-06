@@ -12,10 +12,7 @@ export default function UsersTable() {
     const refreshTable = async () => {
         const data_users = await fetch(`/api/getUsers`)
         const { response } = await data_users.json()
-        setUsuarios(() => {
-            response.map((e: User) => e.user_date = new Date(e.user_date))
-            return response
-        })
+        setUsuarios( response)
     }
 
     useEffect(() => {

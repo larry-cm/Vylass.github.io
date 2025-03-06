@@ -1,7 +1,7 @@
 import { turso } from "@bd/configTurso";
 import type { APIRoute } from "astro";
-export const POST: APIRoute = async ({ request }) => {
 
+export const POST: APIRoute = async ({ request }) => {
   const data = await request.formData()
 
   const [name, lastName] = [data.get('nombre'), data.get('apellido')]
