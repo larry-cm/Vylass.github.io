@@ -15,5 +15,11 @@ En mi proyecto, he organizado los archivos de la siguiente manera:
 │   │   └── Layout.astro
 │   └── pages/
 │       └── index.astro
+│       └── api/
+│           └── [id_delete].ts
+│           └── GetUsers.ts
+│           └── users.json.ts
+├── styles/
+│  └── global.css
 └── package.json
 ```
