@@ -3,8 +3,8 @@ import "@styles/global.css";
 import Layout from "@/layouts/Layout.astro";
 import FormInicio from "@/components/react/FormInicio";
 const userSesion = Astro.cookies.get("usuario")?.value;
-console.log(userSesion);
-if (!userSesion) return Astro.redirect("/");
+const sesionIniciada = Astro.cookies.get("sesionIniciada")?.value;
+if (!userSesion || sesionIniciada) return Astro.redirect("/");
 ---
 
 <Layout title="Inicio de sesión de MySQL || FetchToMySQL">

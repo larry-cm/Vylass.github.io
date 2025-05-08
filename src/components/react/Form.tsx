@@ -4,6 +4,7 @@ import Loading from "@components/casa/Loading.tsx"
 import { Anuncio, IconInfo } from "@components/react/Anuncio"
 
 export default function Form() {
+    const [query, setQuery] = useState("")
     const [errorMsg, setErrorMsg] = useState("")
     const [errorInput, setErrorInput] = useState({ size: false, containSpecialCharacter: false, initialNumber: false })
     const [loading, setLoading] = useState(false)
@@ -13,11 +14,8 @@ export default function Form() {
         setLoading(true)
         event.preventDefault()
         const envioDatos = async () => {
-            const formData = new FormData(event.target as HTMLFormElement)
-            const res = await fetch('/verifyUsers/users.json', {
-                method: 'POST',
-                body: formData,
-            })
+            // const formData = new FormData(event.target as HTMLFormElement)
+            const res = await fetch(`/verifyUsers/users.json?user=${encodeURIComponent(query)}`)
             const data = await res.json()
             // deberia devolver la data para componetizar
             !data.body.exist && setErrorMsg(data?.body?.message)
@@ -27,7 +25,7 @@ export default function Form() {
             setLoading(false)
 
         }
-        const inputs = Object.values(errorInput).every(input => input === false)
+        const inputs = Object.values(errorInput).every(input => !input)
 
         if (inputs) {
             envioDatos()
@@ -59,6 +57,7 @@ export default function Form() {
 
     function handleErrorInput(event: React.ChangeEvent<HTMLInputElement>) {
         const userOrEmail = event.target.value
+        setQuery(userOrEmail)
         // Create a single validation object to avoid multiple state updates
         const validations = {
             size: userOrEmail.length >= 8,
@@ -76,7 +75,11 @@ export default function Form() {
 
     return (
         <>
-            <form className="text-base flex flex-col justify-between h-full *:text-base" method="POST" encType="multipart/form-data" onSubmit={submitData}>
+            <form
+                className="text-base flex flex-col justify-between h-full *:text-base"
+                method="GET"
+                encType="multipart/form-data"
+                onSubmit={submitData}>
                 <div className="flex flex-col sm:gap-y-3">
                     <label
                         htmlFor="userName" className="max-w-4/5">
@@ -86,9 +89,10 @@ export default function Form() {
                         required
                         type="text"
                         autoComplete="true"
-                        min={8}
-                        minLength={8}
+                        min={4}
+                        minLength={4}
                         onChange={handleErrorInput}
+                        value={query}
                         placeholder="Carlota o carlota@gmail.com"
                         className="w-full px-4 py-2 rounded bg-gray-800 text-white placeholder:text-slate-300 border border-gray-600 focus:outline-none focus:border-orange-500"
                         name="user-or-email"

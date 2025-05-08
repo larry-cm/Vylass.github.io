@@ -27,6 +27,7 @@ export default function FormRegister() {
                         id="username"
                         name="username"
                         placeholder="Ej: usuario123"
+                        autoComplete="username"
                         className="w-full px-4 py-2 rounded bg-gray-800 text-white border border-gray-600 focus:outline-none focus:border-orange-500 placeholder:text-slate-300"
                     />
                 </div>
@@ -41,6 +42,7 @@ export default function FormRegister() {
                         id="email"
                         name="email"
                         placeholder="Ej: correo@ejemplo.com"
+                        autoComplete="email"
                         className="w-full px-4 py-2 rounded bg-gray-800 text-white border border-gray-600 focus:outline-none focus:border-orange-500 placeholder:text-slate-300"
                     />
                 </div>
@@ -55,6 +57,7 @@ export default function FormRegister() {
                         id="password"
                         name="password"
                         placeholder="Introduce tu contraseña"
+                        autoComplete="new-password"
                         className="w-full px-4 py-2 rounded bg-gray-800 text-white border border-gray-600 focus:outline-none focus:border-orange-500 placeholder:text-slate-300"
                     />
                 </div>
@@ -69,6 +72,7 @@ export default function FormRegister() {
                         id="fullname"
                         name="fullname"
                         placeholder="Ej: Juan Pérez"
+                        autoComplete="name"
                         className="w-full px-4 py-2 rounded bg-gray-800 text-white border border-gray-600 focus:outline-none focus:border-orange-500 placeholder:text-slate-300"
                     />
                 </div>
@@ -83,6 +87,7 @@ export default function FormRegister() {
                         id="phone"
                         name="phone"
                         placeholder="Ej: +1 123 456 7890"
+                        autoComplete="tel"
                         className="w-full px-4 py-2 rounded bg-gray-800 text-white border border-gray-600 focus:outline-none focus:border-orange-500 placeholder:text-slate-300"
                     />
                 </div>
@@ -95,6 +100,7 @@ export default function FormRegister() {
                     <select
                         id="country"
                         name="country"
+                        autoComplete="country"
                         className="w-full px-4 py-2 rounded bg-gray-800 text-white border border-gray-600 focus:outline-none focus:border-orange-500 cursor-pointer"
                     >
                         <option value="">Selecciona tu país</option>

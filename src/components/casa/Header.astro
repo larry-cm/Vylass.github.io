@@ -2,6 +2,8 @@
 import { Image } from "astro:assets";
 import Logo from "/public/logo.svg";
 export const prerender = false;
+const userSesion = Astro.cookies?.get("usuario")?.value;
+
 function addItems(l: string[], l2: string[]) {
     return l.map((e, i, m) => ({ text: m[i], url: l2[i] }));
 }
@@ -11,6 +13,14 @@ const entrada = addItems(
 );
 ---
 
+<script>
+    document
+        .getElementById("cerrar-sesion")
+        ?.addEventListener("click", async () => {
+            await fetch("/verifyUsers/logout");
+            window.location.href = "/";
+        });
+</script>
 <header
     class="header relative min-h-[10vh] flex justify-between items-center bg-gradient-to-br from-orange-600/90 to-orange-400 z-20"
 >
@@ -68,22 +78,35 @@ const entrada = addItems(
         </ul>
         <!-- menu principal -->
         <ul
-            class="sm:flex max-h-[60px] justify-end flex-col sm:gap-2 md:gap-5 lg:gap-8 me-[10px] sm:flex-row items-center transition text-center hidden *:md:text-xl *:text-nowrap *:font-normal *:lg:text-xl *:cursor-pointer"
+            class="sm:flex max-h-[60px] justify-end flex-col sm:gap-2 md:gap-5 lg:gap-8 me-[10px] sm:flex-row items-center transition text-center hidden *:md:text-xl *:text-nowrap *:font-normal *:lg:text-xl"
         >
             {
-                entrada.map(({ url, text }) => {
-                    if (url === "registro")
+                userSesion ? (
+                    <>
+                        <li class="text-white ">
+                            <p>Bienvenido {userSesion}</p>
+                        </li>
+                        <li class="text-black hover:text-slate-500">
+                            <button class="cursor-pointer" id="cerrar-sesion">
+                                Cerrar sesión
+                            </button>
+                        </li>
+                    </>
+                ) : (
+                    entrada.map(({ url, text }) => {
+                        if (url === "registro")
+                            return (
+                                <li class="text-white hover:text-slate-900 cursor-pointer">
+                                    <a href={url}>{text}</a>
+                                </li>
+                            );
                         return (
-                            <li class="text-white hover:text-slate-900">
+                            <li class="text-black hover:text-slate-500 cursor-pointer">
                                 <a href={url}>{text}</a>
                             </li>
                         );
-                    return (
-                        <li class="text-black hover:text-slate-500">
-                            <a href={url}>{text}</a>
-                        </li>
-                    );
-                })
+                    })
+                )
             }
         </ul>
     </nav>
