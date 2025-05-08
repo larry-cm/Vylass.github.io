@@ -1,15 +1,25 @@
 ---
-import Form from "@components/section1/Form";
-import GuiaUso from "@components/section1/GuiaUso.astro";
+import Form from "@/components/react/Form";
+import GuieUso from "@components/static/GuieUso.astro";
 ---
 
 <!-- Busca tus bases de datos -->
-<section class="grid grid-cols-2 grid-flow-row gap-4 py-20 mx-4 text-white">
-    <slot name="guia">
-        <GuiaUso />
-    </slot>
-
-    <slot name="form">
+<section
+    class="max-w-4xl grid grid-cols-1 md:grid-cols-2 grid-flow-row gap-4 text-white"
+>
+    <GuieUso
+        h2="Bienvenidos, Fetchers!"
+        h3="Verifiquemos si tienes una cuenta, sigue estos pasos"
+        li={[
+            "Ingresa tu nombre de usuario o correo electrónico",
+            "Haz clic en el botón de inicio de sesión",
+            "¡Listo! ",
+        ]}
+    />
+    <article class="border p-8 flex flex-col bg-[#1a1a1a] rounded-md">
+        <h2 class="text-lg sm:text-2xl font-bold capitalize">
+            verificación de cuenta
+        </h2>
         <Form client:load />
-    </slot>
+    </article>
 </section>

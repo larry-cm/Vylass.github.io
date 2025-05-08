@@ -1,0 +1,24 @@
+---
+import "@/styles/global.css";
+import Layout from "@/layouts/Layout.astro";
+import FormRegister from "@/components/react/FormRegister";
+---
+
+<Layout title="Registro de MySQL || FetchToMySQL">
+    <article class="flex flex-col items-center justify-center flex-1 px-4">
+        <div
+            class="border border-white p-8 bg-[#1a1a1a] w-full max-w-md rounded-md shadow-lg"
+        >
+            <h2 class="text-2xl font-bold text-center mb-6">Crear Cuenta</h2>
+            <FormRegister client:visible />
+            <div class="mt-4 text-center text-sm">
+                ¿Ya tienes cuenta?
+                <a
+                    href="#"
+                    class="text-orange-400 hover:text-orange-400/80 underline-offset-2 underline"
+                    >Inicia sesión</a
+                >
+            </div>
+        </div>
+    </article>
+</Layout>

@@ -1,25 +1,18 @@
 @import "tailwindcss";
 
+:root {
+    --bg: orange;
+    --bg-black: #13151a;
+    --h-mini: 50px;
+}
 
-th,
-    td {
-        padding: 12px;
-        text-align: left;
-        border: 1px solid #ddd;
-    }
+html {
+    font-family: system-ui, sans-serif;
+    background: var(--bg-black);
+    color-scheme: light dark;
+    min-width: 320px;
+}
 
-    /* Color de fondo para las celdas de encabezado */
-    th {
-        background-color: #da8907;
-        color: white;
-    }
-
-    /* Estilo general de la tabla */
-    table {
-        font-family: Arial, sans-serif;
-        font-size: 14px;
-        color: #ecebeb;
-        border-collapse: collapse;
-    }
-
-    /* Efecto al pasar el ratón sobre las filas */
+.bg-black {
+    background-color: #13151a;
+}

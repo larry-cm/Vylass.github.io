@@ -1,5 +1,5 @@
 ---
-import Header from "../components/Header.astro";
+import Header from "@components/static/Header.astro";
 import { ClientRouter } from "astro:transitions";
 interface Props {
 	title: string;
@@ -27,58 +27,10 @@ const { title } = Astro.props;
 	</head>
 	<body>
 		<Header />
-		<main class="max-w-2xl mx-auto">
+		<main
+			class="min-h-[90vh] h-fit p-8 mx-auto flex justify-center items-center relative z-10"
+		>
 			<slot />
 		</main>
 	</body>
 </html>
-<style is:global>
-	:root {
-		--bg: orange;
-		--h-mini: 50px;
-		--accent-gradient: linear-gradient(
-			45deg,
-			rgb(var(--accent)),
-			rgb(var(--accent-light)) 30%,
-			white 60%
-		);
-	}
-	html {
-		font-family: system-ui, sans-serif;
-		background: #13151a;
-	}
-	body {
-	}
-
-	.header {
-		background-color: var(--bg);
-
-		nav {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-
-			#nav {
-				height: 100%;
-				display: flex;
-				align-items: center;
-
-				img {
-					height: calc(var(--h-mini) + 10px);
-					min-height: var(--h-mini);
-					min-width: calc(var(--h-mini) + 10px);
-					margin-right: 01px;
-					margin-left: calc(var(--h-mini) - 40px);
-				}
-
-				> h1 {
-					/* font-family: .6rem !important; */
-					text-wrap: nowrap;
-				}
-			}
-		}
-		.no-ani-color {
-			transition: color 60ms;
-		}
-	}
-</style>

@@ -5,17 +5,5 @@ import Home from "@components/Home.astro";
 ---
 
 <Layout title="Búsquedas de MySQL || FetchToMySQL">
-	<div>
-		<Home>
-			<slot name="guia" />
-			<slot name="form" />
-		</Home>
-	</div>
+	<Home />
 </Layout>
-
-<style>
-	:root {
-		--bg: white;
-		--h-mini: 50px;
-	}
-</style>
