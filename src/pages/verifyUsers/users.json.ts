@@ -2,7 +2,6 @@ import { turso } from "@bd/configTurso"
 import type { APIRoute } from "astro"
 
 export const POST: APIRoute = async ({ request }) => {
-    // return new Response('Credenciales inválidas', { status: 401 });
     const data = await request.formData()
     const user_or_email = data.get('user-or-email')
     let res
@@ -10,7 +9,7 @@ export const POST: APIRoute = async ({ request }) => {
         // regex para mirar que son
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
         const usernameRegex = /^[a-zA-Z0-9_]{3,16}$/
-        // funcion de pedida de datos a columnas diferentes
+        // función de pedida de datos a la bd con columnas diferentes
         const getRows = async (columnWhere: string) => {
             try {
                 const { rows } = await turso.execute({
@@ -25,26 +24,23 @@ export const POST: APIRoute = async ({ request }) => {
             }
             catch (error) {
                 return { exist: false, message: 'Al parecer tuvimos un error con la conexión a la base de datos, por favor revisa si estas conectado a internet y vuelve a intentarlo!' }
-            } finally {
-                // turso.close()
             }
         }
-        if (user_or_email.valueOf().toString().match(emailRegex)) {
-            // consulta sql
-            res = await getRows('user_email')
-        }
-        else if (user_or_email.valueOf().toString().match(usernameRegex)) {
-            res = await getRows('user_name')
-        } else {
-            res = { exist: false, message: 'No hemos encontrado nada,ese nombre que!' }
-        }
-
+        if (user_or_email.valueOf().toString().match(emailRegex)) res = await getRows('user_email')
+        else if (user_or_email.valueOf().toString().match(usernameRegex)) res = await getRows('user_name')
+        else res = { exist: false, message: 'No hemos encontrado nada,ese nombre que!' }
     }
 
     const response = {
-        status: 200,
         message: "¡Formulario enviado correctamente!",
-        body: { ...res }
+        body: { ...res },
     }
-    return new Response(JSON.stringify(response))
+    const userName = res?.user && res.user.valueOf().toString().trim()
+    return new Response(JSON.stringify(response), {
+        headers: {
+            action: '/',
+            'Set-Cookie': `usuario=${userName ?? undefined}; Path=/; Max-Age=120; HttpOnly=true`,
+            'Content-Type': 'application/json'
+        }
+    })
 }

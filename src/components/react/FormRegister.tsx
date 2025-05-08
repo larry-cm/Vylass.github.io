@@ -1,4 +1,5 @@
 import type React from "react"
+import Action from "@components/casa/Action"
 
 export default function FormRegister() {
     const handleForm = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -124,11 +125,7 @@ export default function FormRegister() {
                 </div>
 
                 {/* Botón */}
-                <button
-                    type="submit"
-                    className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 rounded transition-colors cursor-pointer">
-                    Registrarse
-                </button>
+                <Action text="Registro" />
             </form>
         </>
     )
