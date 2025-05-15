@@ -8,8 +8,8 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "v:prod": "vercel --prod",
-    "v:pre": "vercel deploy --prebuilt"
+    "v:pre": "vercel deploy --prebuilt",
+    "v:prod": "vercel --prod"
   },
   "dependencies": {
     "@astrojs/check": "0.9.4",

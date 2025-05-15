@@ -25,10 +25,10 @@ const { title } = Astro.props;
 
 		<ClientRouter />
 	</head>
-	<body>
+	<body id="home">
 		<Header />
 		<main
-			class="min-h-[90vh] h-fit p-8 mx-auto flex justify-center items-center relative z-10"
+			class="h-[90vh] p-8 mx-auto flex justify-center items-center relative z-10"
 		>
 			<slot />
 		</main>

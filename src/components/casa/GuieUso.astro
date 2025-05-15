@@ -11,10 +11,10 @@ const { h2, h3, li }: Props = Astro.props;
   <h2 class="text-lg sm:text-2xl font-semibold capitalize">
     {h2 ?? "Guía de uso"}
   </h2>
-  <h3 class="py-2 text-gray-300 text-lg font-medium">
+  <h3 class="py-1 text-gray-300 text-lg font-medium">
     {h3 ?? "Sigue estos tres sencillos pasos"}
   </h3>
-  <ul class="text-sm sm:text-lg list-decimal relative space-y-2">
+  <ul class="text-sm sm:text-lg list-decimal relative space-y-1">
     {li && li.map((item) => <li class="pe-2 w-fit text-base">{item}</li>)}
   </ul>
 </article>

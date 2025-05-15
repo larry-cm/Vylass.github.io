@@ -3,8 +3,8 @@ import "@styles/global.css";
 import Layout from "@/layouts/Layout.astro";
 import FormRegister from "@/components/react/FormRegister";
 
-const sesionIniciada = Astro.cookies.get("sesionIniciada")?.value;
-if (sesionIniciada) return Astro.redirect("/");
+const sessionIniciada = Astro.cookies.get("sessionIniciada")?.value;
+if (sessionIniciada === "true") return Astro.redirect("/");
 ---
 
 <Layout title="Registro de MySQL || FetchToMySQL">

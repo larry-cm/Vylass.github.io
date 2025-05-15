@@ -1,0 +1,14 @@
+---
+interface Props {
+    userName: string;
+}
+const { userName } = Astro.props;
+---
+
+<li class="bg-black/70 rounded py-1.5 px-4 flex items-center space-x-2">
+    <slot name="before" />
+    <p class="text-center text-nowrap">
+        Bienvenido {userName}
+    </p>
+    <slot name="after" />
+</li>

@@ -2,20 +2,18 @@ import { turso } from "@bd/configTurso"
 import type { APIRoute } from "astro"
 
 export const GET: APIRoute = async ({ request }) => {
-    // const data = await request.formData()
     const url = new URL(request.url)
     const user_or_email = url.searchParams.get('user')
-    // const user_or_email = data.get('user-or-email')
     let res
     if (user_or_email) {
         // regex para mirar que son
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-        const usernameRegex = /^[a-zA-Z0-9_]{3,16}$/
+        const usernameRegex = /^[a-zA-Z0-9\s]{7,26}$/
         // función de pedida de datos a la bd con columnas diferentes
         const getRows = async (columnWhere: string) => {
             try {
                 const { rows } = await turso.execute({
-                    sql: `SELECT user_name FROM users WHERE ${columnWhere} = ?`,
+                    sql: `SELECT user_name,user_register FROM users WHERE ${columnWhere} = ?;`,
                     args: [user_or_email.valueOf().toString().trim()]
                 });
                 return {
@@ -38,14 +36,16 @@ export const GET: APIRoute = async ({ request }) => {
         body: { ...res },
     }
     const userName = res?.user && res.user.valueOf().toString().trim()
-    return new Response(JSON.stringify(response), {
-        headers: {
-            action: '/',
-            'Set-Cookie': `usuario=${userName ?? undefined}; Path=/; Max-Age=120; HttpOnly`,
-            'Content-Type': 'application/json'
-        }
-    })
+    const headers = new Headers()
+    headers.append(
+        'Set-Cookie', `usuario=${userName && encodeURIComponent(userName)}; Path=/; Max-Age=${60 * 2}; HttpOnly`
+    )
+    headers.append(
+        'Set-Cookie', `sessionIniciada=false; Path=/; Max-Age=${60 * 2}; HttpOnly`
+    )
+    return new Response(JSON.stringify(response), { headers })
 }
+
 export const POST: APIRoute = async ({ request }) => {
     const { password, userName } = await request.json()
     if (!password && !userName) return new Response(JSON.stringify({ message: "¡El formulario no se lleno completamente!", body: null }))
@@ -54,13 +54,18 @@ export const POST: APIRoute = async ({ request }) => {
         args: [password, userName]
     })
     if (!(!!rows[0]?.length)) return new Response(JSON.stringify({ message: "¡Tu contraseña no es la correcta!", body: false }))
+
     const headers = new Headers()
     headers.append(
         'Set-Cookie', `usuario=${encodeURIComponent(userName)}; Path=/; Max-Age=${60 * 60 * 24 * 7}; HttpOnly`
     )
     headers.append(
         'Set-Cookie',
-        `sesionIniciada=true; Path=/; Max-Age=${60 * 60 * 24 * 7}; HttpOnly`
+        `sessionIniciada=true; Path=/; Max-Age=${60 * 60 * 24 * 7}; HttpOnly`
+    );
+    headers.append(
+        'Set-Cookie',
+        `imagenUsuario=${rows[0].user_img}; Path=/; Max-Age=${60 * 60 * 24 * 7}; HttpOnly`
     );
     headers.set('Content-Type', 'application/json')
     return new Response(JSON.stringify({ message: "¡Formulario enviado correctamente!", body: { res: rows[0] } }), {

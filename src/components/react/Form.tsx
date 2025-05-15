@@ -1,78 +1,69 @@
 import { useState } from "react"
 import Action from "@components/casa/Action"
-import Loading from "@components/casa/Loading.tsx"
-import { Anuncio, IconInfo } from "@components/react/Anuncio"
+import Loading from "@/components/react/formsServices/Loading"
+import { Anuncio } from "@/components/react/formsServices/Anuncio"
+import { cleanState, validatePassword, salidaInputsErrors } from "@/components/react/formsServices/VerificacionInput"
+import { ValidateInputs, TagVerification } from "@/components/react/formsServices/ValidateInputs.tsx"
+
+export interface InputsErrors {
+    size: boolean | undefined;
+    containSpecialCharacter: boolean | undefined;
+    initialNumber: boolean | undefined;
+}
 
 export default function Form() {
-    const [query, setQuery] = useState("")
-    const [errorMsg, setErrorMsg] = useState("")
-    const [errorInput, setErrorInput] = useState({ size: false, containSpecialCharacter: false, initialNumber: false })
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false) //se muestra mientras se envía la petición al servidor
+    const [query, setQuery] = useState("") //se envía a el servidor para verificar si existe el usuario
+    const [errorMsg, setErrorMsg] = useState("") // se recibe del servidor para mostrar el mensaje de error
+    const [errorInput, setErrorInput] = useState<InputsErrors>({
+        size: undefined, containSpecialCharacter: undefined, initialNumber: undefined
+    }) //se verifican si los inputs cumplen con los requisitos 
 
     function submitData(event: React.FormEvent<HTMLFormElement>) {
-
-        setLoading(true)
         event.preventDefault()
-        const envioDatos = async () => {
-            // const formData = new FormData(event.target as HTMLFormElement)
-            const res = await fetch(`/verifyUsers/users.json?user=${encodeURIComponent(query)}`)
-            const data = await res.json()
-            // deberia devolver la data para componetizar
-            !data.body.exist && setErrorMsg(data?.body?.message)
-            if (data.body.exist) {
-                window.location.href = '/inicio'
-            }
-            setLoading(false)
 
+        async function revisoDatos() {
+            try {
+                setLoading(true)
+
+                const res = await fetch(`/verifyUsers/users.json?user=${encodeURIComponent(query)}`)
+                const { body } = await res.json()
+
+                !body.exist && setErrorMsg(body?.message)
+                if (body.exist) window.location.href = '/inicio'
+                setLoading(false)
+            } catch (error) { setErrorMsg('Error :' + error) }
         }
+
         const inputs = Object.values(errorInput).every(input => !input)
-
-        if (inputs) {
-            envioDatos()
-        }
-        else {
-            setLoading(false)
-            setErrorMsg(() => {
-                if (errorInput.size) {
-                    return "La contraseña debe tener al menos 8 caracteres";
-                }
-                if (errorInput.initialNumber) {
-                    return "No puedes comenzar con números";
-                }
-                if (errorInput.containSpecialCharacter) {
-                    return "No se permiten caracteres especiales";
-                }
-                return "Por favor verifica que todos los campos cumplan con los requisitos indicados";
-            })
-        }
-
-
-    }
-
-    function cleanMsg() {
-        setTimeout(() => {
-            setErrorMsg("")
-        }, 4000);
+        inputs ? revisoDatos() : setErrorMsg(() => salidaInputsErrors(errorInput))
     }
 
     function handleErrorInput(event: React.ChangeEvent<HTMLInputElement>) {
         const userOrEmail = event.target.value
-        setQuery(userOrEmail)
-        // Create a single validation object to avoid multiple state updates
-        const validations = {
-            size: userOrEmail.length >= 8,
-            containSpecialCharacter: userOrEmail.length > 0 && !/[!#$%^&*(),?";:{}|<>]/.test(userOrEmail),
-            initialNumber: userOrEmail.length > 0 && !/^[0-9]/.test(userOrEmail)
-        };
-        // Update all error states at once
-        setErrorInput({
 
-            size: !validations.size,
-            containSpecialCharacter: !validations.containSpecialCharacter,
-            initialNumber: !validations.initialNumber
-        });
+        setQuery(userOrEmail)
+        setErrorInput({
+            size: validatePassword({ verificar: userOrEmail }).size(),
+            containSpecialCharacter: validatePassword({ verificar: userOrEmail }).containSpecialCharacter(),
+            initialNumber: validatePassword({ verificar: userOrEmail }).initialNumber()
+        })
     }
 
+    const tags = (<>
+        <TagVerification
+            verClass={errorInput.containSpecialCharacter}
+            textLi="No se permiten caracteres especiales"
+            titleSpan="Evita caracteres especiales como !@#$%^&*(){}[]<> excepto en correos electrónicos. Para usuarios usa solo letras y números" />
+        <TagVerification
+            verClass={errorInput.size}
+            textLi="¡Usa una contraseña larga y segura!"
+            titleSpan="Tu contraseña debe tener al menos 8 caracteres para mayor seguridad" />
+        <TagVerification
+            verClass={errorInput.initialNumber}
+            textLi="No debe comenzar con números"
+            titleSpan="El nombre de usuario no puede comenzar con números ni contener caracteres especiales para mantener un formato consistente y fácil de recordar" />
+    </>)
     return (
         <>
             <form
@@ -98,36 +89,20 @@ export default function Form() {
                         name="user-or-email"
                         id="userName"
                     />
-                    <div className="flex flex-col lg:flex-row space-y-2 my-2 sm:my-0 sm:space-y-0 text-sm justify-between items-start *:flex ">
-                        <a href="registro" className="items-center text-orange-400 hover:text-orange-400/80 underline underline-offset-2 order-2 sm:order-1">Regístrate ahora</a>
-                        <ul className="order-2 sm:order-1 space-y-1 text-xs mt-2 lg:mt-0 flex-col lg:items-end items-start text-slate-300 no-underline *:no-underline">
-                            <li className={`flex items-center gap-2 ${errorInput.containSpecialCharacter ? 'text-red-600' : 'text-green-500'}`}>
-                                No se permiten caracteres especiales
-                                <span
-                                    title="Evita caracteres especiales como !@#$%^&*(){}[]<> excepto en correos electrónicos. Para usuarios usa solo letras y números"
-                                    className="cursor-pointer ml-1"><IconInfo className="size-4" /></span>
-                            </li>
-                            <li className={`flex items-center gap-2 ${errorInput.size ? 'text-red-600' : 'text-green-500'}`}>
-                                ¡Usa una contraseña larga y segura!
-                                <span
-                                    title="Tu contraseña debe tener al menos 8 caracteres para mayor seguridad"
-                                    className="cursor-pointer ml-1"><IconInfo className="size-4" /></span>
-                            </li>
-                            <li className={`flex items-center gap-2 ${errorInput.initialNumber ? 'text-red-600' : 'text-green-500'} transition-colors`}>
-                                No debe comenzar con números
-                                <span
-                                    title="El nombre de usuario no puede comenzar con números ni contener caracteres especiales para mantener un formato consistente y fácil de recordar"
-                                    className="cursor-pointer ml-1"><IconInfo className="size-4" /></span>
-                            </li>
-                        </ul>
-                    </div>
+                    <ValidateInputs Tags={tags}>
+                        <a href="registro" className="items-center text-orange-400 hover:text-orange-400/80 underline underline-offset-2 min-w-fit">Regístrate ahora</a>
+                    </ValidateInputs>
                 </div>
                 <div className="text-center mt-2 sm:mt-4">
                     <Action type="submit" text="Continuar" />
                 </div>
             </form>
 
-            {loading ? <Loading /> : errorMsg && <Anuncio errorMsgInitial={errorMsg} cleanMsg={cleanMsg} />}
+            {loading ? <Loading /> : errorMsg &&
+                <Anuncio
+                    errorAvisoInitial={errorMsg}
+                    cleanAviso={() => cleanState(() => setErrorMsg(''))} />
+            }
         </>
     )
 }

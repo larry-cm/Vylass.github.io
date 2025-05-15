@@ -9,6 +9,10 @@ import vercel from '@astrojs/vercel';
 
 // https://astro.build/config
 export default defineConfig({
+  image: {
+    remotePatterns: [{ protocol: "https" }],
+    domains: ['https://lh3.googleusercontent.com/']
+  },
   integrations: [react()],
   output: 'server',
   vite: {
