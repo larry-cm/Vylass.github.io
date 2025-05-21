@@ -14,5 +14,21 @@ html {
 }
 
 .bg-black {
-    background-color: #13151a;
-}
+    background-color: #1a1a1a;
+    }
+        details {
+            height: fit-content;
+    
+            &::details-content {
+                block-size: 0;
+                overflow: hidden;
+                transition-property: block-size, content-visibility;
+                transition-behavior: allow-discrete;
+                transition-duration: .5s;
+            }
+    
+            &[open]::details-content {
+                block-size: auto;
+                block-size: clac-size(auto, size);
+            }
+        }

@@ -8,10 +8,7 @@ export const prerender = false;
 const userSession = Astro.cookies?.get("sessionIniciada")?.value;
 const userImg = Astro.cookies?.get("imagenUsuario")?.value;
 const userName = Astro.cookies?.get("usuario")?.value;
-const urlHome =
-    Astro.url.href === "http://localhost:4321/"
-        ? "#home"
-        : "http://localhost:4321/";
+const urlHome = Astro.url.pathname === "/" ? "#home" : "/";
 
 function addItems(l: string[], l2: string[]) {
     return l.map((_, i, m) => ({ text: m[i], url: l2[i] }));

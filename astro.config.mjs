@@ -11,7 +11,7 @@ import vercel from '@astrojs/vercel';
 export default defineConfig({
   image: {
     remotePatterns: [{ protocol: "https" }],
-    domains: ['https://lh3.googleusercontent.com/']
+    domains: ['https://lh3.googleusercontent.com/', 'https://res.cloudinary.com/']
   },
   integrations: [react()],
   output: 'server',

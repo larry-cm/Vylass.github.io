@@ -1,5 +1,4 @@
 import { IconInfo } from "@components/react/formsServices/Anuncio"
-import type { InputsErrors } from "@components/react/Form"
 import type React from "react"
 
 export function TagVerification({ verClass, textLi, titleSpan }: { verClass: boolean | undefined, textLi: string, titleSpan: string }) {
