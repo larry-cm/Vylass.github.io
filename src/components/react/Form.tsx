@@ -1,5 +1,5 @@
 import { useState } from "react"
-import Action from "@components/casa/Action"
+import Action from "@/components/react/Action"
 import Loading from "@/components/react/formsServices/Loading"
 import { Anuncio } from "@/components/react/formsServices/Anuncio"
 import { cleanState, validatePassword, salidaInputsErrors } from "@/components/react/formsServices/VerificacionInput"
@@ -29,6 +29,7 @@ export default function Form() {
                 const res = await fetch(`/verifyUsers/users.json?user=${encodeURIComponent(query)}`)
                 const { body } = await res.json()
 
+                if (!res.ok) throw new Error('en la petición')
                 !body.exist && setErrorMsg(body?.message)
                 if (body.exist) window.location.href = '/inicio'
                 setLoading(false)

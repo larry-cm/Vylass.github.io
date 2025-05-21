@@ -9,7 +9,7 @@ export function Anuncio({ errorAvisoInitial, cleanAviso }: { errorAvisoInitial: 
     }, [])
 
     return (
-        <div className="absolute top-13 sm:top-1/12 left-0 right-0 flex flex-col justify-center items-center max-w-full min-h-26 p-4 mx-8 sm:mx-32 bg-orange-500/90 backdrop-blur-xs ">
+        <div className="absolute top-13 sm:top-1/12 left-0 right-0 flex flex-col justify-center items-center max-w-full min-h-26 p-4 mx-8 sm:mx-32 bg-orange-500/90 backdrop-blur-xs" role="alert">
             <div className="flex justify-center items-start sm:items-center mb-2">
                 <h4 className="text-lg sm:text-xl font-bold ">
                     ¡Ups! Hemos encontrado un error

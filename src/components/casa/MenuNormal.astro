@@ -22,6 +22,7 @@ const { userSession, userName, userImg, entrada } = Astro.props;
                 <BtnPerfil userName={userName ?? ""}>
                     <div slot="after">
                         <Image
+                            loading="eager"
                             height="24"
                             width="24"
                             class="rounded-full"

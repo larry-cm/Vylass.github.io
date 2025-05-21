@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Action from "@components/casa/Action";
+import Action from "@/components/react/Action";
 import Loading from "@/components/react/formsServices/Loading";
 import { Anuncio } from "@components/react/formsServices/Anuncio";
 import type { InputsErrors } from "./Form";

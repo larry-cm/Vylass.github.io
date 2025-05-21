@@ -1,5 +1,5 @@
 import type React from "react"
-import Action from "@components/casa/Action"
+import Action from "@/components/react/Action"
 
 export default function FormRegister() {
     const handleForm = async (event: React.FormEvent<HTMLFormElement>) => {

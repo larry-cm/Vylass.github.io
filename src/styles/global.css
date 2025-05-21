@@ -1,4 +1,18 @@
 @import "tailwindcss";
+@import "flowbite/src/themes/default";
+@plugin "flowbite/plugin";
+@source "./../../node_modules/flowbite";
+
+/* Si usas Tailwind con la directiva @layer */
+[data-carousel-slide-to][aria-current="true"] {
+    background-color: #DD6B20;
+    /* rojo Tailwind red-600 */
+}
+
+[data-carousel-slide-to]:not([aria-current="true"]) {
+    background-color: #c2c7cf;
+    /* gray-400 */
+}
 
 :root {
     --bg: orange;
@@ -13,22 +27,39 @@ html {
     min-width: 320px;
 }
 
+details {
+    height: fit-content;
+
+    &::details-content {
+        block-size: 0;
+        overflow: hidden;
+        transition-property: block-size, content-visibility;
+        transition-behavior: allow-discrete;
+        transition-duration: .5s;
+    }
+
+    &[open]::details-content {
+        block-size: auto;
+        block-size: clac-size(auto, size);
+    }
+}
+
+dialog::backdrop {
+    background-color: #1a1a1a;
+    opacity: .7;
+}
+
+@starting-style {
+    dialog::backdrop {
+        opacity: 0;
+    }
+
+    dialog[open] {
+        transform: scale(0);
+    }
+}
+
+
 .bg-black {
     background-color: #1a1a1a;
-    }
-        details {
-            height: fit-content;
-    
-            &::details-content {
-                block-size: 0;
-                overflow: hidden;
-                transition-property: block-size, content-visibility;
-                transition-behavior: allow-discrete;
-                transition-duration: .5s;
-            }
-    
-            &[open]::details-content {
-                block-size: auto;
-                block-size: clac-size(auto, size);
-            }
-        }
+}

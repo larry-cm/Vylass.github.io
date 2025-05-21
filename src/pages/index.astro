@@ -6,6 +6,7 @@ import Home from "@components/casa/Home.astro";
 import DashBoardIndex from "@components/casa/DashBoardIndex.astro";
 
 const userSession = Astro.cookies.get("sessionIniciada")?.value;
+
 const userImg = Astro.cookies.get("imagenUsuario")?.value;
 const userName = Astro.cookies.get("usuario")?.value;
 ---
@@ -13,7 +14,19 @@ const userName = Astro.cookies.get("usuario")?.value;
 <Layout title="Búsquedas de MySQL || FetchToMySQL">
 	{
 		userSession === "true" ? (
-			<DashBoardIndex userImg={userImg ?? ""} userName={userName ?? ""} />
+			<DashBoardIndex
+				linkCursos={[
+					"T_j60n1zgu0",
+					"QBLbXgeXMU8",
+					"2qgs7buSnHQ",
+					"VcxXipZg1-0",
+					"VcxXipZg1-0",
+					"VcxXipZg1-0",
+					"VcxXipZg1-0",
+				]}
+				userImg={userImg ?? ""}
+				userName={userName ?? ""}
+			/>
 		) : (
 			<Home />
 		)
