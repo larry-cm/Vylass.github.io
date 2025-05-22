@@ -29,7 +29,7 @@ export default function Form() {
                 const res = await fetch(`/verifyUsers/users.json?user=${encodeURIComponent(query)}`)
                 const { body } = await res.json()
 
-                if (!res.ok) throw new Error('en la petición')
+                // if (!res.ok) throw new Error('en la petición')
                 !body.exist && setErrorMsg(body?.message)
                 if (body.exist) window.location.href = '/inicio'
                 setLoading(false)
