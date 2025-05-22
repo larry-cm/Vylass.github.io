@@ -48,8 +48,11 @@ export const GET: APIRoute = async ({ request }) => {
 
 export const POST: APIRoute = async ({ request }) => {
     const { password, userName } = await request.json()
-    if (!userName) return new Response(JSON.stringify({ message: 'Vuelve a ingresar tu usuario' }))
-    if (!password && !userName) return new Response(JSON.stringify({ message: "¡El formulario no se lleno completamente!", body: null }))
+    const cookieHeader = request.headers.get('cookie')
+    const cookies = Object.fromEntries(cookieHeader?.split('; ').map(c => c.split('=')) ?? []);
+
+    if (!password || !cookies?.usuario) return new Response(JSON.stringify({ message: "¡Faltan datos requeridos para procesar la solicitud!", body: null }))
+
     const { rows } = await turso.execute({
         sql: 'SELECT * FROM users WHERE user_password = ? and user_name = ?',
         args: [password, userName]
@@ -69,6 +72,7 @@ export const POST: APIRoute = async ({ request }) => {
         `imagenUsuario=${rows[0].user_img}; Path=/; Max-Age=${60 * 60 * 24 * 7}; HttpOnly`
     );
     headers.set('Content-Type', 'application/json')
+
     return new Response(JSON.stringify({ message: "¡Formulario enviado correctamente!", body: { res: rows[0] } }), {
         headers
     })
