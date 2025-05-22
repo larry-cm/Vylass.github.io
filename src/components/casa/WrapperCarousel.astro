@@ -43,16 +43,15 @@ const { linkCursos = ["no-url"] } = Astro.props;
 
             const cursos = this.dataset.cursos?.split(",");
             cursos?.forEach((idLink) => {
-                const dialogCurrent = document.getElementById(
-                    `dialogModal_${idLink}`,
-                );
                 const imgCurrent = document.getElementById(
                     `imgModal_${idLink}`,
                 );
-
-                const dialogC =
+                const dialogCurrent =
                     imgCurrent?.previousElementSibling as HTMLDialogElement;
-                dialogC.querySelector("");
+
+                // const dialogC =
+                //     imgCurrent?.previousElementSibling as HTMLDialogElement;
+                // dialogC.querySelector("");
                 dialogCurrent?.addEventListener("keydown", (event) => {
                     event.preventDefault();
                     const key = event.code;
