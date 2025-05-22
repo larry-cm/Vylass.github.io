@@ -48,7 +48,7 @@ export const GET: APIRoute = async ({ request }) => {
 
 export const POST: APIRoute = async ({ request }) => {
     const { password, userName } = await request.json()
-    if (!userName && password) return new Response(JSON.stringify({ message: 'Vuelve a ingresar tu usuario' }))
+    if (!userName) return new Response(JSON.stringify({ message: 'Vuelve a ingresar tu usuario' }))
     if (!password && !userName) return new Response(JSON.stringify({ message: "¡El formulario no se lleno completamente!", body: null }))
     const { rows } = await turso.execute({
         sql: 'SELECT * FROM users WHERE user_password = ? and user_name = ?',
