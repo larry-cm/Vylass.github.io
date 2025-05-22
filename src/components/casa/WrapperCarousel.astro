@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 interface Props {
     linkCursos: string[];
 }
@@ -48,6 +49,10 @@ const { linkCursos = ["no-url"] } = Astro.props;
                 const imgCurrent = document.getElementById(
                     `imgModal_${idLink}`,
                 );
+
+                const dialogC =
+                    imgCurrent?.previousElementSibling as HTMLDialogElement;
+                dialogC.querySelector("");
                 dialogCurrent?.addEventListener("keydown", (event) => {
                     event.preventDefault();
                     const key = event.code;
@@ -86,16 +91,18 @@ const { linkCursos = ["no-url"] } = Astro.props;
                             height="100%"
                             data-src={`https://www.youtube.com/embed/${idLink ?? "qkzcjwnueLA"}`}
                             title="Curso de React desde cero: Crea un videojuego y una aplicación para aprender useState y useEffect"
-                            frameborder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             referrerpolicy="strict-origin-when-cross-origin"
                             allowfullscreen
                         />
                     </dialog>
-                    <img
+                    <Image
+                        loading="eager"
+                        width={100}
+                        height={100}
                         id={`imgModal_${idLink}`}
                         src="logo.svg"
-                        class="absolute block size-full p-8 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                        class="absolute block size-full p-12 sm:p-16 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
                         alt={idLink}
                         title={idLink}
                     />

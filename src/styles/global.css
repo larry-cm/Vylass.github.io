@@ -59,6 +59,12 @@ dialog::backdrop {
     }
 }
 
+input:focus,
+select:focus {
+    outline: solid transparent;
+    border: 1px solid #ff6900;
+    box-shadow: 0 0 2px #ff6900;
+}
 
 .bg-black {
     background-color: #1a1a1a;
