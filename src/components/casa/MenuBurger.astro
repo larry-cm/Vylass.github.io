@@ -31,7 +31,7 @@ const { userSession, userName, userImg,entrada } = Astro.props;
     </span>
 </label>
 <ul
-    class={` text-white hidden peer-checked:md:hidden peer-checked:flex flex-wrap ${userSession === "true" ? "justify-between" : "justify-center"}  bg-gradient-to-l from-slate-50 to-slate-200 absolute top-[100%] right-0 mx-auto left-0 p-4 gap-4`}
+    class={` text-white hidden peer-checked:md:hidden peer-checked:flex flex-wrap ${userSession === "true" ? "justify-between" : "justify-center"}  bg-gradient-to-l from-slate-100 to-slate-300/90 absolute top-[100%] right-0 mx-auto left-0 p-4 gap-4`}
 >
     {
         userSession === "true" ? (

@@ -1,3 +1,4 @@
+import type { ActionProps } from "@/types/type";
 import { useEffect } from "react";
 
 export const IconInfo = (props: React.SVGProps<SVGSVGElement>) => <svg {...props} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M12 9v4" /><path d="M12 16v.01" /> </svg >
@@ -19,4 +20,34 @@ export function Anuncio({ errorAvisoInitial, cleanAviso }: { errorAvisoInitial: 
             <p className="text-slate-100 block font-medium text-base sm:text-lg self-start">{errorAvisoInitial}</p>
         </div>
     )
+}
+
+export function Loading() {
+    return (
+        <div className="flex justify-center items-center absolute min-w-full min-h-full py-8 top-0 bottom-0 right-0 left-0 z-50 bg-slate-50 dark:bg-black/50">
+            <ul>
+                <li>
+                    <div className="loader">
+                        <div className="child"></div>
+                    </div>
+                </li>
+
+                <li>
+                    <div className="text"></div>
+                </li>
+            </ul>
+        </div>
+    )
+}
+
+export function Action({ type = "submit", text = "Registrarse", izquierda, children }: ActionProps) {
+    return (
+        <button
+            type={type}
+            className="w-full flex gap-x-2 items-center justify-center bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 rounded transition-colors cursor-pointer"
+        >
+            {izquierda && children && children}
+            {text}{children && !izquierda && children}
+        </button>
+    );
 }

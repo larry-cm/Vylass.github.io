@@ -23,6 +23,7 @@ html {
     background: var(--bg-black);
     color-scheme: light dark;
     min-width: 320px;
+    scroll-behavior: smooth;
 }
 
 details {

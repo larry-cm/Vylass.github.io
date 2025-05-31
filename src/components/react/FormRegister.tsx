@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
-import Action from "@/components/react/formsServices/Action"
+import { Action } from "@/components/react/formsServices/PopApps"
 import { validatePassword } from "@/utils/VerificationInput"
 import type { InputsErrors, InputsUse } from "@/types/type"
 import { ValidateInputs } from "@/utils/ValidateInputs"

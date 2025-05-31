@@ -53,9 +53,15 @@ const { userSession, userName, userImg, entrada } = Astro.props;
             entrada.map(({ url, text }) => (
                 <li
                     class:list={[
-                        "px-4 py-1.5 hover:text-slate-100/80 rounded cursor-pointer",
-                        { "bg-black": url === "registro" },
-                        { "bg-slate-900/70": url !== "registro" },
+                        "px-4 py-1.5 *:font-medium hover:bg-slate-300/90 dark:hover:text-slate-900 rounded cursor-pointer",
+                        {
+                            "bg-slate-50  text-slate-900 dark:text-slate-200 dark:bg-black":
+                                url === "registro",
+                        },
+                        {
+                            "bg-slate-50 text-slate-900 dark:text-slate-200 dark:bg-slate-900/70":
+                                url !== "registro",
+                        },
                     ]}
                 >
                     <a href={url}>{text}</a>

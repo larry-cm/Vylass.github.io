@@ -20,3 +20,9 @@ export interface InputsErrors {
     containSpecialCharacter: boolean | undefined;
     initialNumber: boolean | undefined;
 }
+export interface ActionProps {
+    type?: HTMLButtonElement["type"];
+    children?: React.ReactNode;
+    izquierda?: boolean;
+    text: string;
+}

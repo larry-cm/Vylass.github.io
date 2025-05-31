@@ -24,11 +24,13 @@ const {
 } = Astro.props;
 ---
 
-<section class="flex size-full rounded border border-slate-50 relative">
+<section
+    class="flex size-full scroll-smooth rounded border border-orange-400 dark:border-slate-200 relative"
+>
     <input type="checkbox" class="peer hidden" id="menuBar" />
 
     <aside
-        class="flex flex-col transition-all w-12 sm:w-16 hover:w-2/3 hover:sm:w-1/3 hover:lg:w-1/5 hover:2xl:w-1/8 peer-checked:sm:w-1/3 peer-checked:w-2/3 peer-checked:2xl:w-1/8 peer-checked:lg:w-1/5 h-full px-3 sm:px-5 py-8 overflow-y-auto bg-[#1a1a1a] border-r overflow-hidden absolute left-0 top-0 z-50"
+        class="flex flex-col transition-all w-12 sm:w-16 hover:w-2/3 hover:sm:w-1/3 hover:lg:w-1/5 hover:2xl:w-1/8 peer-checked:sm:w-1/3 peer-checked:w-2/3 peer-checked:2xl:w-1/8 peer-checked:lg:w-1/5 h-full px-3 sm:px-5 py-8 overflow-y-auto bg-slate-50 dark:bg-[#1a1a1a] border-r border-orange-400 dark:border-slate-200 overflow-hidden absolute left-0 top-0 z-50"
     >
         <label
             for="menuBar"
@@ -36,23 +38,25 @@ const {
         >
             <Image
                 loading="eager"
-                width={20}
-                height={20}
-                src="/logo.svg"
-                class="cursor-pointer"
+                width={24}
+                height={24}
+                src={userImg ?? "/logo.svg"}
+                class="cursor-pointer size-6 scale-150 rounded-full"
                 alt="Logo de la compañía para el menú de navegación del panel"
             />
-            <em class="not-italic font-medium text-xl">Dashboard</em>
+            <em class="not-italic font-medium truncate text-xl"
+                >{userName ?? "Dashboard"}</em
+            >
         </label>
 
-        <div class="flex flex-col justify-between flex-1 mt-6">
-            <nav class="flex-1 -mx-3 space-y-3">
+        <div class="flex flex-col justify-start flex-1 mt-6">
+            <nav class="flex-1 -mx-3 w-fit max-h-fit space-y-[1lh]">
                 <a
-                    class="flex items-center px-3 py-2 text-slate-50 transition-colors duration-300 transform rounded hover:bg-orange-500 hover:text-slate-100"
+                    class="group flex items-center ms-0.5 px-3 py-2 text-slate-900 dark:text-slate-50 transition-colors duration-300 transform rounded hover:bg-orange-500 hover:text-slate-200 dark:hover:text-slate-100"
                     href="#info-principal"
                 >
                     <svg
-                        class="min-w-5 w-5"
+                        class="min-w-5 w-5 transition-transform group-hover:translate-x-2"
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
@@ -70,11 +74,11 @@ const {
                 </a>
 
                 <a
-                    class="flex items-center px-3 py-2 text-slate-50 transition-colors duration-300 transform rounded hover:bg-orange-500 hover:text-slate-100"
+                    class="group flex items-center ms-0.5 px-3 py-2 text-slate-900 dark:text-slate-50 transition-colors duration-300 transform rounded hover:bg-orange-500 hover:text-slate-200 dark:hover:text-slate-100"
                     href="#info-usuario"
                 >
                     <svg
-                        class="min-w-5 w-5"
+                        class="min-w-5 w-5 transition-transform group-hover:translate-x-2"
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
@@ -92,7 +96,7 @@ const {
                 </a>
 
                 <a
-                    class="flex items-center px-3 py-2 text-slate-50 transition-colors duration-300 transform rounded hover:bg-orange-500 hover:text-slate-100"
+                    class="group flex items-center ms-0.5 px-3 py-2 text-slate-900 dark:text-slate-50 transition-colors duration-300 transform rounded hover:bg-orange-500 hover:text-slate-200 dark:hover:text-slate-100"
                     href="#info-config"
                 >
                     <svg
@@ -100,7 +104,7 @@ const {
                         viewBox="0 0 24 24"
                         stroke-width="1.5"
                         stroke="currentColor"
-                        class="min-w-5 w-5"
+                        class="min-w-5 w-5 transition-transform group-hover:translate-x-2"
                     >
                         <path
                             stroke-linecap="round"
@@ -115,38 +119,17 @@ const {
 
                     <span class="mx-6 text-sm font-medium">Configuración</span>
                 </a>
-            </nav>
 
-            <div class="flex items-center justify-between mt-6 text-slate-100">
                 <label
                     for="menuBar"
-                    class="flex items-center space-x-6 cursor-pointer"
-                >
-                    <Image
-                        loading="eager"
-                        width={20}
-                        height={20}
-                        class="object-cover rounded-full"
-                        src={userImg ??
-                            "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&h=634&q=80"}
-                        alt="avatar"
-                    />
-                    <span
-                        class="text-sm font-medium w-24 truncate hover:text-slate-100/90 transition-colors"
-                        >{userName ?? "John Doe"}</span
-                    >
-                </label>
-
-                <button
-                    type="button"
-                    class="transition-colors cursor-pointer duration-200 rotate-180 rtl:rotate-0 ms-2 hover:text-orange-500 cerrar-session"
+                    class="flex items-center space-x-6 w-full rounded px-3 py-2 cursor-pointer mt-6 hover:bg-red-500 group cerrar-session transition-all"
                 >
                     <svg
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke-width="1.5"
                         stroke="currentColor"
-                        class="w-5 h-5"
+                        class="min-w-5 w-5 transition-all text-slate-900 dark:text-orange-500 -translate-y-0.5 group-hover:translate-x-2"
                     >
                         <path
                             stroke-linecap="round"
@@ -154,13 +137,17 @@ const {
                             d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
                         ></path>
                     </svg>
-                </button>
-            </div>
+                    <span
+                        class="text-sm font-medium w-24 truncate text-slate-800 dark:text-slate-200 dark:hover:text-slate-300/90 transition-colors"
+                        >Cerrar Sesión</span
+                    >
+                </label>
+            </nav>
         </div>
     </aside>
 
     <div
-        class="w-full ms-12 sm:ms-16 overflow-auto scroll-smooth *:transition-all space-y-2 sm:space-y-0 bg-black"
+        class="w-full h-fit ms-12 sm:ms-16 space-y-2 sm:space-y-0 bg-slate-50 dark:bg-[#1a1a1a]"
     >
         <article
             id="info-principal"
@@ -892,6 +879,7 @@ const {
                         Preferencias del Sistema
                     </h5>
                 </div>
+
                 <div class="p-4 sm:p-8 space-y-4 mt-8 sm:mt-16">
                     <div
                         class="flex flex-col md:flex-row md:items-center gap-4 justify-between"
