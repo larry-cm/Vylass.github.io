@@ -1,0 +1,112 @@
+---
+import { Image } from "astro:assets";
+interface Props {
+    linkCursos: string[];
+}
+const { linkCursos = ["no-url"] } = Astro.props;
+---
+
+<script>
+    class AstroCardElement extends HTMLElement {
+        connectedCallback() {
+            function handleOpenDialog(event: MouseEvent) {
+                const dialogCurrent = (event.currentTarget as HTMLElement)
+                    .previousElementSibling as HTMLDialogElement;
+
+                if (!dialogCurrent?.hasAttribute("open")) {
+                    dialogCurrent.classList.replace("opacity-0", "opacity-100");
+                    dialogCurrent.classList.replace("scale-0", "scale-100");
+
+                    const iframe = dialogCurrent?.querySelector("iframe");
+                    if (iframe?.dataset.src) iframe.src = iframe?.dataset.src;
+
+                    dialogCurrent?.showModal();
+                }
+            }
+
+            function handleCloseDialog(
+                event: MouseEvent | KeyboardEvent,
+            ): void {
+                const dialogCurrent = event.currentTarget as HTMLDialogElement;
+
+                if (dialogCurrent?.hasAttribute("open")) {
+                    dialogCurrent.classList.replace("scale-100", "scale-0");
+                    dialogCurrent.classList.replace("opacity-100", "opacity-0");
+
+                    setTimeout(() => {
+                        dialogCurrent?.close();
+                        const iframe = dialogCurrent?.querySelector("iframe");
+                        if (iframe) iframe.src = "";
+                    }, 100);
+                }
+            }
+
+            const cursos = this.dataset.cursos?.split(",");
+            cursos?.forEach((idLink) => {
+                const imgCurrent = document.getElementById(
+                    `imgModal_${idLink}`,
+                );
+                const dialogCurrent =
+                    imgCurrent?.previousElementSibling as HTMLDialogElement;
+
+                // const dialogC =
+                //     imgCurrent?.previousElementSibling as HTMLDialogElement;
+                // dialogC.querySelector("");
+                dialogCurrent?.addEventListener("keydown", (event) => {
+                    event.preventDefault();
+                    const key = event.code;
+                    if (key === "Backspace" || key === "Escape")
+                        handleCloseDialog(event);
+                });
+                dialogCurrent?.addEventListener("click", (e) =>
+                    handleCloseDialog(e),
+                );
+                imgCurrent?.addEventListener("click", (e) =>
+                    handleOpenDialog(e),
+                );
+            });
+        }
+    }
+    customElements.define("card-element", AstroCardElement);
+</script>
+
+<card-element data-cursos={linkCursos}>
+    <div
+        class="relative h-56 overflow-hidden md:h-80 bg-black/20 rounded border border-slate-200"
+    >
+        {/* Items */}
+        {
+            linkCursos?.map((idLink, index) => (
+                <div
+                    class="hidden duration-300 ease-in-out "
+                    data-carousel-item={!index ? "active" : "any"}
+                >
+                    <dialog
+                        class={`m-auto w-2xl aspect-video duration-200 transition-all opacity-0 scale-0`}
+                        id={`dialogModal_${idLink}`}
+                    >
+                        <iframe
+                            width="100%"
+                            height="100%"
+                            data-src={`https://www.youtube.com/embed/${idLink ?? "qkzcjwnueLA"}`}
+                            title="Curso de React desde cero: Crea un videojuego y una aplicación para aprender useState y useEffect"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            allowfullscreen
+                        />
+                    </dialog>
+                    <Image
+                        loading="eager"
+                        width={100}
+                        height={100}
+                        id={`imgModal_${idLink}`}
+                        src="logo.svg"
+                        class="absolute block size-full p-12 sm:p-16 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                        alt={idLink}
+                        title={idLink}
+                    />
+                </div>
+            ))
+        }
+    </div>
+</card-element>

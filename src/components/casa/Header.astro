@@ -1,0 +1,81 @@
+---
+import { Image } from "astro:assets";
+import Logo from "/public/logo.svg";
+import MenuBurger from "./MenuBurger.astro";
+
+import MenuNormal from "./MenuNormal.astro";
+export const prerender = false;
+const userSession = Astro.cookies?.get("sessionIniciada")?.value;
+const userImg = Astro.cookies?.get("imagenUsuario")?.value;
+const userName = Astro.cookies?.get("usuario")?.value;
+const urlHome = Astro.url.pathname === "/" ? "#home" : "/";
+
+function addItems(l: string[], l2: string[]) {
+    return l.map((_, i, m) => ({ text: m[i], url: l2[i] }));
+}
+const entrada = addItems(
+    ["Plataforma", "Registro de usuarios"],
+    ["/", "registro"],
+);
+---
+
+<script>
+    [...document.getElementsByClassName("cerrar-session")].forEach((button) =>
+        button?.addEventListener("click", async () => {
+            await fetch("/verifyUsers/logout");
+            window.location.href = "/";
+        }),
+    );
+</script>
+<header
+    class="header relative min-h-[10vh] flex justify-between items-center bg-gradient-to-br from-orange-600/90 to-orange-400 z-20"
+>
+    <nav
+        transition:name={`nav-base`}
+        class="px-4 h-full w-full flex justify-between items-center"
+    >
+        <a href={urlHome} class="min-w-[28%] flex items-center">
+            <Image
+                src={Logo}
+                alt="foto del icono"
+                loading="eager"
+                width={60}
+                height={60}
+            />
+            <h1
+                class="transition-all text-2xl md:text-3xl lg:text-4xl font-semibold first-letter:text-3xl first-letter:md:text-4xl first-letter:lg:text-5xl first-letter:capitalize text-nowrap"
+            >
+                fetchToMySQL
+            </h1>
+        </a>
+
+        <!-- menu de aburguesa -->
+        <MenuBurger
+            userSession={userSession ?? ""}
+            userName={userName ?? ""}
+            userImg={userImg ?? ""}
+            entrada={entrada}
+        />
+        <!-- menu principal -->
+        <MenuNormal
+            userSession={userSession ?? ""}
+            userName={userName ?? ""}
+            userImg={userImg ?? ""}
+            entrada={entrada}
+        />
+    </nav>
+</header>
+<style>
+    .header nav {
+        span svg {
+            transform: rotate(-90deg);
+            transition: 0.2s ease;
+        }
+        #btn-burger:checked + label span svg {
+            transform: rotate(0deg);
+        }
+        ul li {
+            transition: 0.3s ease;
+        }
+    }
+</style>

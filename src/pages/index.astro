@@ -1,0 +1,37 @@
+---
+import "@styles/global.css";
+import "@styles/loading.css";
+import Layout from "@/layouts/Layout.astro";
+import Home from "@components/casa/Home.astro";
+import DashBoardIndex from "@components/casa/DashBoardIndex.astro";
+
+const userSession = Astro.cookies.get("sessionIniciada")?.value;
+
+const userImg = Astro.cookies.get("imagenUsuario")?.value;
+const userName = Astro.cookies.get("usuario")?.value;
+---
+
+<Layout title="Búsquedas de MySQL || FetchToMySQL">
+	{
+		userSession === "true" ? (
+			<DashBoardIndex
+				linkCursos={[
+					"T_j60n1zgu0",
+					"QBLbXgeXMU8",
+					"2qgs7buSnHQ",
+					"VcxXipZg1-0",
+					"VcxXipZg1-1",
+				]}
+				userRegister="12-05-2005"
+				userDesc="Desarrollador apasionado por la tecnología, el aprendizaje continuo y la creación de soluciones innovadoras."
+				userImg={userImg ?? ""}
+				userName={userName ?? ""}
+				urlGitHub=""
+				urlLinkedIn=""
+				numeroCelular=""
+			/>
+		) : (
+			<Home />
+		)
+	}
+</Layout>

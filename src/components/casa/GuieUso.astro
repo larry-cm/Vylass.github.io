@@ -1,0 +1,20 @@
+---
+interface Props {
+  h2: string;
+  h3: string;
+  li: string[];
+}
+const { h2, h3, li }: Props = Astro.props;
+---
+
+<article class="border p-8 bg-[#1a1a1a] rounded-md">
+  <h2 class="text-lg sm:text-2xl font-semibold capitalize">
+    {h2 ?? "Guía de uso"}
+  </h2>
+  <h3 class="py-1 text-gray-300 text-lg font-medium">
+    {h3 ?? "Sigue estos tres sencillos pasos"}
+  </h3>
+  <ul class="text-sm sm:text-lg list-decimal relative space-y-1">
+    {li && li.map((item) => <li class="pe-2 w-fit text-base">{item}</li>)}
+  </ul>
+</article>

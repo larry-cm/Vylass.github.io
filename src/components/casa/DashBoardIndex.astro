@@ -1,0 +1,1006 @@
+---
+import Image from "astro/components/Image.astro";
+import ActionLink from "@components/casa/ActionLink.astro";
+import Carousel from "@components/casa/Carousel.astro";
+interface Props {
+    userName: string;
+    userImg: string;
+    userRegister: string;
+    userDesc: string;
+    urlGitHub: string;
+    urlLinkedIn: string;
+    numeroCelular: string;
+    linkCursos: string[];
+}
+const {
+    userName,
+    userImg,
+    userRegister,
+    userDesc,
+    urlGitHub,
+    urlLinkedIn,
+    numeroCelular,
+    linkCursos,
+} = Astro.props;
+---
+
+<section class="flex size-full rounded border border-slate-50 relative">
+    <input type="checkbox" class="peer hidden" id="menuBar" />
+
+    <aside
+        class="flex flex-col transition-all w-12 sm:w-16 hover:w-2/3 hover:sm:w-1/3 hover:lg:w-1/5 hover:2xl:w-1/8 peer-checked:sm:w-1/3 peer-checked:w-2/3 peer-checked:2xl:w-1/8 peer-checked:lg:w-1/5 h-full px-3 sm:px-5 py-8 overflow-y-auto bg-[#1a1a1a] border-r overflow-hidden absolute left-0 top-0 z-50"
+    >
+        <label
+            for="menuBar"
+            class="flex items-center space-x-6 w-fit cursor-pointer"
+        >
+            <Image
+                loading="eager"
+                width={20}
+                height={20}
+                src="/logo.svg"
+                class="cursor-pointer"
+                alt="Logo de la compañía para el menú de navegación del panel"
+            />
+            <em class="not-italic font-medium text-xl">Dashboard</em>
+        </label>
+
+        <div class="flex flex-col justify-between flex-1 mt-6">
+            <nav class="flex-1 -mx-3 space-y-3">
+                <a
+                    class="flex items-center px-3 py-2 text-slate-50 transition-colors duration-300 transform rounded hover:bg-orange-500 hover:text-slate-100"
+                    href="#info-principal"
+                >
+                    <svg
+                        class="min-w-5 w-5"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        ><path stroke="none" d="M0 0h24v24H0z" fill="none"
+                        ></path><path d="M5 12l-2 0l9 -9l9 9l-2 0"></path><path
+                            d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"
+                        ></path><path
+                            d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"
+                        ></path></svg
+                    >
+                    <span class="mx-6 text-sm font-medium">General</span>
+                </a>
+
+                <a
+                    class="flex items-center px-3 py-2 text-slate-50 transition-colors duration-300 transform rounded hover:bg-orange-500 hover:text-slate-100"
+                    href="#info-usuario"
+                >
+                    <svg
+                        class="min-w-5 w-5"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        ><path stroke="none" d="M0 0h24v24H0z" fill="none"
+                        ></path><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"
+                        ></path><path
+                            d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"
+                        ></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path><path
+                            d="M21 21v-2a4 4 0 0 0 -3 -3.85"></path></svg
+                    >
+                    <span class="mx-6 text-sm font-medium">Usuario</span>
+                </a>
+
+                <a
+                    class="flex items-center px-3 py-2 text-slate-50 transition-colors duration-300 transform rounded hover:bg-orange-500 hover:text-slate-100"
+                    href="#info-config"
+                >
+                    <svg
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="min-w-5 w-5"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 011.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 01-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.397.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 01-.12-1.45l.527-.737c.25-.35.273-.806.108-1.204-.165-.397-.505-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.107-1.204l-.527-.738a1.125 1.125 0 01.12-1.45l.773-.773a1.125 1.125 0 011.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894z"
+                        ></path>
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+
+                    <span class="mx-6 text-sm font-medium">Configuración</span>
+                </a>
+            </nav>
+
+            <div class="flex items-center justify-between mt-6 text-slate-100">
+                <label
+                    for="menuBar"
+                    class="flex items-center space-x-6 cursor-pointer"
+                >
+                    <Image
+                        loading="eager"
+                        width={20}
+                        height={20}
+                        class="object-cover rounded-full"
+                        src={userImg ??
+                            "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&h=634&q=80"}
+                        alt="avatar"
+                    />
+                    <span
+                        class="text-sm font-medium w-24 truncate hover:text-slate-100/90 transition-colors"
+                        >{userName ?? "John Doe"}</span
+                    >
+                </label>
+
+                <button
+                    type="button"
+                    class="transition-colors cursor-pointer duration-200 rotate-180 rtl:rotate-0 ms-2 hover:text-orange-500 cerrar-session"
+                >
+                    <svg
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-5 h-5"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
+                        ></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <div
+        class="w-full ms-12 sm:ms-16 overflow-auto scroll-smooth *:transition-all space-y-2 sm:space-y-0 bg-black"
+    >
+        <article
+            id="info-principal"
+            class="h-fit w-full px-2 pt-2 sm:pt-8 sm:px-8"
+        >
+            <h2
+                class="text-3xl sm:text-4xl font-bold pb-4 lg:pb-8 mx-auto w-fit"
+            >
+                General
+            </h2>
+
+            <div class="gap-4 grid grid-cols-1 sm:grid-cols-3">
+                <div
+                    class="flex flex-col sm:col-span-3 lg:col-span-2 items-center bg-black/30 border border-slate-200 rounded shadow-sm md:flex-row"
+                >
+                    <Image
+                        height={100}
+                        width={100}
+                        loading="eager"
+                        class="object-cover w-full rounded-t-lg h-full md:w-48 md:rounded-none md:rounded-s-lg"
+                        src={userImg ?? "/logo.svg"}
+                        alt=""
+                    />
+
+                    <div
+                        class="flex flex-col justify-between p-4 w-full leading-normal"
+                    >
+                        <strong
+                            class="mb-[1lh] block ms-auto rounded-full bg-[#1a1a1a] py-0.5 px-1.5 sm:px-2.5 border border-orange-500 text-xs text-orange-500 transition-all shadow-md font-medium w-fit text-center text-nowrap"
+                        >
+                            Registrado : {userRegister ?? "12-05-2025"}
+                        </strong>
+
+                        <h3
+                            class="mb-2 text-xl sm:text-2xl font-bold tracking-tight text-gray-900 dark:text-white capitalize"
+                        >
+                            {userName ?? "No tiene nombre"}
+                        </h3>
+
+                        <p class="mb-3 font-normal text-slate-300 max-w-96">
+                            {
+                                userDesc ??
+                                    "  Este perfil no tiene descripción, pero puedes agregarle conectándote con alguna de las plataformas."
+                            }
+                        </p>
+                    </div>
+                </div>
+
+                {
+                    urlGitHub || urlLinkedIn || numeroCelular ? (
+                        <ul class="flex flex-col sm:flex-row lg:flex-col sm:items-center justify-center gap-2 sm:gap-4 sm:col-span-3 lg:col-span-1 bg-black/30 p-4 sm:p-8 rounded border border-orange-500 *:h-fit *:overflow-hidden">
+                            <li>
+                                <ActionLink
+                                    url={urlGitHub ?? "#no-have-github"}
+                                    text="Conectar con GitHub "
+                                >
+                                    <svg
+                                        class="min-w-[20px]"
+                                        aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="currentColor"
+                                        viewBox="0 0 18 19"
+                                    >
+                                        <path
+                                            fill-rule="evenodd"
+                                            d="M8.842 18.083a8.8 8.8 0 0 1-8.65-8.948 8.841 8.841 0 0 1 8.8-8.652h.153a8.464 8.464 0 0 1 5.7 2.257l-2.193 2.038A5.27 5.27 0 0 0 9.09 3.4a5.882 5.882 0 0 0-.2 11.76h.124a5.091 5.091 0 0 0 5.248-4.057L14.3 11H9V8h8.34c.066.543.095 1.09.088 1.636-.086 5.053-3.463 8.449-8.4 8.449l-.186-.002Z"
+                                            clip-rule="evenodd"
+                                        />
+                                    </svg>
+                                </ActionLink>
+                            </li>
+                            <li>
+                                <ActionLink
+                                    url={urlLinkedIn ?? "#no-have-linkeind"}
+                                    text="Conectar con LinkedIn"
+                                >
+                                    <svg
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.5"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="min-w-[20px]"
+                                    >
+                                        <>
+                                            <path
+                                                stroke="none"
+                                                d="M0 0h24v24H0z"
+                                                fill="none"
+                                            />
+                                            <path d="M8 11v5" />
+                                            <path d="M8 8v.01" />
+                                            <path d="M12 16v-5" />
+                                            <path d="M16 16v-3a2 2 0 1 0 -4 0" />
+                                            <path d="M3 7a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4z" />
+                                        </>
+                                    </svg>
+                                </ActionLink>
+                            </li>
+                            <li>
+                                <ActionLink
+                                    url={
+                                        numeroCelular
+                                            ? `https://api.whatsapp.com/send?phone=${numeroCelular.startsWith("+")}`
+                                            : "#no-have-number"
+                                    }
+                                    text="Conectar con WhatsApp"
+                                >
+                                    <svg
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.5"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="min-w-[20px]"
+                                    >
+                                        <path
+                                            stroke="none"
+                                            d="M0 0h24v24H0z"
+                                            fill="none"
+                                        />
+                                        <path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9" />
+                                        <path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1" />
+                                    </svg>
+                                </ActionLink>
+                            </li>
+                        </ul>
+                    ) : (
+                        <div
+                            id="plataformasCarousel"
+                            data-carousel="slide"
+                            class="sm:col-span-3 flex items-center lg:col-span-1 bg-black/30 p-4 sm:p-8 rounded border border-slate-200 w-full relative"
+                        >
+                            {/* wrapper carousel */}
+                            <div class="relative overflow-hidden rounded h-12 lg:h-24 w-full">
+                                {/* items */}
+                                <div
+                                    data-carousel-item
+                                    class="hidden duration-300 ease-in-ou h-fit  my-auto gap-2 "
+                                >
+                                    <button class="truncate rounded capitalize py-2 px-2 sm:px-4 mx-auto bg-black/30 hover:bg-[#1a1a1a] cursor-pointer transition-colors border border-slate-300 flex items-center justify-center text-base font-medium text-slate-300">
+                                        enlazarte con{" "}
+                                        <span class="ms-2">
+                                            <svg
+                                                class="w-4 h-4 min-w-[20px]"
+                                                aria-hidden="true"
+                                                fill="currentColor"
+                                                viewBox="0 0 20 20"
+                                            >
+                                                <path
+                                                    fill-rule="evenodd"
+                                                    d="M10 .333A9.911 9.911 0 0 0 6.866 19.65c.5.092.678-.215.678-.477 0-.237-.01-1.017-.014-1.845-2.757.6-3.338-1.169-3.338-1.169a2.627 2.627 0 0 0-1.1-1.451c-.9-.615.07-.6.07-.6a2.084 2.084 0 0 1 1.518 1.021 2.11 2.11 0 0 0 2.884.823c.044-.503.268-.973.63-1.325-2.2-.25-4.516-1.1-4.516-4.9A3.832 3.832 0 0 1 4.7 7.068a3.56 3.56 0 0 1 .095-2.623s.832-.266 2.726 1.016a9.409 9.409 0 0 1 4.962 0c1.89-1.282 2.717-1.016 2.717-1.016.366.83.402 1.768.1 2.623a3.827 3.827 0 0 1 1.02 2.659c0 3.807-2.319 4.644-4.525 4.889a2.366 2.366 0 0 1 .673 1.834c0 1.326-.012 2.394-.012 2.72 0 .263.18.572.681.475A9.911 9.911 0 0 0 10 .333Z"
+                                                    clip-rule="evenodd"
+                                                />
+                                            </svg>
+                                        </span>
+                                    </button>
+                                </div>
+
+                                <div
+                                    data-carousel-item
+                                    class="hidden duration-300 ease-in-ou h-fit my-auto gap-2 "
+                                >
+                                    <button class="truncate rounded capitalize  py-2 px-2 sm:px-4 mx-auto flex items-center justify-center  bg-black/30 hover:bg-[#1a1a1a] cursor-pointer transition-colors border border-slate-300 text-base font-medium text-slate-300">
+                                        enlazarte con{" "}
+                                        <span class="ms-2">
+                                            <svg
+                                                class="w-4 h-4 min-w-[20px]"
+                                                viewBox="0 0 20 20"
+                                                fill="currentColor"
+                                            >
+                                                <path
+                                                    stroke="none"
+                                                    d="M0 0h24v24H0z"
+                                                    fill="none"
+                                                />
+                                                <path d="M17 2a5 5 0 0 1 5 5v10a5 5 0 0 1 -5 5h-10a5 5 0 0 1 -5 -5v-10a5 5 0 0 1 5 -5zm-9 8a1 1 0 0 0 -1 1v5a1 1 0 0 0 2 0v-5a1 1 0 0 0 -1 -1m6 0a3 3 0 0 0 -1.168 .236l-.125 .057a1 1 0 0 0 -1.707 .707v5a1 1 0 0 0 2 0v-3a1 1 0 0 1 2 0v3a1 1 0 0 0 2 0v-3a3 3 0 0 0 -3 -3m-6 -3a1 1 0 0 0 -.993 .883l-.007 .127a1 1 0 0 0 1.993 .117l.007 -.127a1 1 0 0 0 -1 -1" />
+                                            </svg>
+                                        </span>
+                                    </button>
+                                </div>
+
+                                <div
+                                    data-carousel-item
+                                    class="hidden duration-300 ease-in-ou h-fit my-auto gap-2 "
+                                >
+                                    <button class="truncate rounded capitalize py-2 px-2 sm:px-4 mx-auto bg-black/30 hover:bg-[#1a1a1a] cursor-pointer transition-colors border border-slate-300 flex items-center justify-center text-base font-medium text-slate-300">
+                                        enlazarte con{" "}
+                                        <span class="ms-2">
+                                            <svg
+                                                class="w-4 h-4 min-w-[20px]"
+                                                viewBox="0 0 24 24"
+                                                fill="currentColor"
+                                            >
+                                                <path
+                                                    stroke="none"
+                                                    d="M0 0h24v24H0z"
+                                                    fill="none"
+                                                />
+                                                <path d="M18.497 4.409a10 10 0 0 1 -10.36 16.828l-.223 -.098l-4.759 .849l-.11 .011a1 1 0 0 1 -.11 0l-.102 -.013l-.108 -.024l-.105 -.037l-.099 -.047l-.093 -.058l-.014 -.011l-.012 -.007l-.086 -.073l-.077 -.08l-.067 -.088l-.056 -.094l-.034 -.07l-.04 -.108l-.028 -.128l-.012 -.102a1 1 0 0 1 0 -.125l.012 -.1l.024 -.11l.045 -.122l1.433 -3.304l-.009 -.014a10 10 0 0 1 1.549 -12.454l.215 -.203a10 10 0 0 1 13.226 -.217m-8.997 3.09a1.5 1.5 0 0 0 -1.5 1.5v1a6 6 0 0 0 6 6h1a1.5 1.5 0 0 0 0 -3h-1l-.144 .007a1.5 1.5 0 0 0 -1.128 .697l-.042 .074l-.022 -.007a4.01 4.01 0 0 1 -2.435 -2.435l-.008 -.023l.075 -.041a1.5 1.5 0 0 0 .704 -1.272v-1a1.5 1.5 0 0 0 -1.5 -1.5" />
+                                            </svg>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )
+                }
+
+                <div
+                    class="bg-black/30 w-full h-fit sm:col-span-3 lg:col-span-3 border border-slate-200 rounded p-4 sm:p-8"
+                >
+                    <h4
+                        class="relative text-2xl pb-8 2xl:pb-0 font-semibold w-fit mx-auto"
+                    >
+                        Cursos Realizados
+                    </h4>
+
+                    <Carousel cursosIdLinks={linkCursos} />
+                </div>
+            </div>
+        </article>
+
+        <article
+            id="info-usuario"
+            class="h-fit w-full px-2 pt-2 sm:pt-8 sm:px-8"
+        >
+            <h4
+                class="text-3xl sm:text-4xl text-center font-bold pb-4 lg:pb-8 mx-auto w-fit"
+            >
+                Datos Personales
+            </h4>
+            <div class="grid md:grid-cols-2 gap-4">
+                <!-- Información Básica -->
+                <div
+                    class="bg-black/30 border border-slate-200 rounded overflow-hidden"
+                >
+                    <div class="p-4 sm:p-8 border-b border-dark-200">
+                        <h5
+                            class="text-xl font-semibold flex flex-col sm:flex-row sm:items-center gap-2"
+                        >
+                            <i class="w-8 md:w-9 text-orange-500">
+                                <svg
+                                    class="min-w-[20px]"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.5"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    ><path
+                                        stroke="none"
+                                        d="M0 0h24v24H0z"
+                                        fill="none"></path><path
+                                        d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"
+                                    ></path><path
+                                        d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"
+                                    ></path></svg
+                                ></i
+                            >
+                            Información Básica
+                        </h5>
+                    </div>
+
+                    <div class="p-4 sm:p-8 space-y-4">
+                        <div class="space-y-2">
+                            <label
+                                class="block text-sm sm:text-base font-semibold text-slate-300"
+                                >Nombre completo</label
+                            >
+                            <div class="relative">
+                                <input
+                                    type="text"
+                                    value="Larry Antonio Ceballos Moncada"
+                                    class="w-full py-3 px-3 bg-black/30 border border-slate-200 rounded text-white text-xs sm:text-base appearance-none"
+                                />
+                                <button
+                                    class="absolute right-2 top-1/2 transform -translate-y-1/2 rounded transition-colors hover:bg-[#1a1a1a] bg-[#0d0d0d] p-1 cursor-pointer"
+                                >
+                                    <i
+                                        class="min-w-[20px] text-orange-500 cursor-pointer"
+                                    >
+                                        <svg
+                                            width="20"
+                                            height="20"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="1.5"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            ><path
+                                                stroke="none"
+                                                d="M0 0h24v24H0z"
+                                                fill="none"></path><path
+                                                d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"
+                                            ></path><path
+                                                d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"
+                                            ></path><path d="M16 5l3 3"
+                                            ></path></svg
+                                        >
+                                    </i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label
+                                class="block text-sm sm:text-base font-semibold text-slate-300"
+                                >Ubicación</label
+                            >
+                            <div class="relative">
+                                <i
+                                    class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-300"
+                                >
+                                    <svg
+                                        class="min-w-[20px]"
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.5"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        ><path
+                                            stroke="none"
+                                            d="M0 0h24v24H0z"
+                                            fill="none"></path><path
+                                            d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"
+                                        ></path><path
+                                            d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"
+                                        ></path>
+                                    </svg>
+                                </i>
+                                <input
+                                    type="text"
+                                    value="Medellín, Colombia"
+                                    class="w-full py-3 pl-10 pr-10 bg-black/30 border border-slate-200 rounded text-white text-xs sm:text-base"
+                                />
+                                <button
+                                    class="absolute right-2 top-1/2 transform -translate-y-1/2 rounded transition-colors hover:bg-[#1a1a1a] bg-[#0d0d0d] p-1 cursor-pointer"
+                                >
+                                    <i
+                                        class="min-w-[20px] text-orange-500 cursor-pointer"
+                                    >
+                                        <svg
+                                            width="20"
+                                            height="20"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="1.5"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            ><path
+                                                stroke="none"
+                                                d="M0 0h24v24H0z"
+                                                fill="none"></path><path
+                                                d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"
+                                            ></path><path
+                                                d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"
+                                            ></path><path d="M16 5l3 3"
+                                            ></path></svg
+                                        >
+                                    </i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label
+                                class="block text-sm sm:text-base font-semibold text-slate-300"
+                                >Teléfono</label
+                            >
+                            <div class="relative">
+                                <i
+                                    class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-300"
+                                >
+                                    <svg
+                                        class="min-w-[20px]"
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.5"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        ><path
+                                            stroke="none"
+                                            d="M0 0h24v24H0z"
+                                            fill="none"></path><path
+                                            d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"
+                                        ></path></svg
+                                    >
+                                </i>
+                                <input
+                                    type="text"
+                                    value="300 123 4567"
+                                    class="w-full py-3 pl-10 bg-black/30 border border-slate-200 rounded text-white text-xs sm:text-base"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label
+                                class="block text-sm sm:text-base font-semibold text-slate-300"
+                                >Correo electrónico</label
+                            >
+                            <div class="relative">
+                                <i
+                                    class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-300"
+                                >
+                                    <svg
+                                        class="min-w-[20px]"
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.5"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        ><path
+                                            stroke="none"
+                                            d="M0 0h24v24H0z"
+                                            fill="none"></path><path
+                                            d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"
+                                        ></path><path d="M3 7l9 6l9 -6"
+                                        ></path></svg
+                                    >
+                                </i>
+                                <input
+                                    type="email"
+                                    value="lceballos@email.com"
+                                    class="w-full py-3 pl-10 bg-black/30 border border-slate-200 rounded text-white text-xs sm:text-base"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dirección de residencia -->
+                <div
+                    class="bg-black/30 border border-slate-200 rounded overflow-hidden"
+                >
+                    <div class="p-4 sm:p-8 border-b border-dark-200">
+                        <h5
+                            class="text-xl font-semibold flex flex-col sm:flex-row sm:items-center gap-2"
+                        >
+                            <i class="w-8 md:w-9 text-orange-500">
+                                <svg
+                                    class="min-w-[20px]"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.5"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    ><path
+                                        stroke="none"
+                                        d="M0 0h24v24H0z"
+                                        fill="none"></path><path
+                                        d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"
+                                    ></path><path
+                                        d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"
+                                    ></path>
+                                </svg>
+                            </i>
+                            Dirección de residencia
+                        </h5>
+                    </div>
+                    <div class="p-4 sm:p-8 space-y-4">
+                        <div class="space-y-2">
+                            <label
+                                class="block text-sm sm:text-base font-semibold text-slate-300"
+                                >Dirección actual</label
+                            >
+                            <input
+                                type="text"
+                                value="Calle 45 #78-23, Apto 302"
+                                class="w-full py-3 px-3 bg-black/30 border border-slate-200 rounded text-white text-xs sm:text-base"
+                            />
+                        </div>
+
+                        <div class="space-y-2">
+                            <label
+                                class="block text-sm sm:text-base font-semibold text-slate-300"
+                                >Fecha de nacimiento</label
+                            >
+                            <div class="relative">
+                                <i
+                                    class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-stale-300"
+                                >
+                                    <svg
+                                        class="min-w-[20px]"
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.5"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        ><path
+                                            stroke="none"
+                                            d="M0 0h24v24H0z"
+                                            fill="none"></path><path
+                                            d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"
+                                        ></path><path d="M16 3l0 4"></path><path
+                                            d="M8 3l0 4"></path><path
+                                            d="M4 11l16 0"></path><path
+                                            d="M8 15h2v2h-2z"></path></svg
+                                    >
+                                </i>
+                                <input
+                                    type="text"
+                                    value="25 de marzo de 1985"
+                                    class="w-full py-3 pl-10 bg-black/30 border border-slate-200 rounded text-white text-xs sm:text-base"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label
+                                class="block text-sm sm:text-base font-semibold text-slate-300"
+                                >Estado civil</label
+                            >
+                            <select
+                                class="w-full py-3 px-3 bg-black/30 border border-slate-200 rounded text-white text-xs sm:text-base appearance-none"
+                            >
+                                <option value="soltero" selected>Soltero</option
+                                >
+                                <option value="casado">Casado</option>
+                                <option value="divorciado">Divorciado</option>
+                                <option value="viudo">Viudo</option>
+                            </select>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label
+                                class="block text-sm sm:text-base font-semibold text-slate-300"
+                                >Ocupación</label
+                            >
+                            <div class="relative">
+                                <i
+                                    class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-stale-300"
+                                >
+                                    <svg
+                                        class="min-w-[20px]"
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.5"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        ><path
+                                            stroke="none"
+                                            d="M0 0h24v24H0z"
+                                            fill="none"></path><path
+                                            d="M3 9a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9z"
+                                        ></path><path
+                                            d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2"
+                                        ></path></svg
+                                    >
+                                </i>
+                                <input
+                                    type="text"
+                                    value="Operador de máquina"
+                                    class="w-full py-3 pl-10 bg-black/30 border border-slate-200 rounded text-white text-xs sm:text-base"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label
+                                class="block text-sm sm:text-base font-semibold text-slate-300"
+                                >Nacionalidad</label
+                            >
+                            <div class="relative">
+                                <i
+                                    class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-stale-300"
+                                >
+                                    <svg
+                                        class="min-w-[20px]"
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.5"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        ><path
+                                            stroke="none"
+                                            d="M0 0h24v24H0z"
+                                            fill="none"></path><path
+                                            d="M5 5a5 5 0 0 1 7 0a5 5 0 0 0 7 0v9a5 5 0 0 1 -7 0a5 5 0 0 0 -7 0v-9z"
+                                        ></path><path d="M5 21v-7"></path></svg
+                                    >
+                                </i>
+                                <input
+                                    type="text"
+                                    value="Colombiana"
+                                    class="w-full py-3 pl-10 bg-black/30 border border-slate-200 rounded text-white text-xs sm:text-base"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Información Adicional -->
+            <div
+                class="bg-black/30 border border-slate-200 rounded overflow-hidden mt-4"
+            >
+                <div class="p-4 sm:p-8 border-b border-dark-200">
+                    <h5
+                        class="text-xl font-semibold flex flex-col sm:flex-row sm:items-center gap-2"
+                    >
+                        <i class="w-8 md:w-9 text-orange-500">
+                            <svg
+                                class="min-w-[20px] w-full"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.5"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                ><path
+                                    stroke="none"
+                                    d="M0 0h24v24H0z"
+                                    fill="none"></path><path
+                                    d="M22 9l-10 -4l-10 4l10 4l10 -4v6"
+                                ></path><path
+                                    d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4"
+                                ></path></svg
+                            >
+                        </i>
+                        Información Adicional
+                    </h5>
+                </div>
+                <div class="p-4 sm:p-8">
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label
+                                class="block text-sm sm:text-base font-semibold text-slate-300"
+                                >Nivel de educación</label
+                            >
+                            <select
+                                class="w-full py-3 px-3 bg-black/30 border border-slate-200 rounded text-white text-xs sm:text-base appearance-none"
+                            >
+                                <option value="primaria">Primaria</option>
+                                <option value="secundaria">Secundaria</option>
+                                <option value="tecnico" selected>Técnico</option
+                                >
+                                <option value="universitario"
+                                    >Universitario</option
+                                >
+                                <option value="postgrado">Postgrado</option>
+                            </select>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label
+                                class="block text-sm sm:text-base font-semibold text-slate-300"
+                                >Idiomas</label
+                            >
+                            <select
+                                class="w-full py-3 px-3 bg-black/30 border border-slate-200 rounded text-white text-xs sm:text-base appearance-none"
+                            >
+                                <option value="espanol" selected>Español</option
+                                >
+                                <option value="ingles">Inglés</option>
+                                <option value="frances">Francés</option>
+                                <option value="portugues">Portugués</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <article
+            id="info-config"
+            class="h-fit w-full px-2 pt-2 sm:pt-8 sm:px-8"
+        >
+            <h4
+                class="text-3xl sm:text-4xl font-bold pb-4 lg:pb-8 mx-auto w-fit truncate"
+            >
+                Configuración
+            </h4>
+
+            <div
+                class="bg-black/30 border border-slate-200 rounded overflow-hidden mb-4 sm:mb-8"
+            >
+                <div class="p-4 sm:p-8 border-b border-dark-200">
+                    <h5
+                        class="text-xl font-semibold flex flex-col sm:flex-row sm:items-center gap-2"
+                    >
+                        <i class="w-8 md:w-9 text-orange-500">
+                            <svg
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="min-w-[20px]"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 011.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 01-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.397.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 01-.12-1.45l.527-.737c.25-.35.273-.806.108-1.204-.165-.397-.505-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.107-1.204l-.527-.738a1.125 1.125 0 01.12-1.45l.773-.773a1.125 1.125 0 011.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894z"
+                                ></path>
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                        </i>
+                        Preferencias del Sistema
+                    </h5>
+                </div>
+                <div class="p-4 sm:p-8 space-y-4 mt-8 sm:mt-16">
+                    <div
+                        class="flex flex-col md:flex-row md:items-center gap-4 justify-between"
+                    >
+                        <div>
+                            <h6 class="font-medium">Idioma del sistema</h6>
+                            <p class="text-sm text-slate-300">
+                                Seleccione el idioma de la interfaz
+                            </p>
+                        </div>
+                        <select
+                            class="w-36 sm:w-44 py-2 px-4 bg-black/30 border border-slate-200 rounded text-white appearance-none cursor-pointer"
+                        >
+                            <option value="es" selected>Español</option>
+                            <option value="en">English</option>
+                            <option value="pt">Português</option>
+                        </select>
+                    </div>
+
+                    <div
+                        class="flex flex-col md:flex-row md:items-center gap-4 justify-between"
+                    >
+                        <div>
+                            <h6 class="font-medium">Zona horaria</h6>
+                            <p class="text-sm text-slate-300">
+                                Configurar zona horaria del sistema
+                            </p>
+                        </div>
+                        <select
+                            class="w-36 sm:w-44 py-2 px-4 bg-black/30 border border-slate-200 rounded text-white appearance-none cursor-pointer"
+                        >
+                            <option
+                                class="hover:bg-amber-500"
+                                class="hover:bg-amber-500"
+                                value="america_bogota"
+                                selected>América/Bogotá</option
+                            >
+                            <option
+                                class="hover:bg-amber-500"
+                                value="america_mexico">América/México</option
+                            >
+                            <option value="america_santiago"
+                                >América/Santiago</option
+                            >
+                        </select>
+                    </div>
+
+                    <div
+                        id="plataformas"
+                        class="flex flex-col md:flex-row md:items-center gap-4 justify-between"
+                    >
+                        <div>
+                            <h3 class="font-medium">Vincular plataformas</h3>
+                            <p class="text-sm text-slate-300 max-w-2xs">
+                                Conecta tu cuenta con plataformas externas como
+                                GitHub, LinkedIn o WhatsApp para mejorar tu
+                                experiencia y sincronizar información.
+                            </p>
+                        </div>
+                        <button
+                            class="w-full sm:w-44 py-2 px-4 border border-orange-500 text-primary rounded flex justify-center items-center gap-2 bg-black/30 hover:bg-[#1a1a1a] transition-colors font-medium capitalize cursor-pointer text-orange-500"
+                        >
+                            <i class="w-4 h-4 -translate-y-0.5">
+                                <svg
+                                    class="min-w-[20px]"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.5"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    ><path
+                                        stroke="none"
+                                        d="M0 0h24v24H0z"
+                                        fill="none"></path><path
+                                        d="M12 10.941c2.333 -3.308 .167 -7.823 -1 -8.941c0 3.395 -2.235 5.299 -3.667 6.706c-1.43 1.408 -2.333 3.621 -2.333 5.588c0 3.704 3.134 6.706 7 6.706s7 -3.002 7 -6.706c0 -1.712 -1.232 -4.403 -2.333 -5.588c-2.084 3.353 -3.257 3.353 -4.667 2.235"
+                                    ></path></svg
+                                >
+                            </i>
+                            Conectar ahora
+                        </button>
+                    </div>
+
+                    <div class="pt-4 border-t border-slate-200">
+                        <button
+                            class="w-full py-3 px-4 bg-red-600 hover:bg-red-700 text-white rounded font-medium flex items-center justify-center gap-2 cursor-pointer group"
+                        >
+                            <i
+                                class="w-4 h-4 group-hover:-translate-x-1 transition-transform"
+                            >
+                                <svg
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="1.5"
+                                    stroke="currentColor"
+                                    class="min-w-[20px] -translate-y-0.5"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
+                                    ></path>
+                                </svg>
+                            </i>
+                            Cerrar sesión
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </div>
+</section>

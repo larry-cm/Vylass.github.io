@@ -1,0 +1,26 @@
+---
+import Form from "@/components/react/Form";
+import GuieUso from "@components/casa/GuieUso.astro";
+---
+
+<section class="h-[80vh] flex justify-center items-center">
+    <div
+        class="max-w-4xl grid grid-cols-1 md:grid-cols-2 grid-flow-row gap-4 text-white"
+    >
+        <GuieUso
+            h2="Bienvenidos, Fetchers!"
+            h3="Verifiquemos si tienes una cuenta"
+            li={[
+                "Ingresa tus credenciales",
+                "Presiona 'Iniciar sesión'",
+                "¡Comienza a explorar!",
+            ]}
+        />
+        <article class="border p-8 flex flex-col bg-[#1a1a1a] rounded-md">
+            <h2 class="text-lg sm:text-2xl font-bold capitalize">
+                verificación de cuenta
+            </h2>
+            <Form client:load />
+        </article>
+    </div>
+</section>

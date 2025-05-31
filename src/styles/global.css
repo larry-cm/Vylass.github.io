@@ -1,0 +1,83 @@
+@import "tailwindcss";
+@import "flowbite/src/themes/default";
+@plugin "flowbite/plugin";
+@source "./../../node_modules/flowbite";
+
+[data-carousel-slide-to][aria-current="true"] {
+    background-color: #DD6B20;
+}
+
+[data-carousel-slide-to]:not([aria-current="true"]) {
+    background-color: #c2c7cf;
+    /* gray-400 */
+}
+
+:root {
+    --bg: orange;
+    --bg-black: #13151a;
+    --h-mini: 50px;
+}
+
+html {
+    font-family: system-ui, sans-serif;
+    background: var(--bg-black);
+    color-scheme: light dark;
+    min-width: 320px;
+}
+
+details {
+    height: fit-content;
+
+    &::details-content {
+        block-size: 0;
+        overflow: hidden;
+        transition-property: block-size, content-visibility;
+        transition-behavior: allow-discrete;
+        transition-duration: .5s;
+    }
+
+    &[open]::details-content {
+        block-size: auto;
+        block-size: clac-size(auto, size);
+    }
+}
+
+dialog::backdrop {
+    background-color: #1a1a1a;
+    opacity: .7;
+}
+
+@starting-style {
+    dialog::backdrop {
+        opacity: 0;
+    }
+
+    dialog[open] {
+        transform: scale(0);
+    }
+}
+
+input:focus,
+select:focus {
+    outline: solid transparent;
+    border: 1px solid #ff6900;
+    box-shadow: 0 0 2px #ff6900;
+}
+
+.bg-black {
+    background-color: #1a1a1a;
+}
+
+.animate-h {
+    block-size: 0;
+    overflow: hidden;
+    transition-property: block-size;
+    transition-duration: 0.3s;
+    transition-behavior: allow-discrete;
+    /* animation: h .3s ease-in-out 1 both; */
+}
+
+.animate-h.on {
+    block-size: auto;
+    block-size: calc-size(auto, size);
+}

@@ -1,0 +1,77 @@
+---
+import BtnPerfil from "@components/casa/BtnPerfil.astro";
+import Image from "astro/components/Image.astro";
+
+interface Props {
+    userSession: string;
+    userName: string;
+    userImg: string;
+    entrada: {
+        text: string;
+        url: string;
+    }[];
+}
+const { userSession, userName, userImg,entrada } = Astro.props;
+---
+
+<input type="checkbox" id="btn-burger" class="peer hidden" />
+<label class="" for="btn-burger">
+    <span class="sr-only">Menu de hamburguesa para los celulares</span>
+    <span class="md:hidden">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="30"
+            height="30"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            ><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path
+                d="M18 3a3 3 0 0 1 2.995 2.824l.005 .176v12a3 3 0 0 1 -2.824 2.995l-.176 .005h-12a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-12a3 3 0 0 1 2.824 -2.995l.176 -.005h12zm0 2h-12a1 1 0 0 0 -.993 .883l-.007 .117v9h14v-9a1 1 0 0 0 -.883 -.993l-.117 -.007zm-7.387 3.21l.094 .083l1.293 1.292l1.293 -1.292a1 1 0 0 1 1.32 -.083l.094 .083a1 1 0 0 1 .083 1.32l-.083 .094l-2 2a1 1 0 0 1 -1.32 .083l-.094 -.083l-2 -2a1 1 0 0 1 1.32 -1.497z"
+            ></path></svg
+        >
+    </span>
+</label>
+<ul
+    class={` text-white hidden peer-checked:md:hidden peer-checked:flex flex-wrap ${userSession === "true" ? "justify-between" : "justify-center"}  bg-gradient-to-l from-slate-50 to-slate-200 absolute top-[100%] right-0 mx-auto left-0 p-4 gap-4`}
+>
+    {
+        userSession === "true" ? (
+            <BtnPerfil userName={userName}>
+            <div slot="before">
+                <Image
+                loading="eager"
+                    height="24"
+                    width="24"
+                    class="rounded-full"
+                    src={userImg}
+                    alt="imagen de perfil del usuario"
+                />
+            </div>
+            </BtnPerfil>
+            <li class=" hover:text-slate-200 bg-black rounded px-4 py-1.5 flex items-center space-x-2 cursor-pointer">
+                <button class="cursor-pointer cerrar-session text-nowrap">
+                    Cerrar sesión
+                </button>
+                <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-5 h-5 -scale-x-100 "
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
+                            ></path>
+                        </svg>
+            </li>
+        ) : (
+            entrada?.map(({ url, text }) => (
+                    <li class="text-black font-medium sm:text-lg text-base underline hover:bg-orange-400 px-2 py-1.5 rounded underline-offset-2 transition-all cursor-pointer">
+                        <a href={url}>{text}</a>
+                    </li>
+                ))
+        )
+    }
+</ul>
