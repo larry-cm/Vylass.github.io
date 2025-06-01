@@ -19,7 +19,6 @@ const { userSession, userName, userImg,entrada } = Astro.props;
     <span class="sr-only">Menu de hamburguesa para los celulares</span>
     <span class="md:hidden">
         <svg
-            xmlns="http://www.w3.org/2000/svg"
             width="30"
             height="30"
             viewBox="0 0 24 24"
@@ -31,7 +30,7 @@ const { userSession, userName, userImg,entrada } = Astro.props;
     </span>
 </label>
 <ul
-    class={` text-white hidden peer-checked:md:hidden peer-checked:flex flex-wrap ${userSession === "true" ? "justify-between" : "justify-center"}  bg-gradient-to-l from-slate-100 to-slate-300/90 absolute top-[100%] right-0 mx-auto left-0 p-4 gap-4`}
+    class={` text-white hidden peer-checked:md:hidden peer-checked:flex flex-wrap ${userSession === "true" ? "justify-between" : "justify-center"} bg-gradient-to-l from-slate-100 to-slate-300/90 absolute top-[100%] right-0 mx-auto left-0 p-4 gap-4`}
 >
     {
         userSession === "true" ? (
@@ -48,24 +47,30 @@ const { userSession, userName, userImg,entrada } = Astro.props;
                 />
             </div>
             </BtnPerfil>
-            <li class=" hover:text-slate-200 bg-black rounded px-4 py-1.5 flex items-center space-x-2 cursor-pointer">
-                <button class="cursor-pointer cerrar-session text-nowrap">
-                    Cerrar sesión
-                </button>
-                <svg
+            <li class="group bg-black px-3 py-2 rounded flex items-center cursor-pointer *:cursor-pointer cerrar-session transition-all ">
+                    <button
+                        class="flex items-center gap-1 text-white group-hover:text-red-500 font-medium relative transition-colors focus:outline-none"
+                        style="outline: none;"
+                        aria-label="Cerrar sesión"
+                    >
+                        <svg
                             fill="none"
                             viewBox="0 0 24 24"
-                            stroke-width="1.5"
+                            stroke-width="1.7"
                             stroke="currentColor"
-                            class="w-5 h-5 -scale-x-100 "
+                            class="w-5 h-5 transition-transform group-hover:-translate-x-0.5 group-hover:text-red-500"
                         >
                             <path
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
                                 d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
-                            ></path>
+                            />
                         </svg>
-            </li>
+                        <span slot="before" class="relative z-10 transition-colors">
+                            Cerrar sesión
+                        </span>
+                    </button>
+                </li>
         ) : (
             entrada?.map(({ url, text }) => (
                     <li class="text-black font-medium sm:text-lg text-base underline hover:bg-orange-400 px-2 py-1.5 rounded underline-offset-2 transition-all cursor-pointer">

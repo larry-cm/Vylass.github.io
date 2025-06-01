@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Anuncio, Loading, Action } from "@/components/react/formsServices/PopApps";
-import { validatePassword, cleanState, salidaInputsErrors } from "@/utils/VerificationInput";
+import { validatePassword, salidaInputsErrors } from "@/utils/VerificationInput";
 import { ValidateInputs } from "@/utils/ValidateInputs";
 import type { InputsErrors } from "@/types/type";
 
@@ -35,7 +35,10 @@ export default function FormInicio({ userSessionInitial }: { userSessionInitial:
         }
 
         const inputsValides = errorInput.initialNumber === false && errorInput.size === false
-        inputsValides ? setVerify() : setError(() => salidaInputsErrors(errorInput))
+        inputsValides ? (() => {
+            setError('')
+            setVerify()
+        })() : setError(() => salidaInputsErrors(errorInput))
     }
 
     function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -91,7 +94,7 @@ export default function FormInicio({ userSessionInitial }: { userSessionInitial:
                 loading ? <Loading /> : error &&
                     <Anuncio
                         errorAvisoInitial={error}
-                        cleanAviso={() => cleanState(() => setError(''))} />
+                        cleanAviso={() => setError('')} />
             }
         </>
     )

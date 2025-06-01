@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { Anuncio, Loading, Action } from "@/components/react/formsServices/PopApps"
-import { cleanState, validatePassword, salidaInputsErrors } from "@/utils/VerificationInput"
+import { validatePassword, salidaInputsErrors } from "@/utils/VerificationInput"
 import { ValidateInputs } from "@/utils/ValidateInputs"
 import type { InputsErrors } from "@/types/type"
 
@@ -84,7 +84,7 @@ export default function Form() {
             {loading ? <Loading /> : errorMsg &&
                 <Anuncio
                     errorAvisoInitial={errorMsg}
-                    cleanAviso={() => cleanState(() => setErrorMsg(''))} />
+                    cleanAviso={() => setErrorMsg('')} />
             }
         </>
     )
