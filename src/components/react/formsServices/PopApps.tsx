@@ -24,7 +24,7 @@ export function Anuncio({ errorAvisoInitial, cleanAviso }: { errorAvisoInitial: 
 
 export function Loading() {
     return (
-        <div className="flex justify-center items-center absolute min-w-full min-h-full py-8 top-0 bottom-0 right-0 left-0 z-50 bg-slate-50 dark:bg-black/50">
+        <div className="flex justify-center items-center absolute min-w-full min-h-full py-8 top-0 bottom-0 right-0 left-0 z-50 bg-slate-50/50 dark:bg-black/50">
             <ul>
                 <li>
                     <div className="loader">

@@ -68,12 +68,12 @@ export default function Form() {
                         onChange={handleErrorInput}
                         value={query}
                         placeholder="Carlota o carlota@gmail.com"
-                        className="w-full px-4 py-2 rounded bg-black/50 text-white placeholder:text-slate-300 border border-gray-600 focus:outline-none focus:border-orange-500"
+                        className="w-full px-4 py-2 rounded bg-slate-100 dark:bg-black/50 text-slate-900 dark:text-white placeholder:text-slate-500 dark:placeholder:text-slate-300 border border-slate-300 dark:border-slate-200 focus:outline-none focus:border-orange-500"
                         name="user-or-email"
                         id="userName"
                     />
                     <ValidateInputs tagsOptions={[true, false, true]} tagsState={errorInput}>
-                        <a href="registro" className="items-center text-slate-600 hover:contrast-150 transition-all dark:text-orange-400 dark:hover:text-orange-400/80 underline underline-offset-2 min-w-fit">Regístrate ahora</a>
+                        <a href="registro" className="items-center text-orange-500 hover:contrast-150 transition-all dark:text-orange-400 dark:hover:text-orange-400/80 underline underline-offset-2 min-w-fit">Regístrate ahora</a>
                     </ValidateInputs>
                 </div>
                 <div className="text-center mt-2 sm:mt-4">

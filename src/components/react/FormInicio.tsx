@@ -52,7 +52,7 @@ export default function FormInicio({ userSessionInitial }: { userSessionInitial:
             <form method="POST" onSubmit={handleForm} encType="multipart/form-data">
                 {/* Usuario / Email */}
                 <div className="mb-2 text-xl">
-                    <p className="font-semibold">
+                    <p className="font-semibold text-slate-900 dark:text-white">
                         ¡Bienvenido de nuevo {userSessionInitial}! Ingresa tu contraseña
                         para continuar.
                     </p>
@@ -60,7 +60,7 @@ export default function FormInicio({ userSessionInitial }: { userSessionInitial:
 
                 {/* Contraseña */}
                 <div className="mb-6 space-y-3">
-                    <label htmlFor="password" className="block mb-1 font-semibold">
+                    <label htmlFor="password" className="block mb-1 font-semibold text-slate-900 dark:text-white">
                         Contraseña
                     </label>
                     <input
@@ -71,7 +71,7 @@ export default function FormInicio({ userSessionInitial }: { userSessionInitial:
                         onChange={handleChange}
                         autoComplete="current-password"
                         placeholder="Introduce tu contraseña"
-                        className="w-full px-4 py-2 rounded bg-black/30 text-white border border-gray-600 focus:outline-none focus:border-orange-500 placeholder:text-slate-300"
+                        className="w-full px-4 py-2 rounded bg-slate-100 dark:bg-black/30 text-slate-900 dark:text-white border border-gray-300 dark:border-gray-600 focus:outline-none focus:border-orange-500 placeholder:text-slate-500 dark:placeholder:text-slate-300"
                     />
                     <ValidateInputs tagsOptions={[false, true, false]} tagsState={errorInput} />
                 </div>
@@ -80,9 +80,9 @@ export default function FormInicio({ userSessionInitial }: { userSessionInitial:
                 <Action type="submit" text="Iniciar Sesión" />
 
                 {/* Enlaces */}
-                <div className="mt-4 text-center text-sm">
+                <div className="mt-4 text-center text-sm text-slate-700 dark:text-white">
                     ¿Olvidaste tu contraseña?
-                    <a href="#recuperar-contraseña" className="text-orange-400 underline ms-1">
+                    <a href="#recuperar-contraseña" className="text-orange-500 dark:text-orange-400 underline ms-1">
                         Recupérala aquí
                     </a>
                 </div>
