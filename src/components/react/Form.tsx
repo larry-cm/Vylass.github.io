@@ -42,7 +42,7 @@ export default function Form() {
         setQuery(userOrEmail)
         setErrorInput({
             size: validatePassword({ verificar: userOrEmail }).size(),
-            containSpecialCharacter: validatePassword({ verificar: userOrEmail }).containSpecialCharacter(),
+            containSpecialCharacter: validatePassword({ verificar: userOrEmail, yesNumbers: true }).containSpecialCharacter(),
             initialNumber: validatePassword({ verificar: userOrEmail }).initialNumber()
         })
     }

@@ -30,7 +30,7 @@ const { userSession, userName, userImg,entrada } = Astro.props;
     </span>
 </label>
 <ul
-    class={` text-white hidden peer-checked:md:hidden peer-checked:flex flex-wrap ${userSession === "true" ? "justify-between" : "justify-center"} bg-gradient-to-l from-slate-100 to-slate-300/90 absolute top-[100%] right-0 mx-auto left-0 p-4 gap-4`}
+    class={` text-white hidden peer-checked:md:hidden peer-checked:flex flex-wrap ${userSession === "true" ? "justify-between" : "justify-center"} bg-gradient-to-l from-slate-100 to-slate-300/90 absolute top-24 z-30 right-0 mx-auto left-0 p-4 gap-4`}
 >
     {
         userSession === "true" ? (
@@ -66,7 +66,7 @@ const { userSession, userName, userImg,entrada } = Astro.props;
                                 d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
                             />
                         </svg>
-                        <span slot="before" class="relative z-10 transition-colors">
+                        <span slot="before" class="relative transition-colors">
                             Cerrar sesión
                         </span>
                     </button>
