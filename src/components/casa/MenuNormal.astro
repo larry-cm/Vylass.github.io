@@ -27,14 +27,14 @@ const { userSession, userName, userImg, entrada } = Astro.props;
                             width="24"
                             class="rounded-full"
                             src={userImg}
-                            alt="imagen de perfil del usuario"
+                            title="Imagen de perfil personalizada del usuario del menu normal"
+                            alt="Imagen de perfil personalizada del usuario del menu normal"
                         />
                     </div>
                 </BtnPerfil>
                 <li class="bg-black py-1.5 px-4 hover:text-slate-100/80 rounded cursor-pointer cerrar-session flex items-center space-x-2">
                     <button class="cursor-pointer">Cerrar sesión</button>
                     <svg
-                        xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke-width="1.5"
@@ -53,12 +53,13 @@ const { userSession, userName, userImg, entrada } = Astro.props;
             entrada.map(({ url, text }) => (
                 <li
                     class:list={[
-                        "px-4 py-1.5 hover:text-slate-100/80 rounded cursor-pointer",
-                        { "bg-black": url === "registro" },
-                        { "bg-slate-900/70": url !== "registro" },
+                        "px-5 py-2 mx-1 rounded border font-medium shadow-sm transition-all cursor-pointer bg-[#1a1a1a] hover:bg-slate-white border-slate-200 hover:bg-white text-white hover:border-slate-900 hover:text-slate-900",
+                        {},
                     ]}
                 >
-                    <a href={url}>{text}</a>
+                    <a href={url} class="block w-full h-full font-medium">
+                        {text}
+                    </a>
                 </li>
             ))
         )

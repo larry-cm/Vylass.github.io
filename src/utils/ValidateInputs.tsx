@@ -1,4 +1,4 @@
-import { IconInfo } from "@/components/react/formsServices/Anuncio"
+import { IconInfo } from "@/components/react/formsServices/PopApps"
 import type { InputsErrors } from "@/types/type"
 
 export function TagVerification({ verClass, textLi, titleSpan }: { verClass: boolean | undefined, textLi: string, titleSpan: string }) {
@@ -18,8 +18,7 @@ export function TagVerification({ verClass, textLi, titleSpan }: { verClass: boo
 export function ValidateInputs({ children, tagsOptions, tagsTexts, tagsState }: { tagsOptions: boolean[], tagsTexts?: { li?: string[], title?: string[] }, tagsState: InputsErrors, children?: React.ReactNode }) {
 
     const Tags = ({ tags, optionalText, state }: { tags: boolean[], optionalText?: { li?: string[], title?: string[] }, state: InputsErrors }) => {
-        const orderTags = [...tags].sort((a, b) => (a === b ? 0 : a ? -1 : 1))
-        return orderTags.map((show, idx) => {
+        return tags.map((show, idx) => {
             if (!show) return null;
 
             const defaultTexts = [

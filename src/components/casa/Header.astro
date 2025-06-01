@@ -13,6 +13,7 @@ const urlHome = Astro.url.pathname === "/" ? "#home" : "/";
 function addItems(l: string[], l2: string[]) {
     return l.map((_, i, m) => ({ text: m[i], url: l2[i] }));
 }
+
 const entrada = addItems(
     ["Plataforma", "Registro de usuarios"],
     ["/", "registro"],
@@ -27,6 +28,7 @@ const entrada = addItems(
         }),
     );
 </script>
+
 <header
     class="header relative min-h-[10vh] flex justify-between items-center bg-gradient-to-br from-orange-600/90 to-orange-400 z-20"
 >
@@ -37,7 +39,8 @@ const entrada = addItems(
         <a href={urlHome} class="min-w-[28%] flex items-center">
             <Image
                 src={Logo}
-                alt="foto del icono"
+                alt="icono principal de mi pagina web en donde estoy haciendo peticiones sql"
+                title="icono principal de mi pagina web en donde estoy haciendo peticiones sql"
                 loading="eager"
                 width={60}
                 height={60}
@@ -65,7 +68,8 @@ const entrada = addItems(
         />
     </nav>
 </header>
-<style>
+
+<style is:inline>
     .header nav {
         span svg {
             transform: rotate(-90deg);

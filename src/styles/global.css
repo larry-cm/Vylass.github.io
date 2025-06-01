@@ -12,6 +12,13 @@
     /* gray-400 */
 }
 
+@media (prefers-color-scheme:light) {
+    [data-carousel-slide-to]:not([aria-current="true"]) {
+        background-color: #a7a7a7;
+        /* gray-400 */
+    }
+}
+
 :root {
     --bg: orange;
     --bg-black: #13151a;
@@ -23,6 +30,7 @@ html {
     background: var(--bg-black);
     color-scheme: light dark;
     min-width: 320px;
+    scroll-behavior: smooth;
 }
 
 details {
@@ -59,7 +67,7 @@ dialog::backdrop {
 
 input:focus,
 select:focus {
-    outline: solid transparent;
+    /* outline: solid transparent; */
     border: 1px solid #ff6900;
     box-shadow: 0 0 2px #ff6900;
 }

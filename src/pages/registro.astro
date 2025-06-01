@@ -9,15 +9,19 @@ if (sessionIniciada === "true") return Astro.redirect("/");
 
 <Layout title="Registro de MySQL || FetchToMySQL">
     <section
-        class="flex flex-col items-center justify-center flex-1 p-4 min-h-[80vh]"
+        class="flex flex-col items-center justify-center flex-1 min-h-[80vh]"
     >
         <div
-            class="h-fit w-full max-w-md rounded-lg shadow-lg p-4 sm:p-8 bg-slate-50 dark:bg-[#1a1a1a] border border-slate-200"
+            class="h-fit w-full max-w-md rounded-lg shadow-lg p-4 sm:p-8 bg-white dark:bg-[#1a1a1a] border border-orange-400 dark:border-slate-200"
         >
             <header class="mb-6 text-center">
-                <h1 class="text-2xl font-bold mb-2">Crear una cuenta</h1>
+                <h2
+                    class="text-2xl font-bold mb-2 text-slate-800 dark:text-white"
+                >
+                    Crear una cuenta
+                </h2>
                 <p
-                    class="text-slate-800 dark:text-slate-300 font-medium text-sm"
+                    class="text-slate-600 dark:text-slate-300 font-medium text-sm"
                 >
                     Regístrate para acceder a FetchToMySQL
                 </p>
@@ -25,7 +29,9 @@ if (sessionIniciada === "true") return Astro.redirect("/");
 
             <FormRegister client:load />
 
-            <div class="mt-6 text-center text-sm">
+            <div
+                class="mt-6 text-center text-sm text-slate-700 dark:text-slate-200"
+            >
                 ¿Ya tienes cuenta?
                 <a
                     href="/"

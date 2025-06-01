@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
-import Action from "@/components/react/formsServices/Action"
+import { Action } from "@/components/react/formsServices/PopApps"
 import { validatePassword } from "@/utils/VerificationInput"
 import type { InputsErrors, InputsUse } from "@/types/type"
 import { ValidateInputs } from "@/utils/ValidateInputs"
@@ -51,7 +51,7 @@ function InputsText({
 
     return (
         <div>
-            <label htmlFor={id ?? "username"} className="block text-sm font-medium text-slate-950 dark:text-slate-50">
+            <label htmlFor={id ?? "username"} className="block text-sm font-medium text-slate-900 dark:text-slate-50">
                 {etiqueta ?? "Nombre completo (Obligatorio)"}
             </label>
             <input
@@ -64,7 +64,7 @@ function InputsText({
                 aria-required={required}
                 placeholder={placeH ?? "Nombre y apellido (Ej: Juan Pérez)"}
                 title={title ?? "Introduce tu nombre completo"}
-                className="w-full mb-2 mt-1 bg-input border border-slate-200 rounded px-3 py-2 text-slate-900 placeholder:text-slate-900 dark:placeholder:text-slate-300/90 dark:text-slate-200 bg-black/30"
+                className="w-full mb-2 mt-1 bg-slate-100 dark:bg-black/30 border border-slate-300 dark:border-slate-200 rounded px-3 py-2 text-slate-900 dark:text-slate-200 placeholder:text-slate-500 dark:placeholder:text-slate-300/90"
                 onChange={handleInput}
                 value={valueInput ?? value}
                 pattern={type ? pattern : undefined}
@@ -162,11 +162,11 @@ export default function FormRegister() {
             {/* Información Personal */}
             <div>
                 <fieldset
-                    className=" bg-black/30 border border-orange-400 dark:border-slate-200 rounded p-3 sm:p-6 space-y-4"
+                    className="bg-white dark:bg-black/30 border border-orange-500 dark:border-slate-200 rounded p-3 sm:p-6 space-y-4"
                     aria-labelledby="info-personal-legend"
                 >
                     <legend
-                        className=" font-semibold text-lg px-2 text-black dark:text-orange-500"
+                        className="font-semibold text-lg px-2 text-orange-600 dark:text-orange-500"
                     >
                         Información Personal
                     </legend>
@@ -208,7 +208,7 @@ export default function FormRegister() {
                     />
                     {/* estado civil */}
                     <div>
-                        <label htmlFor="estado_civil" className="block text-sm font-medium text-slate-950 dark:text-slate-50">
+                        <label htmlFor="estado_civil" className="block text-sm font-medium text-slate-900 dark:text-slate-50">
                             Estado civil <span className="sr-only">(Obligatorio)</span>
                         </label>
                         <select
@@ -218,13 +218,13 @@ export default function FormRegister() {
                             autoComplete="off"
                             aria-label="Estado civil"
                             aria-required="true"
-                            className="w-full mt-1 bg-input border border-slate-200 text-texto rounded px-3 py-2 text-slate-900 dark:text-slate-200 bg-black/30"
+                            className="w-full mt-1 bg-slate-100 dark:bg-black/30 border border-slate-300 dark:border-slate-200 rounded px-3 py-2"
                             required
                             defaultValue="Soltero"
                         >
-                            <option className="bg-[#1a1a1a] text-slate-200 font-normal" value="Soltero">Soltero</option>
-                            <option className="bg-[#1a1a1a] text-slate-200 font-normal" value="Casado">Casado</option>
-                            <option className="bg-[#1a1a1a] text-slate-200 font-normal" value="Union libre">Unión libre</option>
+                            <option className="bg-white dark:bg-[#1a1a1a] text-slate-900 dark:text-slate-200 font-normal" value="Soltero">Soltero</option>
+                            <option className="bg-white dark:bg-[#1a1a1a] text-slate-900 dark:text-slate-200 font-normal" value="Casado">Casado</option>
+                            <option className="bg-white dark:bg-[#1a1a1a] text-slate-900 dark:text-slate-200 font-normal" value="Union libre">Unión libre</option>
                         </select>
                     </div>
                     {/* nacionalidad */}
@@ -236,21 +236,21 @@ export default function FormRegister() {
                         title="Indica tu nacionalidad principal"
                         autocomplete="country"
                     >
-                        <p className="text-sm text-slate-900 dark:text-slate-300/90 mt-1">
+                        <p className="text-sm text-slate-700 dark:text-slate-300/90 mt-1">
                             Escribe tu nacionalidad principal, por ejemplo: Colombiana.
                         </p>
                     </InputsText>
                 </fieldset>
             </div>
-            {/* Contacto y residencia */}
+            {/* Contacto y residencia */} 
             <div>
                 <fieldset
-                    className="bg-panel bg-black/30 border border-orange-400 dark:border-slate-200 rounded p-3 sm:p-6 space-y-4"
+                    className="bg-white dark:bg-black/30 border border-orange-500 dark:border-slate-200 rounded p-3 sm:p-6 space-y-4"
                     aria-labelledby="contacto-legend"
                 >
                     <legend
                         id="contacto-legend"
-                        className="text-acento font-semibold me-auto sm:me-0 px-2 text-black dark:text-orange-500"
+                        className="font-semibold text-lg px-2 text-orange-600 dark:text-orange-500"
                     >
                         Contacto y Residencia
                     </legend>
@@ -263,7 +263,7 @@ export default function FormRegister() {
                         title="Ciudad y país donde resides"
                         autocomplete="address-level2"
                     >
-                        <p className="text-sm text-slate-900 dark:text-slate-300/90 mt-1">
+                        <p className="text-sm text-slate-700 dark:text-slate-300/90 mt-1">
                             Indica la ciudad y el país donde resides actualmente.
                         </p>
                     </InputsText>
@@ -275,7 +275,7 @@ export default function FormRegister() {
                         label="Dirección de residencia"
                         title="Introduce tu dirección completa"
                         autocomplete="street-address">
-                        <p className="text-sm text-slate-900 dark:text-slate-300/90 mt-1">
+                        <p className="text-sm text-slate-700 dark:text-slate-300/90 mt-1">
                             Escribe tu dirección completa para facilitar la ubicación.
                         </p>
                     </InputsText>
@@ -290,7 +290,7 @@ export default function FormRegister() {
                         autocomplete="tel"
                         pattern="[0-9+\s\-]{7,20}"
                         required>
-                        <p className="text-sm text-slate-900 dark:text-slate-300/90 mt-1">
+                        <p className="text-sm text-slate-700 dark:text-slate-300/90 mt-1">
                             Ingresa un número de teléfono donde podamos contactarte.
                         </p>
                     </InputsText>
@@ -303,22 +303,22 @@ export default function FormRegister() {
                         title="Introduce un correo electrónico válido"
                         autocomplete="email"
                         required>
-                        <p className="text-sm text-slate-900 dark:text-slate-300/90 mt-1">
+                        <p className="text-sm text-slate-700 dark:text-slate-300/90 mt-1">
                             Escribe un correo electrónico válido para recibir
                             notificaciones.
                         </p>
                     </InputsText>
                 </fieldset>
             </div>
-            {/* Información profesional */}
+            {/* Información profesional */} 
             <div>
                 <fieldset
-                    className="bg-panel bg-black/30 border  dark:border-slate-200 border-orange-500 rounded-md p-3 sm:p-6 space-y-4"
+                    className="bg-white dark:bg-black/30 border border-orange-500 dark:border-slate-200 rounded-md p-3 sm:p-6 space-y-4"
                     aria-labelledby="profesional-legend"
                 >
                     <legend
                         id="profesional-legend"
-                        className="text-acento font-semibold me-auto sm:me-0 px-2 text-black dark:text-orange-500"
+                        className="font-semibold text-lg px-2 text-orange-600 dark:text-orange-500"
                     >
                         Información Profesional
                     </legend>
@@ -330,13 +330,13 @@ export default function FormRegister() {
                         label="Ocupación actual"
                         title="Indica tu ocupación actual"
                         autocomplete="off">
-                        <p className="text-sm text-slate-900 dark:text-slate-300/90 mt-1">
+                        <p className="text-sm text-slate-700 dark:text-slate-300/90 mt-1">
                             Especifica tu ocupación o profesión actual.
                         </p>
                     </InputsText>
-                    {/* educación */}
+                    {/* educación */} 
                     <div>
-                        <label htmlFor="education" className="block text-sm text-slate-950 dark:text-slate-50 font-medium">
+                        <label htmlFor="education" className="block text-sm text-slate-900 dark:text-slate-50 font-medium">
                             Nivel de educación
                         </label>
                         <select
@@ -344,17 +344,17 @@ export default function FormRegister() {
                             name="education"
                             aria-label="Nivel de educación alcanzado"
                             title="Selecciona tu nivel de educación más alto"
-                            className="w-full mt-1 bg-input border border-slate-200 text-texto rounded px-3 py-2 text-slate-900 dark:text-slate-200 bg-black/30"
+                            className="w-full mt-1 bg-slate-100 dark:bg-black/30 border border-slate-300 dark:border-slate-200 text-slate-900 dark:text-slate-200 rounded px-3 py-2"
                             defaultValue="Ninguno"
                         >
-                            <option className="bg-[#1a1a1a] text-slate-200 font-normal" value="Ninguno" >Ninguno</option>
-                            <option className="bg-[#1a1a1a] text-slate-200 font-normal" value="Técnico">Técnico</option>
-                            <option className="bg-[#1a1a1a] text-slate-200 font-normal" value="Bachiller">Bachiller</option>
-                            <option className="bg-[#1a1a1a] text-slate-200 font-normal" value="Tecnólogo">Tecnólogo</option>
-                            <option className="bg-[#1a1a1a] text-slate-200 font-normal" value="Profesional">Profesional</option>
+                            <option className="bg-white dark:bg-[#1a1a1a] text-slate-900 dark:text-slate-200 font-normal" value="Ninguno" >Ninguno</option>
+                            <option className="bg-white dark:bg-[#1a1a1a] text-slate-900 dark:text-slate-200 font-normal" value="Técnico">Técnico</option>
+                            <option className="bg-white dark:bg-[#1a1a1a] text-slate-900 dark:text-slate-200 font-normal" value="Bachiller">Bachiller</option>
+                            <option className="bg-white dark:bg-[#1a1a1a] text-slate-900 dark:text-slate-200 font-normal" value="Tecnólogo">Tecnólogo</option>
+                            <option className="bg-white dark:bg-[#1a1a1a] text-slate-900 dark:text-slate-200 font-normal" value="Profesional">Profesional</option>
                         </select>
                     </div>
-                    {/* Idiomas */}
+                    {/* Idiomas */} 
                     <InputsText
                         etiqueta="Idiomas"
                         id="idiomas"
@@ -363,7 +363,7 @@ export default function FormRegister() {
                         title="Indica los idiomas que hablas"
                         autocomplete="off"
                     >
-                        <p className="text-sm text-slate-900 dark:text-slate-300/90 mt-1">
+                        <p className="text-sm text-slate-700 dark:text-slate-300/90 mt-1">
                             Menciona los idiomas que hablas, separados por comas.
                         </p>
                     </InputsText>

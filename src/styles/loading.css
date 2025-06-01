@@ -63,3 +63,16 @@ ul {
         content: "Loading...";
     }
 }
+
+@media (prefers-color-scheme:light) {
+
+    .loader,
+    .child {
+        background-color: black;
+    }
+
+    .text::before {
+        content: "Loading";
+        color: black;
+    }
+}
