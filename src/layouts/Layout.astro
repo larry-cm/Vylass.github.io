@@ -34,7 +34,10 @@ const { title } = Astro.props;
 		class="bg-slate-100 dark:bg-neutral-900 text-slate-900 dark:text-white"
 	>
 		<Header />
-		<main id="main" class="p-2 sm:py-8 sm:p-8 mx-auto relative">
+		<main
+			id="main"
+			class="p-2 sm:p-8 mx-auto relative h-[90vh] overflow-auto scroll-smooth"
+		>
 			<slot />
 		</main>
 	</body>

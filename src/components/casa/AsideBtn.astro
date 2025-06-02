@@ -2,7 +2,7 @@
 interface Props {
     text: string;
     id: string;
-    to: string;
+    to?: string;
     button?: boolean;
 }
 const { text, id, to, button } = Astro.props;
@@ -16,7 +16,7 @@ const { text, id, to, button } = Astro.props;
                 data-popover-placement="right"
                 data-popover-target={id ?? "popover-1"}
                 class:list={[
-                    "group flex items-center px-1 sm:px-3 py-2 text-slate-900 dark:text-slate-50 transition-colors duration-300 transform rounded  hover:text-white  dark:hover:text-black",
+                    `${to} flex items-center justify-center px-1 sm:px-3 py-2 text-slate-900 dark:text-slate-50 transition-colors duration-300 transform rounded hover:text-white cursor-pointer dark:hover:text-black`,
                     {
                         "hover:bg-orange-500 dark:hover:bg-orange-400":
                             id !== "pop-user",
@@ -46,7 +46,7 @@ const { text, id, to, button } = Astro.props;
                 data-popover-placement="right"
                 data-popover-target={id ?? "popover-1"}
                 class:list={[
-                    "group flex items-center px-1 sm:px-3 py-2 text-slate-900 dark:text-slate-50 transition-colors duration-300 transform rounded  hover:text-white  dark:hover:text-black",
+                    "flex items-center px-1 sm:px-3 py-2 text-slate-900 dark:text-slate-50 transition-colors duration-300 transform rounded hover:text-white dark:hover:text-black",
                     {
                         "hover:bg-orange-500 dark:hover:bg-orange-400":
                             id !== "pop-user",
@@ -73,13 +73,13 @@ const { text, id, to, button } = Astro.props;
             </a>
         )
     }
-    <p
+    <div
         data-popover
         role="tooltip"
         id={id ?? "popover-1"}
-        class="bg-white dark:bg-[#1a1a1a] sm:translate-x-2.5 text-nowrap z-20 rounded border border-slate-300 px-4 py-2 invisible absolute text-slate-900 dark:text-slate-50"
+        class="bg-white dark:bg-[#1a1a1a] sm:translate-x-2.5 text-nowrap rounded border border-slate-300 px-4 py-2 invisible absolute text-slate-900 dark:text-slate-50"
     >
         {text ?? "General"}
-        <div data-popper-arrow class="dark:bg-[#1a1a1a]"></div>
-    </p>
+        <div data-popper-arrow></div>
+    </div>
 </section>

@@ -59,7 +59,20 @@ const { userSession, userName, userImg, entrada } = Astro.props;
             </>
         ) : (
             entrada.map(({ url, text }) => (
-                <li class="px-5 py-2 mx-1 rounded border font-medium shadow-sm transition-all cursor-pointer bg-[#1a1a1a] hover:bg-slate-white border-slate-200 hover:bg-white text-white hover:border-slate-900 hover:text-slate-900">
+                <li
+                    class:list={[
+                        "border border-slate-200 rounded px-3 py-2 focus:outline-none focus:ring transition-all",
+
+                        {
+                            "bg-white dark:bg-[#1a1a1a] text-orange-600 dark:text-orange-400 hover:shadow-md  focus:ring-orange-300 dark:focus:ring-orange-500":
+                                url === "/",
+                        },
+                        {
+                            "bg-white/20 text-white backdrop-blur-sm hover:bg-white/30 focus:ring-white/50":
+                                url !== "/",
+                        },
+                    ]}
+                >
                     <a href={url} class="block w-full h-full font-medium">
                         {text}
                     </a>
