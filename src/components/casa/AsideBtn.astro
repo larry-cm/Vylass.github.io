@@ -22,6 +22,8 @@ const { text, id, to, button } = Astro.props;
                             id !== "pop-user",
                     },
                 ]}
+                aria-label={text ? `Ir a ${text}` : "Ir a sección"}
+                aria-labelledby={id ?? "popover-1"}
             >
                 <slot name="svg">
                     <svg
@@ -33,6 +35,9 @@ const { text, id, to, button } = Astro.props;
                         stroke-linecap="round"
                         stroke-linejoin="round"
                     >
+                        <title>
+                            {text ? `Icono de ${text}` : "Icono para el aside"}
+                        </title>
                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                         <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
                         <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
@@ -53,6 +58,8 @@ const { text, id, to, button } = Astro.props;
                     },
                 ]}
                 href={`#${to ?? "main"}`}
+                aria-label={text ? `Ir a ${text}` : "Ir a sección"}
+                aria-labelledby={id ?? "popover-1"}
             >
                 <slot name="svg">
                     <svg
@@ -64,6 +71,9 @@ const { text, id, to, button } = Astro.props;
                         stroke-linecap="round"
                         stroke-linejoin="round"
                     >
+                        <title>
+                            {text ? `Icono de ${text}` : "Icono para el aside"}
+                        </title>
                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                         <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
                         <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />

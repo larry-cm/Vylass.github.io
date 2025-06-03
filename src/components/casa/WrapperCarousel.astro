@@ -10,7 +10,7 @@ const { linkCursos = ["no-url"] } = Astro.props;
     class AstroCardElement extends HTMLElement {
         connectedCallback() {
             function handleOpenDialog(event: MouseEvent) {
-                const dialogCurrent = (event.currentTarget as HTMLElement)
+                const dialogCurrent = (event.currentTarget as HTMLImageElement)
                     .previousElementSibling as HTMLDialogElement;
 
                 if (!dialogCurrent?.hasAttribute("open")) {
@@ -49,20 +49,25 @@ const { linkCursos = ["no-url"] } = Astro.props;
                 const dialogCurrent =
                     imgCurrent?.previousElementSibling as HTMLDialogElement;
 
-                // const dialogC =
-                //     imgCurrent?.previousElementSibling as HTMLDialogElement;
-                // dialogC.querySelector("");
-                dialogCurrent?.addEventListener("keydown", (event) => {
-                    event.preventDefault();
-                    const key = event.code;
-                    if (key === "Backspace" || key === "Escape")
-                        handleCloseDialog(event);
-                });
-                dialogCurrent?.addEventListener("click", (e) =>
-                    handleCloseDialog(e),
+                dialogCurrent?.addEventListener(
+                    "keydown",
+                    (event) => {
+                        event.preventDefault();
+                        const key = event.code;
+                        if (key === "Backspace" || key === "Escape")
+                            handleCloseDialog(event);
+                    },
+                    { once: true },
                 );
-                imgCurrent?.addEventListener("click", (e) =>
-                    handleOpenDialog(e),
+                dialogCurrent?.addEventListener(
+                    "click",
+                    (e) => handleCloseDialog(e),
+                    { once: true },
+                );
+                imgCurrent?.addEventListener(
+                    "click",
+                    (e) => handleOpenDialog(e),
+                    { once: true },
                 );
             });
         }
@@ -72,13 +77,13 @@ const { linkCursos = ["no-url"] } = Astro.props;
 
 <card-element data-cursos={linkCursos}>
     <div
-        class="relative h-56 overflow-hidden md:h-80 bg-black/20 rounded border border-slate-200"
+        class="relative h-56 overflow-hidden md:h-80 bg-black/20 rounded border border-slate-200 transition duration-200"
     >
         {/* Items */}
         {
             linkCursos?.map((idLink, index) => (
                 <div
-                    class="hidden duration-300 ease-in-out "
+                    class="hidden duration-200 ease-in-out absolute size-full -translate-x-[100%]"
                     data-carousel-item={!index ? "active" : "any"}
                 >
                     <dialog
@@ -101,7 +106,7 @@ const { linkCursos = ["no-url"] } = Astro.props;
                         height={100}
                         id={`imgModal_${idLink}`}
                         src="logo.svg"
-                        class="absolute bg-orange-100 dark:bg-black/30 block object-contain size-full p-12 sm:p-16 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                        class="bg-orange-100 dark:bg-black/30 block object-contain size-full"
                         alt={idLink}
                         title={idLink}
                     />

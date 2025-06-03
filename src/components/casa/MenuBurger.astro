@@ -15,17 +15,73 @@ interface Props {
 const { userSession, userName, userImg, entrada } = Astro.props;
 ---
 
+<script>
+    function setupCloseBurger() {
+        function getElements() {
+            return {
+                burger: document.getElementById(
+                    "btn-burger",
+                ) as HTMLInputElement,
+                menu: document.querySelector("menu") as HTMLMenuElement,
+                label: document.querySelector(
+                    'label[for="btn-burger"]',
+                ) as HTMLLabelElement,
+            };
+        }
+
+        function closeBurger(event: Event) {
+            const { burger, menu, label } = getElements();
+
+            if (
+                burger &&
+                burger.checked &&
+                menu &&
+                !menu.contains(event.target as Node) &&
+                event.target !== burger &&
+                !(label && label.contains(event.target as Node))
+            ) {
+                burger.checked = false;
+            }
+        }
+
+        function maybeAddClickListener() {
+            const { burger } = getElements();
+            let clickListenerAdded = false;
+
+            if (!burger) return;
+
+            if (burger.checked && !clickListenerAdded) {
+                document.addEventListener("click", closeBurger);
+                clickListenerAdded = true;
+            } else if (!burger.checked && clickListenerAdded) {
+                document.removeEventListener("click", closeBurger);
+                clickListenerAdded = false;
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const { burger } = getElements();
+            burger?.addEventListener("change", maybeAddClickListener, {
+                once: true,
+            });
+        });
+    }
+    setupCloseBurger();
+</script>
+
 <input type="checkbox" id="btn-burger" class="peer hidden" />
 <label class="cursor-pointer peer-checked:*:*:-rotate-180" for="btn-burger">
     <span class="sr-only">Menu de hamburguesa para los celulares</span>
     <span class="md:hidden">
         <svg
-            class="transition-transform duration-300"
+            stroke-width="1.5"
+            class="transition-transform duration-300 size-8"
             width="30"
             height="30"
             viewBox="0 0 24 24"
             fill="currentColor"
         >
+            <title>Menu de hamburguesa para los celulares</title>
             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
             <path
                 d="M18 3a3 3 0 0 1 2.995 2.824l.005 .176v12a3 3 0 0 1 -2.824 2.995l-.176 .005h-12a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-12a3 3 0 0 1 2.824 -2.995l.176 -.005h12zm0 2h-12a1 1 0 0 0 -.993 .883l-.007 .117v9h14v-9a1 1 0 0 0 -.883 -.993l-.117 -.007zm-7.387 3.21l.094 .083l1.293 1.292l1.293 -1.292a1 1 0 0 1 1.32 -.083l.094 .083a1 1 0 0 1 .083 1.32l-.083 .094l-2 2a1 1 0 0 1 -1.32 .083l-.094 -.083l-2 -2a1 1 0 0 1 1.32 -1.497z"
@@ -35,18 +91,15 @@ const { userSession, userName, userImg, entrada } = Astro.props;
 </label>
 
 <menu
-    class={`fixed z-40 top-[10vh] left-0 right-0 w-full mx-auto max-w-full transition-all duration-300 ease-in-out
+    class={`fixed z-40 top-[10vh] left-0 right-0 w-full mx-auto max-w-full transition-all duration-200 ease-in-out
         bg-orange-500 rounded-b
         opacity-0 -translate-y-[10vh] scale-y-95 pointer-events-none
         peer-checked:opacity-100 peer-checked:scale-y-100 peer-checked:pointer-events-auto peer-checked:translate-y-0
-        flex flex-wrap items-center gap-4 p-4
-        ${userSession === "true" ? "justify-between" : "justify-start"}
+        flex flex-wrap items-center gap-4 p-2
+        ${userSession === "true" ? "justify-betweens" : "justify-start"}
         md:hidden
     `}
 >
-    <!-- <label for="btn-burger" class="absolute right-4 top-4 text-5xl"
-        >&times;</label
-    > -->
     {
         userSession === "true" ? (
             <>
@@ -54,16 +107,16 @@ const { userSession, userName, userImg, entrada } = Astro.props;
                     <div slot="before">
                         <Image
                             loading="eager"
-                            height="32"
-                            width="32"
-                            class="rounded-full"
+                            height="30"
+                            width="30"
+                            class="rounded-full size-6"
                             src={userImg}
                             title="imagen de perfil del usuario del menu hamburguesa"
                             alt="imagen de perfil del usuario del menu hamburguesa"
                         />
                     </div>
                 </BtnPerfil>
-                <li class="group bg-black px-3 py-2 rounded flex items-center cursor-pointer cerrar-session transition-all">
+                <li class="updateDetails group bg-black border border-slate-200 px-3 py-2 rounded flex items-center cursor-pointer  transition-all">
                     <button
                         class="flex items-center gap-1 text-white group-hover:text-red-500 font-medium relative transition-colors focus:outline-none"
                         style="outline: none;"
@@ -76,13 +129,20 @@ const { userSession, userName, userImg, entrada } = Astro.props;
                             stroke="currentColor"
                             class="w-5 h-5 transition-transform group-hover:-translate-x-0.5 group-hover:text-red-500"
                         >
+                            <title>
+                                Boton para el cierre de sesión rápido de la
+                                pagina
+                            </title>
                             <path
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
                                 d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
                             />
                         </svg>
-                        <span slot="before" class="relative transition-colors">
+                        <span
+                            slot="before"
+                            class="transition-colors cursor-pointer"
+                        >
                             Cerrar sesión
                         </span>
                     </button>
@@ -114,28 +174,19 @@ const { userSession, userName, userImg, entrada } = Astro.props;
             ))
         )
     }
+    <button
+        class="py-2 px-3 bg-black text-white border border-slate-200 rounded"
+        type="button"
+    >
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" class="size-5">
+            <title>Boton para el cambio de tema de la pagina</title>
+            <path
+                d="m12 3c-3.585 0-6.5 2.9225-6.5 6.5385 0 2.2826 1.162 4.2913 2.9248 5.4615h7.1504c1.7628-1.1702 2.9248-3.1789 2.9248-5.4615 0-3.6159-2.915-6.5385-6.5-6.5385zm2.8653 14h-5.7306v1h5.7306v-1zm-1.1329 3h-3.4648c0.3458 0.5978 0.9921 1 1.7324 1s1.3866-0.4022 1.7324-1zm-5.6064 0c0.44403 1.7252 2.0101 3 3.874 3s3.43-1.2748 3.874-3c0.5483-0.0047 0.9913-0.4506 0.9913-1v-2.4593c2.1969-1.5431 3.6347-4.1045 3.6347-7.0022 0-4.7108-3.8008-8.5385-8.5-8.5385-4.6992 0-8.5 3.8276-8.5 8.5385 0 2.8977 1.4378 5.4591 3.6347 7.0022v2.4593c0 0.5494 0.44301 0.9953 0.99128 1z"
+                clip-rule="evenodd"
+                fill="currentColor"
+                fill-rule="evenodd"
+            >
+            </path>
+        </svg>
+    </button>
 </menu>
-<script is:inline>
-    function getElements() {
-        return {
-            burger: document.getElementById("btn-burger"),
-            menu: document.querySelector("menu"),
-            m: document.getElementById("main"),
-            label: document.querySelector('label[for="btn-burger"]'),
-        };
-    }
-
-    document?.addEventListener("click", (event) => {
-        const { burger, menu, label, m } = getElements();
-
-        if (
-            burger &&
-            burger.checked &&
-            menu &&
-            !menu.contains(event.target) &&
-            event.target !== burger &&
-            !(label && label.contains(event.target))
-        )
-            burger.checked = false;
-    });
-</script>
