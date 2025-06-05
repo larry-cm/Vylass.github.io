@@ -1,8 +1,4 @@
 @import "tailwindcss";
-@import "flowbite/src/themes/default";
-
-@plugin "flowbite/plugin";
-@source "@bd/node_modules/flowbite";
 
 @config '@bd/tailwind.config.js';
 
@@ -61,8 +57,6 @@
         background-color: #1a1a1a;
         opacity: .7;
     }
-
-    
 }
 
 @layer utilities{
@@ -105,3 +99,6 @@
 }
 
 
+/* .parent:has(.tooltip:hover) {
+    opacity: 1;
+} */

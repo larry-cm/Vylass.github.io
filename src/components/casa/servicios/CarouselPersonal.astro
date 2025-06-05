@@ -1,13 +1,16 @@
 ---
-import { Image } from "astro:assets";
 interface Props {
-    linkCursos: string[];
+    cursosIdLinks?: string[];
 }
-const { linkCursos = ["no-url"] } = Astro.props;
+const { cursosIdLinks } = Astro.props;
+const cursos = ["7iobxzd_2wY", "qkzcjwnueLA", "nr2WVkriE4g", "Nngm8C5XCOs"];
+const cursosUtils = cursos?.every((e, i, m) => e !== m[i + 1])
+    ? cursos
+    : cursosIdLinks || [""];
 ---
 
 <script>
-    class AstroCardElement extends HTMLElement {
+    class DialogCustom extends HTMLElement {
         connectedCallback() {
             function handleOpenDialog(event: MouseEvent) {
                 const dialogCurrent = (event.currentTarget as HTMLImageElement)
@@ -42,6 +45,8 @@ const { linkCursos = ["no-url"] } = Astro.props;
             }
 
             const cursos = this.dataset.cursos?.split(",");
+            console.log(cursos);
+
             cursos?.forEach((idLink) => {
                 const imgCurrent = document.getElementById(
                     `imgModal_${idLink}`,
@@ -49,43 +54,31 @@ const { linkCursos = ["no-url"] } = Astro.props;
                 const dialogCurrent =
                     imgCurrent?.previousElementSibling as HTMLDialogElement;
 
-                dialogCurrent?.addEventListener(
-                    "keydown",
-                    (event) => {
-                        event.preventDefault();
-                        const key = event.code;
-                        if (key === "Backspace" || key === "Escape")
-                            handleCloseDialog(event);
-                    },
-                    { once: true },
+                dialogCurrent?.addEventListener("keydown", (event) => {
+                    event.preventDefault();
+                    const key = event.code;
+                    if (key === "Backspace" || key === "Escape")
+                        handleCloseDialog(event);
+                });
+                dialogCurrent?.addEventListener("click", (e) =>
+                    handleCloseDialog(e),
                 );
-                dialogCurrent?.addEventListener(
-                    "click",
-                    (e) => handleCloseDialog(e),
-                    { once: true },
-                );
-                imgCurrent?.addEventListener(
-                    "click",
-                    (e) => handleOpenDialog(e),
-                    { once: true },
+                imgCurrent?.addEventListener("click", (e) =>
+                    handleOpenDialog(e),
                 );
             });
         }
     }
-    customElements.define("card-element", AstroCardElement);
+    customElements.define("dialog-element", DialogCustom);
 </script>
 
-<card-element data-cursos={linkCursos}>
+<dialog-element data-cursos={cursosUtils}>
     <div
-        class="relative h-56 overflow-hidden md:h-80 bg-black/20 rounded border border-slate-200 transition duration-200"
+        class="relative h-56 flex gap-4 overflow-hidden md:h-80 bg-black/20 rounded border border-slate-200"
     >
-        {/* Items */}
         {
-            linkCursos?.map((idLink, index) => (
-                <div
-                    class="hidden duration-200 ease-in-out absolute size-full -translate-x-[100%]"
-                    data-carousel-item={!index ? "active" : "any"}
-                >
+            cursosUtils?.map((idLink) => (
+                <div class="block size-full bg-orange-300 p-1 rounded">
                     <dialog
                         class={`m-auto w-2xl aspect-video duration-200 transition-all opacity-0 scale-0`}
                         id={`dialogModal_${idLink}`}
@@ -100,18 +93,36 @@ const { linkCursos = ["no-url"] } = Astro.props;
                             allowfullscreen
                         />
                     </dialog>
-                    <Image
-                        loading="eager"
-                        width={100}
-                        height={100}
+                    {/* <Image
+                                loading="eager"
+                                width={100}
+                                height={100}
+                                id={`imgModal_${idLink}`}
+                                src="logo.svg"
+                                class="bg-orange-100 dark:bg-black/30 block object-contain aspect-video size-full"
+                                alt={idLink}
+                                title={idLink}
+                            /> */}
+
+                    <div
                         id={`imgModal_${idLink}`}
-                        src="logo.svg"
-                        class="bg-orange-100 dark:bg-black/30 block object-contain size-full"
-                        alt={idLink}
-                        title={idLink}
-                    />
+                        role="status"
+                        class="flex items-center justify-center size-full bg-gray-300 rounded-lg animate-pulse dark:bg-gray-700 p-8"
+                    >
+                        <svg
+                            class="w-10 h-10 text-gray-200 dark:text-gray-600"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="currentColor"
+                            viewBox="0 0 16 20"
+                        >
+                            <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.98 2.98 0 0 0 .13 5H5Z" />
+                            <path d="M14.066 0H7v5a2 2 0 0 1-2 2H0v11a1.97 1.97 0 0 0 1.934 2h12.132A1.97 1.97 0 0 0 16 18V2a1.97 1.97 0 0 0-1.934-2ZM9 13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2Zm4 .382a1 1 0 0 1-1.447.894L10 13v-2l1.553-1.276a1 1 0 0 1 1.447.894v2.764Z" />
+                        </svg>
+                        <span class="sr-only">Loading...</span>
+                    </div>
                 </div>
             ))
         }
     </div>
-</card-element>
+</dialog-element>

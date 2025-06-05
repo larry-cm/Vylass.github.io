@@ -1,0 +1,21 @@
+---
+interface Props {
+    heading: string;
+    id: string | number;
+}
+const { heading, id } = Astro.props;
+---
+
+<article
+    id={`${id}` || "info-user"}
+    class="h-fit w-auto p-8 m-4 sm:m-8 bg-white dark:bg-black/30 border border-slate-300 dark:border-slate-200 rounded"
+>
+    <header class="">
+        <h2
+            class="text-3xl sm:text-4xl text-center font-bold pb-4 lg:pb-8 mx-auto w-fit"
+        >
+            {heading || " Datos Personales"}
+        </h2>
+    </header>
+    <slot />
+</article>

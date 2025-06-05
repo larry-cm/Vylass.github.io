@@ -7,36 +7,6 @@ interface Props {
 const { title } = Astro.props;
 ---
 
-<script>
-	function setupTheme() {
-		function toggleDarkMode() {
-			const html = document.documentElement;
-			const isDark = html.classList.contains("dark");
-			html.classList.toggle("dark");
-			localStorage.setItem("theme", isDark ? "light" : "dark");
-		}
-
-		window.addEventListener("DOMContentLoaded", function () {
-			const isDarkMode = window.matchMedia(
-				"prefers-color-scheme: dark",
-			).matches;
-			const savedMode = localStorage.getItem("theme");
-			if (savedMode === "dark" || (!savedMode && isDarkMode)) {
-				document.documentElement.classList.add("dark");
-			}
-		});
-
-		Array.from(document.getElementsByClassName("btn-theme")).forEach(
-			(btnTheme) => {
-				btnTheme.addEventListener("click", toggleDarkMode, {
-					once: true,
-				});
-			},
-		);
-	}
-	setupTheme();
-</script>
-
 <html lang="es">
 	<head>
 		<meta charset="UTF-8" />
@@ -51,11 +21,6 @@ const { title } = Astro.props;
 		/>
 
 		<ClientRouter />
-		<!-- <script is:inline src="../../tailwind.config.js"></script> -->
-		<script
-			is:inline
-			src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"
-		></script>
 	</head>
 	<body
 		id="home"
@@ -64,7 +29,7 @@ const { title } = Astro.props;
 		<Header />
 		<main
 			id="main"
-			class="p-2 sm:p-8 mx-auto relative h-[90vh] transition-all"
+			class="p-2 sm:p-8 mx-auto relative h-[90vh] transition-all overflow-auto"
 		>
 			<slot />
 		</main>
