@@ -1,0 +1,13 @@
+---
+import { Button } from "@material-tailwind/react";
+interface Props {
+  subClass?: string;
+}
+const { subClass } = Astro.props;
+---
+
+<Button
+  className={`${subClass || ""} ${!subClass?.match("hover:bg-transparent") && "hover:bg-orange-300/40"} px-3 flex items-center justify-center gap-2 py-2 max-h-[42px] bg-transparent text-white border-none font-semibold rounded cursor-pointer  transition-colors ease-in-out duration-300`}
+>
+  <slot />
+</Button>

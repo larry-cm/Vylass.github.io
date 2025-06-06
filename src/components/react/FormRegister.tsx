@@ -64,7 +64,7 @@ function InputsText({
                 aria-required={required}
                 placeholder={placeH ?? "Nombre y apellido (Ej: Juan Pérez)"}
                 title={title ?? "Introduce tu nombre completo"}
-                className="w-full mb-2 mt-1 bg-slate-100 dark:bg-black/30 border border-slate-300 dark:border-slate-200 rounded px-3 py-2 text-slate-900 dark:text-slate-200 placeholder:text-slate-500 dark:placeholder:text-slate-300/90"
+                className="w-full px-3 py-2 mt-1 mb-2 border rounded bg-slate-100 dark:bg-black/30 border-slate-300 dark:border-slate-200 text-slate-900 dark:text-slate-200 placeholder:text-slate-500 dark:placeholder:text-slate-300/90"
                 onChange={handleInput}
                 value={valueInput ?? value}
                 pattern={type ? pattern : undefined}
@@ -162,11 +162,11 @@ export default function FormRegister() {
             {/* Información Personal */}
             <div>
                 <fieldset
-                    className="bg-white dark:bg-black/30 border border-orange-500 dark:border-slate-200 rounded p-3 sm:p-6 space-y-4"
+                    className="p-3 space-y-4 bg-white border border-orange-500 rounded dark:bg-black/30 dark:border-slate-200 sm:p-6"
                     aria-labelledby="info-personal-legend"
                 >
                     <legend
-                        className="font-semibold text-lg px-2 text-orange-600 dark:text-orange-500"
+                        className="px-2 text-lg font-semibold text-orange-600 dark:text-orange-500"
                     >
                         Información Personal
                     </legend>
@@ -218,7 +218,7 @@ export default function FormRegister() {
                             autoComplete="off"
                             aria-label="Estado civil"
                             aria-required="true"
-                            className="w-full mt-1 bg-slate-100 dark:bg-black/30 border border-slate-300 dark:border-slate-200 rounded px-3 py-2"
+                            className="w-full px-3 py-2 mt-1 border rounded bg-slate-100 dark:bg-black/30 border-slate-300 dark:border-slate-200"
                             required
                             defaultValue="Soltero"
                         >
@@ -236,21 +236,21 @@ export default function FormRegister() {
                         title="Indica tu nacionalidad principal"
                         autocomplete="country"
                     >
-                        <p className="text-sm text-slate-700 dark:text-slate-300/90 mt-1">
+                        <p className="mt-1 text-sm text-slate-700 dark:text-slate-300/90">
                             Escribe tu nacionalidad principal, por ejemplo: Colombiana.
                         </p>
                     </InputsText>
                 </fieldset>
             </div>
-            {/* Contacto y residencia */} 
+            {/* Contacto y residencia */}
             <div>
                 <fieldset
-                    className="bg-white dark:bg-black/30 border border-orange-500 dark:border-slate-200 rounded p-3 sm:p-6 space-y-4"
+                    className="p-3 space-y-4 bg-white border border-orange-500 rounded dark:bg-black/30 dark:border-slate-200 sm:p-6"
                     aria-labelledby="contacto-legend"
                 >
                     <legend
                         id="contacto-legend"
-                        className="font-semibold text-lg px-2 text-orange-600 dark:text-orange-500"
+                        className="px-2 text-lg font-semibold text-orange-600 dark:text-orange-500"
                     >
                         Contacto y Residencia
                     </legend>
@@ -263,7 +263,7 @@ export default function FormRegister() {
                         title="Ciudad y país donde resides"
                         autocomplete="address-level2"
                     >
-                        <p className="text-sm text-slate-700 dark:text-slate-300/90 mt-1">
+                        <p className="mt-1 text-sm text-slate-700 dark:text-slate-300/90">
                             Indica la ciudad y el país donde resides actualmente.
                         </p>
                     </InputsText>
@@ -275,7 +275,7 @@ export default function FormRegister() {
                         label="Dirección de residencia"
                         title="Introduce tu dirección completa"
                         autocomplete="street-address">
-                        <p className="text-sm text-slate-700 dark:text-slate-300/90 mt-1">
+                        <p className="mt-1 text-sm text-slate-700 dark:text-slate-300/90">
                             Escribe tu dirección completa para facilitar la ubicación.
                         </p>
                     </InputsText>
@@ -290,7 +290,7 @@ export default function FormRegister() {
                         autocomplete="tel"
                         pattern="[0-9+\s\-]{7,20}"
                         required>
-                        <p className="text-sm text-slate-700 dark:text-slate-300/90 mt-1">
+                        <p className="mt-1 text-sm text-slate-700 dark:text-slate-300/90">
                             Ingresa un número de teléfono donde podamos contactarte.
                         </p>
                     </InputsText>
@@ -303,22 +303,22 @@ export default function FormRegister() {
                         title="Introduce un correo electrónico válido"
                         autocomplete="email"
                         required>
-                        <p className="text-sm text-slate-700 dark:text-slate-300/90 mt-1">
+                        <p className="mt-1 text-sm text-slate-700 dark:text-slate-300/90">
                             Escribe un correo electrónico válido para recibir
                             notificaciones.
                         </p>
                     </InputsText>
                 </fieldset>
             </div>
-            {/* Información profesional */} 
+            {/* Información profesional */}
             <div>
                 <fieldset
-                    className="bg-white dark:bg-black/30 border border-orange-500 dark:border-slate-200 rounded-md p-3 sm:p-6 space-y-4"
+                    className="p-3 space-y-4 bg-white border border-orange-500 rounded-md dark:bg-black/30 dark:border-slate-200 sm:p-6"
                     aria-labelledby="profesional-legend"
                 >
                     <legend
                         id="profesional-legend"
-                        className="font-semibold text-lg px-2 text-orange-600 dark:text-orange-500"
+                        className="px-2 text-lg font-semibold text-orange-600 dark:text-orange-500"
                     >
                         Información Profesional
                     </legend>
@@ -330,13 +330,13 @@ export default function FormRegister() {
                         label="Ocupación actual"
                         title="Indica tu ocupación actual"
                         autocomplete="off">
-                        <p className="text-sm text-slate-700 dark:text-slate-300/90 mt-1">
+                        <p className="mt-1 text-sm text-slate-700 dark:text-slate-300/90">
                             Especifica tu ocupación o profesión actual.
                         </p>
                     </InputsText>
-                    {/* educación */} 
+                    {/* educación */}
                     <div>
-                        <label htmlFor="education" className="block text-sm text-slate-900 dark:text-slate-50 font-medium">
+                        <label htmlFor="education" className="block text-sm font-medium text-slate-900 dark:text-slate-50">
                             Nivel de educación
                         </label>
                         <select
@@ -344,7 +344,7 @@ export default function FormRegister() {
                             name="education"
                             aria-label="Nivel de educación alcanzado"
                             title="Selecciona tu nivel de educación más alto"
-                            className="w-full mt-1 bg-slate-100 dark:bg-black/30 border border-slate-300 dark:border-slate-200 text-slate-900 dark:text-slate-200 rounded px-3 py-2"
+                            className="w-full px-3 py-2 mt-1 border rounded bg-slate-100 dark:bg-black/30 border-slate-300 dark:border-slate-200 text-slate-900 dark:text-slate-200"
                             defaultValue="Ninguno"
                         >
                             <option className="bg-white dark:bg-[#1a1a1a] text-slate-900 dark:text-slate-200 font-normal" value="Ninguno" >Ninguno</option>
@@ -354,7 +354,7 @@ export default function FormRegister() {
                             <option className="bg-white dark:bg-[#1a1a1a] text-slate-900 dark:text-slate-200 font-normal" value="Profesional">Profesional</option>
                         </select>
                     </div>
-                    {/* Idiomas */} 
+                    {/* Idiomas */}
                     <InputsText
                         etiqueta="Idiomas"
                         id="idiomas"
@@ -363,7 +363,7 @@ export default function FormRegister() {
                         title="Indica los idiomas que hablas"
                         autocomplete="off"
                     >
-                        <p className="text-sm text-slate-700 dark:text-slate-300/90 mt-1">
+                        <p className="mt-1 text-sm text-slate-700 dark:text-slate-300/90">
                             Menciona los idiomas que hablas, separados por comas.
                         </p>
                     </InputsText>

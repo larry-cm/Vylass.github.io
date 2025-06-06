@@ -1,8 +1,19 @@
 ---
 import Image from "astro/components/Image.astro";
-import Carousel from "@components/casa/Carousel.astro";
-import DialogCierre from "./DialogCierre.astro";
-import AsideBtn from "./AsideBtn.astro";
+import Articulo from "./secciones/Articulo.astro";
+import CarouselPersonal from "@components/casa/servicios/CarouselPersonal.astro";
+import { MenuAside } from "@/components/casa/MenuAside";
+import { Button } from "@material-tailwind/react";
+import IconBtn from "@components/casa/Btns/IconBtn.astro";
+import { MediaImageList, MediaImagePlus } from "iconoir-react";
+import {
+    IconTwitter,
+    IconGitHub,
+    IconOther,
+    IconFacebook,
+    IconInstagram,
+} from "../../assets/Icons";
+
 interface Props {
     userNameComplete: string;
     userName: string;
@@ -15,6 +26,7 @@ interface Props {
     urlLinkedIn: string;
     numeroCelular: string;
     linkCursos: string[];
+    urlCuentas?: string;
 }
 const {
     userNameComplete,
@@ -32,736 +44,278 @@ const {
 ---
 
 <script>
-    function setupDialog() {
-        // Selecciona todos los botones con la clase updateDetails
-        const updateButtons = Array.from(
-            document.querySelectorAll(".updateDetails"),
-        );
-        const cancelButtons = Array.from(document.querySelectorAll(".cancel"));
-        const favDialogs = Array.from(document.querySelectorAll(".favDialog"));
-
-        // Asocia el evento a cada botón updateDetails
-        updateButtons.forEach((btn) => {
-            btn.addEventListener("click", function (e) {
-                // Busca el dialog más cercano al botón (en el DOM)
-                const dialog =
-                    (btn
-                        .closest("menu")
-                        ?.querySelector(".favDialog") as HTMLDialogElement) ||
-                    (btn
-                        .closest("nav")
-                        ?.querySelector(".favDialog") as HTMLDialogElement) ||
-                    (favDialogs[0] as HTMLDialogElement); // fallback por si acaso
-
-                if (dialog && typeof dialog.showModal === "function") {
-                    dialog.showModal();
-                }
-            });
-        });
-
-        // Asocia el evento a cada botón cancelar
-        cancelButtons.forEach((cancelBtn) => {
-            cancelBtn.addEventListener("click", function (e) {
-                const dialog = cancelBtn.closest(
-                    ".favDialog",
-                ) as HTMLDialogElement;
-                if (dialog && typeof dialog.close === "function") {
-                    dialog.close();
-                }
-            });
-        });
-    }
-
-    setupDialog();
-</script>
-
-<script>
-    function setupTheme() {
-        function themeSelected(view: string) {
-            const html = document.documentElement;
-
-            if (view === "dark") html.classList.add("dark");
-            else if (view === "system")
-                html.classList.toggle(
-                    "dark",
-                    window.matchMedia("(prefers-color-scheme: dark)").matches,
-                );
-            else html.classList.remove("dark");
+    function mostrarImagen(event: Event) {
+        const archivo = (event.target as HTMLInputElement).files?.[0];
+        if (archivo) {
+            const url = URL.createObjectURL(archivo);
+            const img = document.getElementById(
+                "imagenSeleccionada",
+            ) as HTMLImageElement;
+            img.src = url;
+            document.getElementById("preview")?.classList.remove("hidden");
         }
-
-        document
-            .getElementById("tema-sistema")
-            ?.addEventListener("change", function (event) {
-                const value = (event.target as HTMLSelectElement).value;
-
-                themeSelected(value);
-                localStorage.setItem("theme", value);
-            });
-
-        window.addEventListener(
-            "DOMContentLoaded",
-            function () {
-                let select = document.getElementById(
-                    "tema-sistema",
-                ) as HTMLSelectElement;
-
-                const theme = localStorage.getItem("theme") || "";
-                if (select) select.value = theme === "" ? "light" : theme;
-                themeSelected(theme);
-            },
-            { once: true },
-        );
     }
-    setupTheme();
+    document
+        .querySelector("#img-prompt")
+        ?.addEventListener("change", mostrarImagen);
 </script>
-
 <section
-    class="flex size-full rounded border border-orange-400 bg-slate-50 h-[calc(90vh - 0.5rem)] sm:h-[calc(90vh - 2rem)] overflow-auto scroll-smooth dark:border-slate-200 dark:bg-[#1a1a1a]"
+    class="flex size-full rounded border bg-slate-50 size-full overflow-y-auto overflow-x-hidden scroll-smooth border-slate-200 dark:bg-[#1a1a1a]"
 >
     <aside
-        class="flex flex-col transition-all w-fit h-full px-2 sm:px-4 py-8 overflow-visible bg-white dark:bg-[#1a1a1a] border-orange-400 dark:border-slate-200 min-h-fit sticky top-0 z-30"
+        class="flex flex-col justify-between transition-all w-fit h-full p-2 md:p-6 overflow-visible bg-white dark:bg-[#1a1a1a] border-slate-200 z-30 sticky top-0"
     >
-        <picture class="flex items-center justify-center cursor-pointer">
-            <AsideBtn text="Mas sobre ti..." id="pop-user" button>
-                <Image
-                    slot="svg"
-                    data-popover-target="popover-user"
-                    data-popover-placement="right"
-                    data-popover-trigger="click"
-                    loading="eager"
-                    width={24}
-                    height={24}
-                    src={userImg ?? "/logo.svg"}
-                    class="cursor-pointer size-5 scale-150 rounded-full"
-                    alt="foto de perfil del usuario de la sección del aside del usuario"
-                    title="foto de perfil del usuario de la sección del aside del usuario"
-                />
-            </AsideBtn>
-
-            <div
-                data-popover
-                id="popover-user"
-                role="tooltip"
-                class="absolute invisible sm:translate-x-4 inline-block w-64 text-sm text-slate-900 transition-opacity duration-300 bg-white border border-slate-300 rounded shadow-sm opacity-0 dark:text-slate-100 dark:bg-[#1a1a1a] cursor-default z-30"
-            >
-                <div class="p-4">
-                    <div class="flex items-center justify-between mb-2">
-                        <a
-                            href="#main"
-                            aria-labelledby={`foto del usuario ${userName}`}
-                            aria-label={`usuario asignado ${userName}`}
-                        >
-                            <Image
-                                loading="eager"
-                                width={100}
-                                height={100}
-                                class="w-10 h-10 rounded-full"
-                                src={userImg ?? "no-tengo-foto"}
-                                alt="una foto del perfil del usuario para el menu aside"
-                                title="foto del perfil del usuario en el menu aside"
-                            />
-                        </a>
-                        <menu class="flex gap-x-2">
-                            <a
-                                href="#info-config"
-                                class="order-2 flex items-center gap-2 text-orange-700 bg-orange-100 hover:bg-orange-200 font-medium rounded text-xs px-3 py-1.5 dark:bg-orange-100 dark:hover:bg-orange-500 dark:text-orange-400 border border-orange-500 transition-colors cursor-pointer"
-                                title="Ir a configuración"
-                                aria-label="Ir a la sección de configuración"
-                                aria-describedby="Enlace para acceder a la configuración del usuario"
-                            >
-                                <svg
-                                    class="w-4 h-4"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                    stroke-width="1.5"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                >
-                                    <path
-                                        stroke="none"
-                                        d="M0 0h24v24H0z"
-                                        fill="none"></path>
-                                    <path
-                                        d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 011.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 01-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.397.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 01-.12-1.45l.527-.737c.25-.35.273-.806.108-1.204-.165-.397-.505-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.107-1.204l-.527-.738a1.125 1.125 0 01.12-1.45l.773-.773a1.125 1.125 0 011.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894z"
-                                    ></path>
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                                    ></path>
-                                </svg>
-                            </a>
-
-                            <button
-                                type="button"
-                                title="Cerrar sesión"
-                                class="updateDetails px-3 py-1.5 rounded border border-red-600 dark:border-slate-700 bg-red-100 hover:bg-red-200 dark:hover:bg-red-900 text-red-500 hover:text-red-700 transition-colors flex items-center justify-center cursor-pointer"
-                            >
-                                <svg
-                                    class="size-5"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                    stroke-width="1.5"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                >
-                                    <title>
-                                        boton para el cierre de la sesión
-                                    </title>
-                                    <path
-                                        stroke="none"
-                                        d="M0 0h24v24H0z"
-                                        fill="none"></path>
-                                    <path
-                                        d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15"
-                                    ></path>
-                                    <path d="M12 9l-3 3m0 0l3 3m-3-3h12.75"
-                                    ></path>
-                                </svg>
-                            </button>
-
-                            <DialogCierre />
-                        </menu>
-                    </div>
-                    <p
-                        class="text-base font-semibold leading-none text-gray-900 dark:text-white"
-                    >
-                        <a
-                            href={urlGitHub ?? "#main"}
-                            aria-label={`Perfil de GitHub de ${userNameComplete ?? "nombre del usuario"}`}
-                            aria-labelledby="GitHub-username"
-                            >{userNameComplete ?? "nombre del usuario"}</a
-                        >
-                    </p>
-                    <p class="mb-3 text-sm font-normal">
-                        <a
-                            href={urlLinkedIn ?? "#main"}
-                            aria-label={`Perfil de LinkedIn de ${userName ?? "nombre del usuario"}`}
-                            aria-labelledby="LinkedIn-username"
-                            class="hover:underline underline-offset-2"
-                            >@{
-                                userName ??
-                                    "no tengo nombre del usuario para LinkedIn"
-                            }</a
-                        >
-                    </p>
-                    <p class="mb-4 text-sm">
-                        {
-                            userOccupation ??
-                                "Open-source contributor. Building "
-                        }<a
-                            href={urlLinkedIn ?? "#main"}
-                            aria-label="Enlace al perfil de LinkedIn del usuario"
-                            aria-labelledby="LinkedIn-profile-link"
-                            class="text-orange-700 dark:text-orange-500 underline-offset-2 hover:underline"
-                            >LinkedIn del usuario</a
-                        >.
-                    </p>
-                </div>
-                <div data-popper-arrow></div>
-            </div>
-        </picture>
-
-        <div class="flex flex-col justify-start flex-1 mt-6">
-            <nav class="flex-1 w-fit max-h-fit space-y-[1lh]">
-                <AsideBtn
-                    text="Información general"
-                    id="pop-general"
-                    to="info-general"
-                >
-                    <svg
-                        slot="svg"
-                        class="min-w-5 w-5"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        ><path stroke="none" d="M0 0h24v24H0z" fill="none"
-                        ></path><path d="M5 12l-2 0l9 -9l9 9l-2 0"></path><path
-                            d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"
-                        ></path><path
-                            d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"
-                        ></path></svg
-                    >
-                </AsideBtn>
-
-                <AsideBtn
-                    text="Datos personales"
-                    id="pop-user-info"
-                    to="info-user"
-                >
-                    <svg
-                        slot="svg"
-                        class="min-w-5 w-5"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        ><path stroke="none" d="M0 0h24v24H0z" fill="none"
-                        ></path><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"
-                        ></path><path
-                            d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"
-                        ></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path><path
-                            d="M21 21v-2a4 4 0 0 0 -3 -3.85"></path></svg
-                    >
-                </AsideBtn>
-
-                <AsideBtn text="Configuración" id="pop-config" to="info-config">
-                    <svg
-                        slot="svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="currentColor"
-                        class="min-w-5 w-5"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 011.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 01-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.397.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 01-.12-1.45l.527-.737c.25-.35.273-.806.108-1.204-.165-.397-.505-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.107-1.204l-.527-.738a1.125 1.125 0 01.12-1.45l.773-.773a1.125 1.125 0 011.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894z"
-                        ></path>
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                    </svg>
-                </AsideBtn>
-
-                <AsideBtn
-                    text="Cerrar Sesión"
-                    id="info-cierre"
-                    to="updateDetails"
-                    button
-                >
-                    <svg
-                        slot="svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="currentColor"
-                        class="min-w-5 w-5 text-slate-900 dark:text-slate-100 dark:group-hover:text-slate-300"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.425V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
-                        ></path>
-                    </svg>
-                </AsideBtn>
-                <DialogCierre />
-            </nav>
-        </div>
+        <MenuAside client:load />
     </aside>
 
     <div
-        class="w-full h-fit space-y-2 border-0 border-l border-orange-400 dark:border-slate-200 sm:space-y-0 bg-slate-100 dark:bg-[#1a1a1a] z-20"
+        class="w-full h-fit space-y-4 border-0 border-l border-slate-300 sm:space-y-8 bg-slate-100 dark:bg-[#1a1a1a] z-20"
     >
-        <article
-            id="info-general"
-            class="h-fit w-full px-2 pt-2 sm:pt-8 sm:px-8"
-        >
-            <h2
-                class="text-3xl sm:text-4xl font-bold pb-4 lg:pb-8 mx-auto w-fit"
-            >
-                General
-            </h2>
-
-            <div class="gap-4 grid grid-cols-1 sm:grid-cols-3">
-                <div
-                    class="flex flex-col sm:col-span-3 lg:col-span-2 items-center bg-white dark:bg-black/30 border border-slate-300 dark:border-slate-200 rounded shadow-sm md:flex-row"
+        <Articulo id="info-general" heading="General">
+            <div class="grid grid-cols-1 gap-3 sm:gap-4 sm:grid-cols-3">
+                <section
+                    class="flex flex-col items-center bg-white border rounded shadow-sm lg:flex-row sm:col-span-3 lg:col-span-3 dark:bg-black/30 border-slate-300 dark:border-slate-200"
                 >
                     <Image
                         height={100}
                         width={100}
                         loading="eager"
-                        class="object-cover w-full h-full md:w-48 rounded rounded-b-none md:rounded-bl md:rounded-r-none"
+                        class="object-cover object-center rounded rounded-b-none size-full sm:h-72 lg:h-full lg:w-56 lg:rounded-bl lg:rounded-r-none"
                         src={userImg ?? "/logo.svg"}
                         alt="Imagen de perfil del usuario de la sección general registrado en la plataforma"
                         title="Imagen de perfil del usuario de la sección general registrado en la plataforma"
                     />
 
                     <div
-                        class="flex flex-col justify-between p-4 w-full leading-normal"
+                        class="flex flex-col justify-between p-4 leading-normal size-full sm:p-6"
                     >
                         <strong
-                            class="mb-[1lh] block ms-auto rounded bg-orange-100 dark:bg-[#1a1a1a] py-1 px-2 sm:px-3 sm:py-2 border border-orange-500 dark:border-orange-500 text-xs text-orange-700 dark:text-orange-500 transition-all shadow-md font-medium w-fit text-center text-nowrap"
+                            class="block px-2 py-1 mb-4 text-xs font-medium text-center text-orange-700 transition-all bg-orange-100 border border-orange-500 rounded shadow-md sm:mb-6 ms-auto dark:bg-orange-300/15 sm:px-3 sm:py-2 dark:border-orange-500 dark:text-orange-500 w-fit text-nowrap"
                         >
                             Registrado : {userRegister ?? "12-05-2025"}
                         </strong>
 
                         <h3
-                            class="mb-2 text-xl sm:text-2xl font-bold tracking-tight text-slate-800 dark:text-white capitalize"
+                            class="mb-2 text-xl font-bold tracking-tight capitalize sm:text-2xl text-slate-800 dark:text-white"
                         >
                             {userName ?? "No tiene nombre"}
                         </h3>
 
                         <p
-                            class="mb-3 font-normal text-slate-700 dark:text-slate-300 max-w-96"
+                            class="mb-4 font-normal sm:mb-6 text-slate-700 dark:text-slate-300 max-w-96 text-pretty"
                         >
                             {
                                 userDesc ??
                                     "  Este perfil no tiene descripción, pero puedes agregarle conectándote con alguna de las plataformas."
                             }
                         </p>
-                    </div>
-                </div>
 
-                {
+                        <div
+                            class="flex flex-wrap items-center justify-between gap-4 mt-4 sm:gap-6"
+                        >
+                            <ul
+                                class="flex justify-center mx-auto space-x-2 md:mx-0 md:space-x-5"
+                            >
+                                <IconBtn>
+                                    <IconFacebook />
+                                </IconBtn>
+                                <IconBtn>
+                                    <IconInstagram />
+                                </IconBtn>
+                                <IconBtn>
+                                    <IconTwitter />
+                                </IconBtn>
+                                <IconBtn>
+                                    <IconGitHub />
+                                </IconBtn>
+                                <IconBtn>
+                                    <IconOther />
+                                </IconBtn>
+                            </ul>
+
+                            <div
+                                class="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 xl:w-auto"
+                            >
+                                <Button
+                                    className="w-full shadow-md bg-orange-00 hover:bg-orange-100 dark:hover:bg-orange-300/15 hover:border-orange-500 border border-orange-500 rounded cursor-pointer hover:text-black dark:hover:text-white text-nowrap text-white text-nowrap min-w-auto sm:min-w-40"
+                                >
+                                    Ver Galeria
+                                    <MediaImageList
+                                        className="ms-2 min-w-5 size-5"
+                                    />
+                                </Button>
+                                <Button
+                                    className="w-full shadow-md bg-orange-00  hover:bg-orange-100 dark:hover:bg-orange-300/15  hover:border-orange-500 border border-orange-500 rounded cursor-pointer hover:text-black dark:hover:text-white text-nowrap text-white text-nowrap min-w-auto sm:min-w-40"
+                                >
+                                    Subir imagen
+                                    <MediaImagePlus
+                                        className="ms-2 min-w-5 size-5"
+                                    />
+                                </Button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- {
                     !urlGitHub?.length ||
                     !urlLinkedIn?.length ||
                     !numeroCelular?.length ? (
-                        <div class="flex flex-col items-center justify-center sm:col-span-3 lg:col-span-1 bg-white dark:bg-black/30 font-medium text-sm text-slate-700 dark:text-slate-200 p-4 sm:p-8 rounded border border-slate-300 dark:border-slate-200">
+                        <section class="flex flex-col items-center justify-center p-4 text-sm font-medium bg-white border rounded shadow-sm sm:col-span-3 lg:col-span-1 dark:bg-black/30 text-slate-700 dark:text-slate-200 sm:p-8 border-slate-300 dark:border-slate-200">
                             <p class="">
                                 No se han encontrado cuentas vinculadas a esta
                                 plataforma. pero puedes{" "}
                                 <a
-                                    class="text-orange-700 hover:text-orange-500 transition-colors underline underline-offset-2"
+                                    class="text-orange-700 underline transition-colors hover:text-orange-500 underline-offset-2"
                                     href="#sin-cuentas"
                                 >
                                     vincular tus cuentas
                                 </a>
                             </p>
-                        </div>
+                        </section>
                     ) : (
-                        <div
-                            id="plataformasCarousel"
-                            data-carousel="slide"
-                            class="sm:col-span-3 flex items-center lg:col-span-1 bg-white dark:bg-black/30 p-4 sm:p-8 rounded border border-slate-300 dark:border-slate-200 w-full relative"
-                        >
-                            {/* wrapper carousel */}
-                            <ul class="relative overflow-hidden rounded h-12 lg:h-24 w-full">
-                                {/* items */}
-                                <li
-                                    data-carousel-item
-                                    class="hidden duration-300 ease-in-ou h-fit  my-auto gap-2 "
-                                >
-                                    <button class="truncate rounded capitalize py-2 px-2 sm:px-4 mx-auto bg-orange-100 dark:bg-black/30 hover:bg-orange-200 dark:hover:bg-[#1a1a1a] hover:text-slate-800 dark:hover:text-slate-200  cursor-pointer transition-colors border border-orange-500 dark:border-slate-200 flex items-center justify-center text-base font-medium text-orange-700 dark:text-slate-200 group">
-                                        enlazarte con{" "}
-                                        <span class="ms-2 group-hover:text-slate-200">
-                                            <svg
-                                                class="w-4 h-4 min-w-[20px]"
-                                                aria-hidden="true"
-                                                fill="currentColor"
-                                                viewBox="0 0 20 20"
-                                            >
-                                                <path
-                                                    fill-rule="evenodd"
-                                                    d="M10 .333A9.911 9.911 0 0 0 6.866 19.65c.5.092.678-.215.678-.477 0-.237-.01-1.017-.014-1.845-2.757.6-3.338-1.169-3.338-1.169a2.627 2.627 0 0 0-1.1-1.451c-.9-.615.07-.6.07-.6a2.084 2.084 0 0 1 1.518 1.021 2.11 2.11 0 0 0 2.884.823c.044-.503.268-.973.63-1.325-2.2-.25-4.516-1.1-4.516-4.9A3.832 3.832 0 0 1 4.7 7.068a3.56 3.56 0 0 1 .095-2.623s.832-.266 2.726 1.016a9.409 9.409 0 0 1 4.962 0c1.89-1.282 2.717-1.016 2.717-1.016.366.83.402 1.768.1 2.623a3.827 3.827 0 0 1 1.02 2.659c0 3.807-2.319 4.644-4.525 4.889a2.366 2.366 0 0 1 .673 1.834c0 1.326-.012 2.394-.012 2.72 0 .263.18.572.681.475A9.911 9.911 0 0 0 10 .333Z"
-                                                    clip-rule="evenodd"
-                                                />
-                                            </svg>
-                                        </span>
-                                    </button>
-                                </li>
-
-                                <li
-                                    data-carousel-item
-                                    class="hidden duration-300 ease-in-ou h-fit my-auto gap-2 "
-                                >
-                                    <button class="truncate rounded capitalize py-2 px-2 sm:px-4 mx-auto bg-orange-100 dark:bg-black/30 hover:bg-orange-200 dark:hover:bg-[#1a1a1a] hover:text-slate-800 dark:hover:text-slate-200  cursor-pointer transition-colors border border-orange-500 dark:border-slate-200 flex items-center justify-center text-base font-medium text-orange-700 dark:text-slate-200 group">
-                                        enlazarte con{" "}
-                                        <span class="ms-2 group-hover:text-slate-200">
-                                            <svg
-                                                class="w-4 h-4 min-w-[20px]"
-                                                viewBox="0 0 20 20"
-                                                fill="currentColor"
-                                            >
-                                                <path
-                                                    stroke="none"
-                                                    d="M0 0h24v24H0z"
-                                                    fill="none"
-                                                />
-                                                <path d="M17 2a5 5 0 0 1 5 5v10a5 5 0 0 1 -5 5h-10a5 5 0 0 1 -5 -5v-10a5 5 0 0 1 5 -5zm-9 8a1 1 0 0 0 -1 1v5a1 1 0 0 0 2 0v-5a1 1 0 0 0 -1 -1m6 0a3 3 0 0 0 -1.168 .236l-.125 .057a1 1 0 0 0 -1.707 .707v5a1 1 0 0 0 2 0v-3a1 1 0 0 1 2 0v3a1 1 0 0 0 2 0v-3a3 3 0 0 0 -3 -3m-6 -3a1 1 0 0 0 -.993 .883l-.007 .127a1 1 0 0 0 1.993 .117l.007 -.127a1 1 0 0 0 -1 -1" />
-                                            </svg>
-                                        </span>
-                                    </button>
-                                </li>
-
-                                <li
-                                    data-carousel-item
-                                    class="hidden duration-300 ease-in-ou h-fit my-auto gap-2 "
-                                >
-                                    <button class="truncate rounded capitalize py-2 px-2 sm:px-4 mx-auto bg-orange-100 dark:bg-black/30 hover:bg-orange-200 dark:hover:bg-[#1a1a1a] hover:text-slate-800 dark:hover:text-slate-200  cursor-pointer transition-colors border border-orange-500 dark:border-slate-200 flex items-center justify-center text-base font-medium text-orange-700 dark:text-slate-200 group">
-                                        enlazarte con{" "}
-                                        <span class="ms-2 group-hover:text-slate-200">
-                                            <svg
-                                                class="w-4 h-4 min-w-[20px]"
-                                                viewBox="0 0 24 24"
-                                                fill="currentColor"
-                                            >
-                                                <path
-                                                    stroke="none"
-                                                    d="M0 0h24v24H0z"
-                                                    fill="none"
-                                                />
-                                                <path d="M18.497 4.409a10 10 0 0 1 -10.36 16.828l-.223 -.098l-4.759 .849l-.11 .011a1 1 0 0 1 -.11 0l-.102 -.013l-.108 -.024l-.105 -.037l-.099 -.047l-.093 -.058l-.014 -.011l-.012 -.007l-.086 -.073l-.077 -.08l-.067 -.088l-.056 -.094l-.034 -.07l-.04 -.108l-.028 -.128l-.012 -.102a1 1 0 0 1 0 -.125l.012 -.1l.024 -.11l.045 -.122l1.433 -3.304l-.009 -.014a10 10 0 0 1 1.549 -12.454l.215 -.203a10 10 0 0 1 13.226 -.217m-8.997 3.09a1.5 1.5 0 0 0 -1.5 1.5v1a6 6 0 0 0 6 6h1a1.5 1.5 0 0 0 0 -3h-1l-.144 .007a1.5 1.5 0 0 0 -1.128 .697l-.042 .074l-.022 -.007a4.01 4.01 0 0 1 -2.435 -2.435l-.008 -.023l.075 -.041a1.5 1.5 0 0 0 .704 -1.272v-1a1.5 1.5 0 0 0 -1.5 -1.5" />
-                                            </svg>
-                                        </span>
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>
+                        <section class="relative flex items-center justify-center w-full p-4 bg-white border rounded shadow-sm sm:col-span-3 lg:col-span-1 dark:bg-orange-200 sm:p-8 border-slate-300 animate-pulse dark:border-slate-200">
+                            carousel de botones
+                        </section>
                     )
-                }
+                } -->
 
-                <div
-                    class="bg-white dark:bg-black/30 w-full h-fit sm:col-span-3 lg:col-span-3 border border-slate-300 dark:border-slate-200 rounded p-4 sm:p-8 shadow-sm"
+                <section
+                    class="w-full p-4 bg-white border rounded shadow-sm sm:col-span-3 lg:col-span-3 dark:bg-black/30 h-fit border-slate-300 dark:border-slate-200 sm:p-6"
                 >
-                    <h4
-                        class="relative text-2xl pb-8 2xl:pb-0 font-semibold w-fit mx-auto"
-                    >
-                        Cursos Realizados
-                    </h4>
-
-                    <Carousel cursosIdLinks={linkCursos} />
-                </div>
-            </div>
-        </article>
-
-        <article id="info-user" class="h-fit w-full px-2 pt-2 sm:pt-8 sm:px-8">
-            <div
-                class="bg-white dark:bg-black/30 w-full h-fit sm:col-span-3 lg:col-span-3 border border-slate-300 dark:border-slate-200 rounded p-4 sm:p-8"
-            >
-                <h2
-                    class="text-3xl sm:text-4xl text-center font-bold pb-4 lg:pb-8 mx-auto w-fit"
-                >
-                    Datos Personales
-                </h2>
-
-                <div class="grid md:grid-cols-2 gap-4">
-                    <!-- Información Básica -->
+                    <header>
+                        <h3
+                            class="relative w-full pb-2 text-xl font-semibold text-center"
+                        >
+                            Selecciona una imagen
+                        </h3>
+                        <p class="text-slate-400 text-center mb-4 sm:mb-6">
+                            Debes seleccionar una imagen para poder almacenarla
+                            en nuestra base de datos.
+                        </p>
+                    </header>
                     <div
-                        class="bg-white dark:bg-black/30 border border-slate-200 dark:border-slate-200 rounded overflow-hidden shadow-sm"
+                        class="border border-slate-300 w-full flex flex-col gap-4 items-center min-h-[500px] relative p-4"
                     >
-                        <div
-                            class="p-4 sm:p-8 border-b border-slate-200 dark:border-dark-200"
+                        <label
+                            class="cursor-pointer bg-orange-400 hover:bg-orange-500 text-white py-2 px-3 rounded text-lg size-fit"
                         >
-                            <h3
-                                class="text-xl font-semibold flex flex-col sm:flex-row sm:items-center gap-2 text-slate-900 dark:text-orange-400"
-                            >
-                                <i class="w-8 md:w-9 text-orange-500">
-                                    <svg
-                                        class="min-w-[20px]"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        stroke-width="1.5"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        ><path
-                                            stroke="none"
-                                            d="M0 0h24v24H0z"
-                                            fill="none"></path><path
-                                            d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"
-                                        ></path><path
-                                            d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"
-                                        ></path></svg
-                                    ></i
-                                >
-                                Información Básica
-                            </h3>
-                        </div>
-
+                            <input
+                                id="img-prompt"
+                                type="file"
+                                accept="image/*"
+                                class="hidden"
+                            />
+                            Elegir imagen
+                        </label>
                         <div
-                            class="p-4 sm:p-8 space-y-4 text-slate-900 dark:text-slate-100"
+                            id="preview"
+                            class="size-fit max-w-[300px] overflow-hidden rounded hidden absolute left-0 right-0 top-0 bottom-0 m-auto"
                         >
-                            <div class="space-y-2">
-                                <label
-                                    class="block text-sm sm:text-base font-semibold text-slate-900 dark:text-slate-300"
-                                    >Nombre completo</label
-                                >
-                                <div class="relative">
-                                    <input
-                                        type="text"
-                                        value="Larry Antonio Ceballos Moncada"
-                                        class="w-full py-3 pl-3 pr-10 bg-slate-100 dark:bg-black/40 border border-slate-200 rounded text-slate-900 dark:text-white text-xs sm:text-base transition-colors outline-none focus:outline-none"
-                                    />
-                                    <button
-                                        class="absolute right-2 top-1/2 transform -translate-y-1/2 rounded transition-colors hover:bg-slate-300 dark:hover:bg-[#1a1a1a] bg-slate-200 dark:bg-black/60 p-1 cursor-pointer"
-                                    >
-                                        <i
-                                            class="min-w-[20px] text-orange-500 cursor-pointer"
-                                        >
-                                            <svg
-                                                width="20"
-                                                height="20"
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                stroke-width="1.5"
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                ><path
-                                                    stroke="none"
-                                                    d="M0 0h24v24H0z"
-                                                    fill="none"></path><path
-                                                    d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"
-                                                ></path><path
-                                                    d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"
-                                                ></path><path d="M16 5l3 3"
-                                                ></path></svg
-                                            >
-                                        </i>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="space-y-2">
-                                <label
-                                    class="block text-sm sm:text-base font-semibold text-slate-900 dark:text-slate-300"
-                                    >Ubicación</label
-                                >
-                                <div class="relative">
-                                    <i
-                                        class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-900 dark:text-slate-300"
-                                    >
-                                        <svg
-                                            class="min-w-[20px]"
-                                            width="20"
-                                            height="20"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            stroke-width="1.5"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            ><path
-                                                stroke="none"
-                                                d="M0 0h24v24H0z"
-                                                fill="none"></path><path
-                                                d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"
-                                            ></path><path
-                                                d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"
-                                            ></path>
-                                        </svg>
-                                    </i>
-                                    <input
-                                        type="text"
-                                        value="Medellín, Colombia"
-                                        class="w-full py-3 pl-10 pr-10 bg-slate-100 dark:bg-black/40 border border-slate-200 rounded text-slate-900 dark:text-white text-xs sm:text-base transition-colors outline-none focus:outline-none"
-                                    />
-                                    <button
-                                        class="absolute right-2 top-1/2 transform -translate-y-1/2 rounded transition-colors hover:bg-slate-300 dark:hover:bg-[#1a1a1a] bg-slate-200 dark:bg-black/60 p-1 cursor-pointer"
-                                    >
-                                        <i
-                                            class="min-w-[20px] text-orange-500 cursor-pointer"
-                                        >
-                                            <svg
-                                                width="20"
-                                                height="20"
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                stroke-width="1.5"
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                ><path
-                                                    stroke="none"
-                                                    d="M0 0h24v24H0z"
-                                                    fill="none"></path><path
-                                                    d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"
-                                                ></path><path
-                                                    d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"
-                                                ></path><path d="M16 5l3 3"
-                                                ></path></svg
-                                            >
-                                        </i>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="space-y-2">
-                                <label
-                                    class="block text-sm sm:text-base font-semibold text-slate-900 dark:text-slate-300"
-                                    >Teléfono</label
-                                >
-                                <div class="relative">
-                                    <i
-                                        class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-900 dark:text-slate-300"
-                                    >
-                                        <svg
-                                            class="min-w-[20px]"
-                                            width="20"
-                                            height="20"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            stroke-width="1.5"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            ><path
-                                                stroke="none"
-                                                d="M0 0h24v24H0z"
-                                                fill="none"></path><path
-                                                d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"
-                                            ></path></svg
-                                        >
-                                    </i>
-                                    <input
-                                        type="text"
-                                        value="300 123 4567"
-                                        class="w-full py-3 pl-10 bg-slate-100 dark:bg-black/40 border border-slate-200 rounded text-slate-900 dark:text-white text-xs sm:text-base transition-colors outline-none focus:outline-none"
-                                    />
-                                </div>
-                            </div>
-
-                            <div class="space-y-2">
-                                <label
-                                    class="block text-sm sm:text-base font-semibold text-slate-900 dark:text-slate-300"
-                                    >Correo electrónico</label
-                                >
-                                <div class="relative">
-                                    <i
-                                        class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-900 dark:text-slate-300"
-                                    >
-                                        <svg
-                                            class="min-w-[20px]"
-                                            width="20"
-                                            height="20"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            stroke-width="1.5"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            ><path
-                                                stroke="none"
-                                                d="M0 0h24v24H0z"
-                                                fill="none"></path><path
-                                                d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"
-                                            ></path><path d="M3 7l9 6l9 -6"
-                                            ></path></svg
-                                        >
-                                    </i>
-                                    <input
-                                        type="email"
-                                        value="lceballos@email.com"
-                                        class="w-full py-3 pl-10 bg-slate-100 dark:bg-black/40 border border-slate-200 rounded text-slate-900 dark:text-white text-xs sm:text-base transition-colors outline-none focus:outline-none"
-                                    />
-                                </div>
-                            </div>
+                            <img
+                                id="imagenSeleccionada"
+                                class="max-w-[300px] max-h-[300px] object-contain rounded cursor-pointer hover:scale-115 transition-transform duration-300 drop-shadow-md"
+                                alt="Vista previa"
+                            />
                         </div>
                     </div>
+                    <!-- <CarouselPersonal /> -->
+                </section>
+            </div>
+        </Articulo>
 
-                    <!-- Dirección de residencia -->
-                    <div
-                        class="bg-white dark:bg-black/30 border border-slate-200 dark:border-slate-200 rounded overflow-hidden shadow-sm"
+        <Articulo id="info-user" heading="Datos Personales">
+            <div class="grid gap-4 md:grid-cols-2">
+                <!-- Información Básica -->
+                <section
+                    class="overflow-hidden bg-white border rounded shadow-sm dark:bg-black/30 border-slate-200 dark:border-slate-200"
+                >
+                    <header
+                        class="p-4 border-b sm:p-6 border-slate-200 dark:border-dark-200"
                     >
-                        <div
-                            class="p-4 sm:p-8 border-b border-slate-200 dark:border-dark-200"
+                        <h3
+                            class="flex flex-wrap gap-2 text-xl font-semibold md:items-center text-slate-900 dark:text-orange-400"
                         >
-                            <h3
-                                class="text-xl font-semibold flex flex-col sm:flex-row sm:items-center gap-2 text-slate-900 dark:text-orange-400"
+                            <i class="text-orange-500">
+                                <svg
+                                    class="size-8"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.5"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    ><path
+                                        stroke="none"
+                                        d="M0 0h24v24H0z"
+                                        fill="none"></path><path
+                                        d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"
+                                    ></path><path
+                                        d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"
+                                    ></path></svg
+                                ></i
                             >
-                                <i class="w-8 md:w-9 text-orange-500">
+                            Información Básica
+                        </h3>
+                    </header>
+
+                    <div
+                        class="p-4 space-y-4 sm:p-6 text-slate-900 dark:text-slate-100"
+                    >
+                        <div class="space-y-2">
+                            <label
+                                class="block text-sm font-semibold sm:text-base text-slate-900 dark:text-slate-300"
+                                >Nombre completo</label
+                            >
+                            <div class="relative">
+                                <input
+                                    type="text"
+                                    value="Larry Antonio Ceballos Moncada"
+                                    class="w-full py-3 pl-3 pr-10 text-xs transition-colors border rounded outline-none bg-slate-100 dark:bg-black/40 border-slate-200 text-slate-900 dark:text-white sm:text-base focus:outline-none"
+                                />
+                                <button
+                                    class="absolute right-2 top-1/2 transform -translate-y-1/2 rounded transition-colors hover:bg-slate-300 dark:hover:bg-[#1a1a1a] bg-slate-200 dark:bg-black/60 p-1 cursor-pointer"
+                                >
+                                    <i
+                                        class="min-w-[20px] text-orange-500 cursor-pointer"
+                                    >
+                                        <svg
+                                            width="20"
+                                            height="20"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="1.5"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            ><path
+                                                stroke="none"
+                                                d="M0 0h24v24H0z"
+                                                fill="none"></path><path
+                                                d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"
+                                            ></path><path
+                                                d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"
+                                            ></path><path d="M16 5l3 3"
+                                            ></path></svg
+                                        >
+                                    </i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label
+                                class="block text-sm font-semibold sm:text-base text-slate-900 dark:text-slate-300"
+                                >Ubicación</label
+                            >
+                            <div class="relative">
+                                <i
+                                    class="absolute w-4 h-4 transform -translate-y-1/2 left-3 top-1/2 text-slate-900 dark:text-slate-300"
+                                >
                                     <svg
                                         class="min-w-[20px]"
+                                        width="20"
+                                        height="20"
                                         viewBox="0 0 24 24"
                                         fill="none"
                                         stroke="currentColor"
@@ -778,35 +332,18 @@ const {
                                         ></path>
                                     </svg>
                                 </i>
-                                Dirección de residencia
-                            </h3>
-                        </div>
-                        <div
-                            class="p-4 sm:p-8 space-y-4 text-slate-900 dark:text-slate-100"
-                        >
-                            <div class="space-y-2">
-                                <label
-                                    class="block text-sm sm:text-base font-semibold text-slate-900 dark:text-slate-300"
-                                    >Dirección actual</label
-                                >
                                 <input
                                     type="text"
-                                    value="Calle 45 #78-23, Apto 302"
-                                    class="w-full py-3 px-3 bg-slate-100 dark:bg-black/40 border border-slate-200 rounded text-slate-900 dark:text-white text-xs sm:text-base transition-colors outline-none focus:outline-none"
+                                    value="Medellín, Colombia"
+                                    class="w-full py-3 pl-10 pr-10 text-xs transition-colors border rounded outline-none bg-slate-100 dark:bg-black/40 border-slate-200 text-slate-900 dark:text-white sm:text-base focus:outline-none"
                                 />
-                            </div>
-
-                            <div class="space-y-2">
-                                <label
-                                    class="block text-sm sm:text-base font-semibold text-slate-900 dark:text-slate-300"
-                                    >Fecha de nacimiento</label
+                                <button
+                                    class="absolute right-2 top-1/2 transform -translate-y-1/2 rounded transition-colors hover:bg-slate-300 dark:hover:bg-[#1a1a1a] bg-slate-200 dark:bg-black/60 p-1 cursor-pointer"
                                 >
-                                <div class="relative">
                                     <i
-                                        class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-stale-300"
+                                        class="min-w-[20px] text-orange-500 cursor-pointer"
                                     >
                                         <svg
-                                            class="min-w-[20px]"
                                             width="20"
                                             height="20"
                                             viewBox="0 0 24 24"
@@ -819,329 +356,30 @@ const {
                                                 stroke="none"
                                                 d="M0 0h24v24H0z"
                                                 fill="none"></path><path
-                                                d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"
-                                            ></path><path d="M16 3l0 4"
-                                            ></path><path d="M8 3l0 4"
-                                            ></path><path d="M4 11l16 0"
-                                            ></path><path d="M8 15h2v2h-2z"
-                                            ></path></svg
-                                        >
-                                    </i>
-                                    <input
-                                        type="text"
-                                        value="25 de marzo de 1985"
-                                        class="w-full py-3 pl-10 bg-slate-100 dark:bg-black/40 border border-slate-200 rounded text-slate-900 dark:text-white text-xs sm:text-base transition-colors outline-none focus:outline-none"
-                                    />
-                                </div>
-                            </div>
-
-                            <div class="space-y-2">
-                                <label
-                                    class="block text-sm sm:text-base font-semibold text-slate-900 dark:text-slate-300"
-                                    >Estado civil</label
-                                >
-                                <select
-                                    class="w-full py-3 px-3 bg-slate-100 dark:bg-black/40 border border-slate-200 rounded text-slate-900 dark:text-white text-xs sm:text-base appearance-none transition-colors outline-none focus:outline-none"
-                                >
-                                    <option value="soltero" selected
-                                        >Soltero</option
-                                    >
-                                    <option value="casado">Casado</option>
-                                    <option value="divorciado"
-                                        >Divorciado</option
-                                    >
-                                    <option value="viudo">Viudo</option>
-                                </select>
-                            </div>
-
-                            <div class="space-y-2">
-                                <label
-                                    class="block text-sm sm:text-base font-semibold text-slate-900 dark:text-slate-300"
-                                    >Ocupación</label
-                                >
-                                <div class="relative">
-                                    <i
-                                        class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-stale-300"
-                                    >
-                                        <svg
-                                            class="min-w-[20px]"
-                                            width="20"
-                                            height="20"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            stroke-width="1.5"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            ><path
-                                                stroke="none"
-                                                d="M0 0h24v24H0z"
-                                                fill="none"></path><path
-                                                d="M3 9a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9z"
+                                                d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"
                                             ></path><path
-                                                d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2"
+                                                d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"
+                                            ></path><path d="M16 5l3 3"
                                             ></path></svg
                                         >
                                     </i>
-                                    <input
-                                        type="text"
-                                        value="Operador de máquina"
-                                        class="w-full py-3 pl-10 bg-slate-100 dark:bg-black/40 border border-slate-200 rounded text-slate-900 dark:text-white text-xs sm:text-base transition-colors outline-none focus:outline-none"
-                                    />
-                                </div>
-                            </div>
-
-                            <div class="space-y-2">
-                                <label
-                                    class="block text-sm sm:text-base font-semibold text-slate-900 dark:text-slate-300"
-                                    >Nacionalidad</label
-                                >
-                                <div class="relative">
-                                    <i
-                                        class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-stale-300"
-                                    >
-                                        <svg
-                                            class="min-w-[20px]"
-                                            width="20"
-                                            height="20"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            stroke-width="1.5"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            ><path
-                                                stroke="none"
-                                                d="M0 0h24v24H0z"
-                                                fill="none"></path><path
-                                                d="M5 5a5 5 0 0 1 7 0a5 5 0 0 0 7 0v9a5 5 0 0 1 -7 0a5 5 0 0 0 -7 0v-9z"
-                                            ></path><path d="M5 21v-7"
-                                            ></path></svg
-                                        >
-                                    </i>
-                                    <input
-                                        type="text"
-                                        value="Colombiana"
-                                        class="w-full py-3 pl-10 bg-slate-100 dark:bg-black/40 border border-slate-200 rounded text-slate-900 dark:text-white text-xs sm:text-base transition-colors outline-none focus:outline-none"
-                                    />
-                                </div>
+                                </button>
                             </div>
                         </div>
-                    </div>
-                </div>
 
-                <!-- Información Adicional -->
-                <div
-                    class="bg-white dark:bg-black/30 border border-slate-200 dark:border-slate-200 rounded overflow-hidden mt-4 shadow-sm"
-                >
-                    <div
-                        class="p-4 sm:p-8 border-b border-slate-200 dark:border-dark-200"
-                    >
-                        <h3
-                            class="text-xl font-semibold flex flex-col sm:flex-row sm:items-center gap-2 text-slate-900 dark:text-orange-400"
-                        >
-                            <i class="w-8 md:w-9 text-orange-500">
-                                <svg
-                                    class="min-w-[20px] w-full"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    stroke-width="1.5"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    ><path
-                                        stroke="none"
-                                        d="M0 0h24v24H0z"
-                                        fill="none"></path><path
-                                        d="M22 9l-10 -4l-10 4l10 4l10 -4v6"
-                                    ></path><path
-                                        d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4"
-                                    ></path></svg
-                                >
-                            </i>
-                            Información Adicional
-                        </h3>
-                    </div>
-
-                    <div class="p-4 sm:p-8 text-slate-900 dark:text-slate-100">
-                        <div class="grid md:grid-cols-2 gap-4">
-                            <div class="space-y-2">
-                                <label
-                                    class="block text-sm sm:text-base font-semibold text-slate-900 dark:text-slate-300"
-                                    >Nivel de educación</label
-                                >
-                                <select
-                                    class="w-full py-3 px-3 bg-slate-100 dark:bg-black/40 border border-slate-200 rounded text-slate-900 dark:text-white text-xs sm:text-base appearance-none transition-colors outline-none focus:outline-none"
-                                >
-                                    <option value="primaria">Primaria</option>
-                                    <option value="secundaria"
-                                        >Secundaria</option
-                                    >
-                                    <option value="técnico" selected
-                                        >Técnico</option
-                                    >
-                                    <option value="universitario"
-                                        >Universitario</option
-                                    >
-                                    <option value="postgrado">Postgrado</option>
-                                </select>
-                            </div>
-
-                            <div class="space-y-2">
-                                <label
-                                    class="block text-sm sm:text-base font-semibold text-slate-900 dark:text-slate-300"
-                                    >Idiomas</label
-                                >
-                                <select
-                                    class="w-full py-3 px-3 bg-slate-100 dark:bg-black/40 border border-slate-200 rounded text-slate-900 dark:text-white text-xs sm:text-base appearance-none transition-colors outline-none focus:outline-none"
-                                >
-                                    <option value="espanol" selected
-                                        >Español</option
-                                    >
-                                    <option value="ingles">Inglés</option>
-                                    <option value="francés">Francés</option>
-                                    <option value="portugues">Portugués</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </article>
-
-        <article
-            id="info-config"
-            class="h-fit w-full px-2 py-2 sm:py-8 sm:px-8"
-        >
-            <div
-                class="bg-white dark:bg-black/30 w-full h-fit sm:col-span-3 lg:col-span-3 border border-slate-300 dark:border-slate-200 rounded p-4 sm:p-8 shadow-sm"
-            >
-                <header>
-                    <h2
-                        class="text-3xl sm:text-4xl font-bold pb-4 lg:pb-8 mx-auto w-fit truncate text-slate-900 dark:text-slate-100"
-                    >
-                        Configuración
-                    </h2>
-                </header>
-
-                <section
-                    class="bg-white dark:bg-black/30 border border-slate-200 dark:border-slate-200 rounded overflow-hidden mb-4 sm:mb-8 shadow-sm"
-                >
-                    <header
-                        class="p-4 sm:p-8 border-b border-slate-200 dark:border-dark-200"
-                    >
-                        <h3
-                            class="text-xl font-semibold flex flex-col sm:flex-row sm:items-center gap-2 text-slate-900 dark:text-orange-400"
-                        >
-                            <i class="w-8 md:w-9 text-orange-500">
-                                <svg
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke-width="1.5"
-                                    stroke="currentColor"
-                                    class="min-w-[20px]"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 011.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 01-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.397.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 01-.12-1.45l.527-.737c.25-.35.273-.806.108-1.204-.165-.397-.505-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.107-1.204l-.527-.738a1.125 1.125 0 01.12-1.45l.773-.773a1.125 1.125 0 011.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894z"
-                                    ></path>
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                                    ></path>
-                                </svg>
-                            </i>
-                            Preferencias del Sistema
-                        </h3>
-                    </header>
-
-                    <form
-                        class="p-4 sm:p-8 space-y-4 mt-8 sm:mt-16"
-                        aria-label="Preferencias del sistema"
-                    >
-                        <div
-                            class="flex flex-col md:flex-row md:items-center gap-4 justify-between"
-                        >
-                            <div>
-                                <label
-                                    for="idioma-sistema"
-                                    class="font-medium text-slate-900 dark:text-slate-100 block text-sm sm:text-base"
-                                >
-                                    Idioma del sistema
-                                </label>
-                                <p
-                                    class="text-xs sm:text-base text-slate-700 dark:text-slate-300"
-                                >
-                                    Seleccione el idioma de la interfaz
-                                </p>
-                            </div>
-                            <select
-                                id="idioma-sistema"
-                                name="idioma"
-                                class="w-36 sm:w-44 py-2 px-4 bg-slate-100 dark:bg-black/40 border border-slate-200 dark:border-slate-200 rounded text-slate-900 dark:text-white appearance-none cursor-pointer transition-colors outline-none focus:outline-none text-xs sm:text-base"
+                        <div class="space-y-2">
+                            <label
+                                class="block text-sm font-semibold sm:text-base text-slate-900 dark:text-slate-300"
+                                >Teléfono</label
                             >
-                                <option value="es" selected>Español</option>
-                                <option value="en">English</option>
-                                <option value="pt">Português</option>
-                            </select>
-                        </div>
-
-                        <div
-                            class="flex flex-col md:flex-row md:items-center gap-4 justify-between"
-                        >
-                            <div>
-                                <label
-                                    for="tema-sistema"
-                                    class="font-medium text-slate-900 dark:text-slate-100 block text-sm sm:text-base"
+                            <div class="relative">
+                                <i
+                                    class="absolute w-4 h-4 transform -translate-y-1/2 left-3 top-1/2 text-slate-900 dark:text-slate-300"
                                 >
-                                    Cambiar tema
-                                </label>
-                                <p
-                                    class="text-xs sm:text-base btn-theme text-slate-700 dark:text-slate-300"
-                                >
-                                    Selecciona el tema de la interfaz (claro u
-                                    oscuro)
-                                </p>
-                            </div>
-                            <select
-                                id="tema-sistema"
-                                name="tema"
-                                class="w-36 sm:w-44 py-2 px-4 bg-slate-100 dark:bg-black/40 border border-slate-200 dark:border-slate-200 rounded text-slate-900 dark:text-white appearance-none cursor-pointer transition-colors outline-none focus:outline-none text-xs sm:text-base"
-                            >
-                                <option value="light" selected>Claro</option>
-                                <option value="dark">Oscuro</option>
-                                <option value="system">Sistema</option>
-                            </select>
-                        </div>
-
-                        <div
-                            class="flex flex-col md:flex-row md:items-center gap-4 justify-between"
-                        >
-                            <div>
-                                <strong
-                                    class="font-medium text-slate-900 dark:text-slate-100 block text-sm sm:text-base"
-                                >
-                                    Vincular plataformas
-                                </strong>
-                                <p
-                                    class="text-xs sm:text-base text-slate-700 dark:text-slate-300 max-w-2xs"
-                                >
-                                    Conecta tu cuenta con plataformas externas
-                                    como GitHub, LinkedIn o WhatsApp para
-                                    mejorar tu experiencia y sincronizar
-                                    información.
-                                </p>
-                            </div>
-
-                            <button
-                                type="button"
-                                class="w-full sm:w-44 py-2 px-4 border border-orange-500 text-orange-700 dark:text-orange-400 rounded flex justify-center items-center gap-2 bg-orange-100 dark:bg-black/30 hover:bg-orange-200 dark:hover:bg-[#1a1a1a] transition-colors font-medium capitalize cursor-pointer text-xs sm:text-base"
-                            >
-                                <i class="w-4 h-4 -translate-y-0.5">
                                     <svg
                                         class="min-w-[20px]"
+                                        width="20"
+                                        height="20"
                                         viewBox="0 0 24 24"
                                         fill="none"
                                         stroke="currentColor"
@@ -1152,44 +390,471 @@ const {
                                             stroke="none"
                                             d="M0 0h24v24H0z"
                                             fill="none"></path><path
-                                            d="M12 10.941c2.333 -3.308 .167 -7.823 -1 -8.941c0 3.395 -2.235 5.299 -3.667 6.706c-1.43 1.408 -2.333 3.621 -2.333 5.588c0 3.704 3.134 6.706 7 6.706s7 -3.002 7 -6.706c0 -1.712 -1.232 -4.403 -2.333 -5.588c-2.084 3.353 -3.257 3.353 -4.667 2.235"
+                                            d="M5 4h4l2 5l-2.5 1.5a11 11 0 0 0 5 5l1.5 -2.5l5 2v4a2 2 0 0 1 -2 2a16 16 0 0 1 -15 -15a2 2 0 0 1 2 -2"
                                         ></path></svg
                                     >
                                 </i>
-                                Conectar ahora
-                            </button>
+                                <input
+                                    type="text"
+                                    value="300 123 4567"
+                                    class="w-full py-3 pl-10 text-xs transition-colors border rounded outline-none bg-slate-100 dark:bg-black/40 border-slate-200 text-slate-900 dark:text-white sm:text-base focus:outline-none"
+                                />
+                            </div>
                         </div>
 
-                        <div
-                            class="pt-4 border-t border-slate-200 dark:border-slate-200"
-                        >
-                            <button
-                                type="button"
-                                class="w-full py-3 px-4 bg-red-600 hover:bg-red-700 text-white rounded font-medium flex items-center justify-center gap-2 cursor-pointer group transition-colors text-xs sm:text-base"
+                        <div class="space-y-2">
+                            <label
+                                class="block text-sm font-semibold sm:text-base text-slate-900 dark:text-slate-300"
+                                >Correo electrónico</label
                             >
+                            <div class="relative">
                                 <i
-                                    class="w-4 h-4 group-hover:-translate-x-1 transition-transform"
+                                    class="absolute w-4 h-4 transform -translate-y-1/2 left-3 top-1/2 text-slate-900 dark:text-slate-300"
                                 >
                                     <svg
-                                        fill="none"
+                                        class="min-w-[20px]"
+                                        width="20"
+                                        height="20"
                                         viewBox="0 0 24 24"
-                                        stroke-width="1.5"
+                                        fill="none"
                                         stroke="currentColor"
-                                        class="min-w-[20px] -translate-y-0.5"
+                                        stroke-width="1.5"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        ><path
+                                            stroke="none"
+                                            d="M0 0h24v24H0z"
+                                            fill="none"></path><path
+                                            d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"
+                                        ></path><path d="M3 7l9 6l9 -6"
+                                        ></path></svg
                                     >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
-                                        ></path>
-                                    </svg>
                                 </i>
-                                Cerrar sesión
-                            </button>
+                                <input
+                                    type="email"
+                                    value="lceballos@email.com"
+                                    class="w-full py-3 pl-10 text-xs transition-colors border rounded outline-none bg-slate-100 dark:bg-black/40 border-slate-200 text-slate-900 dark:text-white sm:text-base focus:outline-none"
+                                />
+                            </div>
                         </div>
-                    </form>
+                    </div>
+                </section>
+
+                <!-- Dirección de residencia -->
+                <section
+                    class="overflow-hidden bg-white border rounded shadow-sm dark:bg-black/30 border-slate-200 dark:border-slate-200"
+                >
+                    <header
+                        class="p-4 border-b sm:p-6 border-slate-200 dark:border-dark-200"
+                    >
+                        <h3
+                            class="flex flex-wrap gap-2 text-xl font-semibold md:items-center text-slate-900 dark:text-orange-400"
+                        >
+                            <i class="text-orange-500">
+                                <svg
+                                    class="size-8"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.5"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    ><path
+                                        stroke="none"
+                                        d="M0 0h24v24H0z"
+                                        fill="none"></path><path
+                                        d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"
+                                    ></path><path
+                                        d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"
+                                    ></path>
+                                </svg>
+                            </i>
+                            Dirección de residencia
+                        </h3>
+                    </header>
+                    <div
+                        class="p-4 space-y-4 sm:p-6 text-slate-900 dark:text-slate-100"
+                    >
+                        <div class="space-y-2">
+                            <label
+                                class="block text-sm font-semibold sm:text-base text-slate-900 dark:text-slate-300"
+                                >Dirección actual</label
+                            >
+                            <input
+                                type="text"
+                                value="Calle 45 #78-23, Apto 302"
+                                class="w-full px-3 py-3 text-xs transition-colors border rounded outline-none bg-slate-100 dark:bg-black/40 border-slate-200 text-slate-900 dark:text-white sm:text-base focus:outline-none"
+                            />
+                        </div>
+
+                        <div class="space-y-2">
+                            <label
+                                class="block text-sm font-semibold sm:text-base text-slate-900 dark:text-slate-300"
+                                >Fecha de nacimiento</label
+                            >
+                            <div class="relative">
+                                <i
+                                    class="absolute w-4 h-4 transform -translate-y-1/2 left-3 top-1/2 text-stale-300"
+                                >
+                                    <svg
+                                        class="min-w-[20px]"
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.5"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        ><path
+                                            stroke="none"
+                                            d="M0 0h24v24H0z"
+                                            fill="none"></path><path
+                                            d="M4 5m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"
+                                        ></path><path d="M16 3l0 4"></path><path
+                                            d="M8 3l0 4"></path><path
+                                            d="M4 11l16 0"></path><path
+                                            d="M8 15h2v2h-2z"></path></svg
+                                    >
+                                </i>
+                                <input
+                                    type="text"
+                                    value="25 de marzo de 1985"
+                                    class="w-full py-3 pl-10 text-xs transition-colors border rounded outline-none bg-slate-100 dark:bg-black/40 border-slate-200 text-slate-900 dark:text-white sm:text-base focus:outline-none"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label
+                                class="block text-sm font-semibold sm:text-base text-slate-900 dark:text-slate-300"
+                                >Estado civil</label
+                            >
+                            <select
+                                class="w-full px-3 py-3 text-xs transition-colors border rounded outline-none appearance-none bg-slate-100 dark:bg-black/40 border-slate-200 text-slate-900 dark:text-white sm:text-base focus:outline-none"
+                            >
+                                <option value="soltero" selected>Soltero</option
+                                >
+                                <option value="casado">Casado</option>
+                                <option value="divorciado">Divorciado</option>
+                                <option value="viudo">Viudo</option>
+                            </select>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label
+                                class="block text-sm font-semibold sm:text-base text-slate-900 dark:text-slate-300"
+                                >Ocupación</label
+                            >
+                            <div class="relative">
+                                <i
+                                    class="absolute w-4 h-4 transform -translate-y-1/2 left-3 top-1/2 text-stale-300"
+                                >
+                                    <svg
+                                        class="min-w-[20px]"
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.5"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        ><path
+                                            stroke="none"
+                                            d="M0 0h24v24H0z"
+                                            fill="none"></path><path
+                                            d="M3 9a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9z"
+                                        ></path><path
+                                            d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2"
+                                        ></path></svg
+                                    >
+                                </i>
+                                <input
+                                    type="text"
+                                    value="Operador de máquina"
+                                    class="w-full py-3 pl-10 text-xs transition-colors border rounded outline-none bg-slate-100 dark:bg-black/40 border-slate-200 text-slate-900 dark:text-white sm:text-base focus:outline-none"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label
+                                class="block text-sm font-semibold sm:text-base text-slate-900 dark:text-slate-300"
+                                >Nacionalidad</label
+                            >
+                            <div class="relative">
+                                <i
+                                    class="absolute w-4 h-4 transform -translate-y-1/2 left-3 top-1/2 text-stale-300"
+                                >
+                                    <svg
+                                        class="min-w-[20px]"
+                                        width="20"
+                                        height="20"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1.5"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        ><path
+                                            stroke="none"
+                                            d="M0 0h24v24H0z"
+                                            fill="none"></path><path
+                                            d="M5 5a5 5 0 0 1 7 0a5 5 0 0 0 7 0v9a5 5 0 0 1 -7 0a5 5 0 0 0 -7 0v-9z"
+                                        ></path><path d="M5 21v-7"></path></svg
+                                    >
+                                </i>
+                                <input
+                                    type="text"
+                                    value="Colombiana"
+                                    class="w-full py-3 pl-10 text-xs transition-colors border rounded outline-none bg-slate-100 dark:bg-black/40 border-slate-200 text-slate-900 dark:text-white sm:text-base focus:outline-none"
+                                />
+                            </div>
+                        </div>
+                    </div>
                 </section>
             </div>
-        </article>
+
+            <!-- Información Adicional -->
+            <section
+                class="mt-4 overflow-hidden bg-white border rounded shadow-sm dark:bg-black/30 border-slate-200 dark:border-slate-200"
+            >
+                <header
+                    class="p-4 border-b sm:p-6 border-slate-200 dark:border-dark-200"
+                >
+                    <h3
+                        class="flex flex-wrap gap-2 text-xl font-semibold md:items-center text-slate-900 dark:text-orange-400"
+                    >
+                        <i class="text-orange-500">
+                            <svg
+                                class="size-8"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.5"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                ><path
+                                    stroke="none"
+                                    d="M0 0h24v24H0z"
+                                    fill="none"></path><path
+                                    d="M22 9l-10 -4l-10 4l10 4l10 -4v6"
+                                ></path><path
+                                    d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4"
+                                ></path></svg
+                            >
+                        </i>
+                        Información Adicional
+                    </h3>
+                </header>
+
+                <div class="p-4 sm:p-6 text-slate-900 dark:text-slate-100">
+                    <div class="grid gap-4 md:grid-cols-2">
+                        <div class="space-y-2">
+                            <label
+                                class="block text-sm font-semibold sm:text-base text-slate-900 dark:text-slate-300"
+                                >Nivel de educación</label
+                            >
+                            <select
+                                class="w-full px-3 py-3 text-xs transition-colors border rounded outline-none appearance-none bg-slate-100 dark:bg-black/40 border-slate-200 text-slate-900 dark:text-white sm:text-base focus:outline-none"
+                            >
+                                <option value="primaria">Primaria</option>
+                                <option value="secundaria">Secundaria</option>
+                                <option value="técnico" selected>Técnico</option
+                                >
+                                <option value="universitario"
+                                    >Universitario</option
+                                >
+                                <option value="postgrado">Postgrado</option>
+                            </select>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label
+                                class="block text-sm font-semibold sm:text-base text-slate-900 dark:text-slate-300"
+                                >Idiomas</label
+                            >
+                            <select
+                                class="w-full px-3 py-3 text-xs transition-colors border rounded outline-none appearance-none bg-slate-100 dark:bg-black/40 border-slate-200 text-slate-900 dark:text-white sm:text-base focus:outline-none"
+                            >
+                                <option value="espanol" selected>Español</option
+                                >
+                                <option value="ingles">Inglés</option>
+                                <option value="francés">Francés</option>
+                                <option value="portugues">Portugués</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </Articulo>
+
+        <Articulo id="info-config" heading=" Configuración">
+            <section
+                class="mb-4 overflow-hidden bg-white border rounded shadow-sm dark:bg-black/30 border-slate-200 dark:border-slate-200 sm:mb-8"
+            >
+                <header
+                    class="p-4 border-b sm:p-8 border-slate-200 dark:border-dark-200"
+                >
+                    <h3
+                        class="flex flex-col gap-2 text-xl font-semibold sm:flex-row sm:items-center"
+                    >
+                        <i class="w-8 text-orange-500 md:w-9">
+                            <svg
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="min-w-[20px]"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 011.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 01-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.397.165-.71.505-.781.929l-.15.894z"
+                                ></path>
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                        </i>
+                        Preferencias del Sistema
+                    </h3>
+                </header>
+
+                <div
+                    class="p-4 mt-8 space-y-4 sm:p-8 sm:mt-16"
+                    aria-label="Preferencias del sistema"
+                >
+                    <div
+                        class="flex flex-col justify-between gap-4 md:flex-row md:items-center"
+                    >
+                        <div>
+                            <label
+                                for="idioma-sistema"
+                                class="block text-sm font-medium text-slate-900 dark:text-slate-100 sm:text-base"
+                            >
+                                Idioma del sistema
+                            </label>
+                            <p
+                                class="text-xs sm:text-base text-slate-700 dark:text-slate-300"
+                            >
+                                Seleccione el idioma de la interfaz
+                            </p>
+                        </div>
+                        <select
+                            id="idioma-sistema"
+                            name="idioma"
+                            class="px-4 py-2 text-xs transition-colors border rounded outline-none appearance-none cursor-pointer w-36 sm:w-44 bg-slate-100 dark:bg-black/40 border-slate-200 dark:border-slate-200 text-slate-900 dark:text-white focus:outline-none sm:text-base"
+                        >
+                            <option value="es" selected>Español</option>
+                            <option value="en">English</option>
+                            <option value="pt">Português</option>
+                        </select>
+                    </div>
+
+                    <div
+                        class="flex flex-col justify-between gap-4 md:flex-row md:items-center"
+                    >
+                        <div>
+                            <label
+                                for="tema-sistema"
+                                class="block text-sm font-medium text-slate-900 dark:text-slate-100 sm:text-base"
+                            >
+                                Cambiar tema
+                            </label>
+                            <p
+                                class="text-xs sm:text-base text-slate-700 dark:text-slate-300"
+                            >
+                                Selecciona el tema de la interfaz (claro u
+                                oscuro)
+                            </p>
+                        </div>
+                        <select
+                            id="tema-sistema"
+                            name="tema"
+                            class="px-4 py-2 text-xs transition-colors border rounded outline-none appearance-none cursor-pointer w-36 sm:w-44 bg-slate-100 dark:bg-black/40 border-slate-200 dark:border-slate-200 text-slate-900 dark:text-white focus:outline-none sm:text-base"
+                        >
+                            <option value="light" selected>Claro</option>
+                            <option value="dark">Oscuro</option>
+                            <option value="system">Sistema</option>
+                        </select>
+                    </div>
+
+                    <div
+                        class="flex flex-col justify-between gap-4 md:flex-row md:items-center"
+                    >
+                        <div>
+                            <strong
+                                class="block text-sm font-medium text-slate-900 dark:text-slate-100 sm:text-base"
+                            >
+                                Vincular plataformas
+                            </strong>
+                            <p
+                                class="text-xs sm:text-base text-slate-700 dark:text-slate-300 max-w-2xs"
+                            >
+                                Conecta tu cuenta con plataformas externas como
+                                GitHub, LinkedIn o WhatsApp para mejorar tu
+                                experiencia y sincronizar información.
+                            </p>
+                        </div>
+
+                        <button
+                            type="button"
+                            class="w-full sm:w-44 py-2 px-4 border border-orange-500 text-orange-700 dark:text-orange-400 rounded flex justify-center items-center gap-2 bg-orange-100 dark:bg-black/30 hover:bg-orange-200 dark:hover:bg-[#1a1a1a] transition-colors font-medium capitalize cursor-pointer text-xs sm:text-base"
+                        >
+                            <i class="w-4 h-4 -translate-y-0.5">
+                                <svg
+                                    class="min-w-[20px]"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.5"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    ><path
+                                        stroke="none"
+                                        d="M0 0h24v24H0z"
+                                        fill="none"></path><path
+                                        d="M12 10.941c2.333 -3.308 .167 -7.823 -1 -8.941c0 3.395 -2.235 5.299 -3.667 6.706c-1.43 1.408 -2.333 3.621 -2.333 5.588c0 3.704 3.134 6.706 7 6.706s7 -3.002 7 -6.706c0 -1.712 -1.232 -4.403 -2.333 -5.588c-2.084 3.353 -3.257 3.353 -4.667 2.235"
+                                    ></path></svg
+                                >
+                            </i>
+                            Conectar ahora
+                        </button>
+                    </div>
+
+                    <div
+                        class="pt-4 border-t border-slate-200 dark:border-slate-200"
+                    >
+                        <button
+                            type="button"
+                            class="flex items-center justify-center w-full gap-2 px-4 py-3 text-xs font-medium text-white transition-colors bg-red-600 rounded cursor-pointer hover:bg-red-700 group sm:text-base"
+                        >
+                            <i
+                                class="w-4 h-4 transition-transform group-hover:-translate-x-1"
+                            >
+                                <svg
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="1.5"
+                                    stroke="currentColor"
+                                    class="min-w-[20px] -translate-y-0.5"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
+                                    ></path>
+                                </svg>
+                            </i>
+                            Cerrar sesión
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </Articulo>
     </div>
 </section>
+

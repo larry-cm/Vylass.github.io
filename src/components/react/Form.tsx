@@ -19,7 +19,7 @@ export default function Form() {
             try {
                 setLoading(true)
 
-                const res = await fetch(`/verifyUsers/users.json?user=${encodeURIComponent(query)}`)
+                const res = await fetch(`/api/verifyUsers/users.json?user=${encodeURIComponent(query)}`)
                 const { body } = await res.json()
 
                 // if (!res.ok) throw new Error('en la petición')
@@ -57,7 +57,7 @@ export default function Form() {
                 <div className="flex flex-col sm:gap-y-3">
                     <label
                         htmlFor="userName" className="max-w-4/5">
-                        <h3 className="py-2 text-slate-900 dark:text-slate-300/90 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-lg">Nombre de usuario o correo electrónico</h3>
+                        <h3 className="py-2 text-lg font-medium leading-none text-slate-900 dark:text-slate-300/90 peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Nombre de usuario o correo electrónico</h3>
                     </label>
                     <input
                         required
@@ -68,15 +68,15 @@ export default function Form() {
                         onChange={handleErrorInput}
                         value={query}
                         placeholder="Carlota o carlota@gmail.com"
-                        className="w-full px-4 py-2 rounded bg-slate-100 dark:bg-black/50 text-slate-900 dark:text-white placeholder:text-slate-500 dark:placeholder:text-slate-300 border border-slate-300 dark:border-slate-200 focus:outline-none focus:border-orange-500"
+                        className="w-full px-4 py-2 border rounded bg-slate-100 dark:bg-black/50 text-slate-900 dark:text-white placeholder:text-slate-500 dark:placeholder:text-slate-300 border-slate-300 dark:border-slate-200 focus:outline-none focus:border-orange-500"
                         name="user-or-email"
                         id="userName"
                     />
                     <ValidateInputs tagsOptions={[true, false, true]} tagsState={errorInput}>
-                        <a href="registro" className="items-center text-orange-500 hover:contrast-150 transition-all dark:text-orange-400 dark:hover:text-orange-400/80 underline underline-offset-2 min-w-fit">Regístrate ahora</a>
+                        <a href="registro" className="items-center text-orange-500 underline transition-all hover:contrast-150 dark:text-orange-400 dark:hover:text-orange-400/80 underline-offset-2 min-w-fit">Regístrate ahora</a>
                     </ValidateInputs>
                 </div>
-                <div className="text-center mt-2 sm:mt-4">
+                <div className="mt-2 text-center sm:mt-4">
                     <Action type="submit" text="Continuar" />
                 </div>
             </form>

@@ -1,4 +1,4 @@
-import { IconInfo } from "@/components/react/formsServices/PopApps"
+import { IconInfo } from "@/assets/Icons"
 import type { InputsErrors } from "@/types/type"
 
 export function TagVerification({ verClass, textLi, titleSpan }: { verClass: boolean | undefined, textLi: string, titleSpan: string }) {
@@ -9,7 +9,7 @@ export function TagVerification({ verClass, textLi, titleSpan }: { verClass: boo
             {textLi}
             <span
                 title={titleSpan ?? "El nombre de usuario no puede comenzar con números ni contener caracteres especiales para mantener un formato consistente y fácil de recordar"}
-                className="cursor-pointer ml-1">{<IconInfo className="size-4" />}
+                className="ml-1 cursor-pointer">{<IconInfo className="size-4" />}
             </span>
         </li>
     )
