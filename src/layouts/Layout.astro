@@ -1,40 +1,156 @@
 ---
-import Header from "@components/casa/secciones/Header.astro";
-import DialogCierre from "@components/casa/servicios/DialogCierre.astro";
-
+import "@styles/global.css";
+import "@styles/loading.css";
 import { ClientRouter } from "astro:transitions";
+import {
+	UserButton,
+	SignedIn,
+	SignInButton,
+	SignUpButton,
+	SignedOut,
+} from "@clerk/astro/components";
+
 interface Props {
 	title: string;
+	description?: string; // Hacemos la descripción opcional para poder sobreescribirla por página si es necesario
+	keywords?: string; // Para palabras clave específicas por página
 }
-const { title } = Astro.props;
+const {
+	title,
+	description = "FetchersWebs: Tu comunidad online para aprender, compartir y crecer en el mundo de la programación web. Únete a discusiones, descubre nuevas herramientas y features, y conecta con otros desarrolladores apasionados.", // Descripción general por defecto
+	keywords = "programación web, desarrollo web, comunidad programadores, aprender a programar, tutoriales web, JavaScript, HTML, CSS, frameworks, librerías, backend, frontend, FetchersWebs", // Palabras clave generales
+} = Astro.props;
 ---
 
-<html lang="es">
+<html lang="es" class="bg-neutral-800 text-slate-100 dark:text-white font-ui">
 	<head>
 		<meta charset="UTF-8" />
 		<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="generator" content={Astro.generator} />
 		<link rel="icon" type="image/svg+xml" href="/logo.svg" />
-		<title>{title}</title>
+		<title>{title} | FetchersWebs</title>
+		{/* Añadimos el nombre del sitio al título */}
+
+		{/* SEO Meta Tags Fundamentales */}
+		<meta name="description" content={description} />
+		<meta name="keywords" content={keywords} />
+		<meta name="author" content="FetchersWebs" />
+		{/* O tu nombre/alias si prefieres */}
+		<link rel="canonical" href={Astro.url.href} />
+		{/* URL canónica de la página actual */}
+
+		{/* Open Graph / Facebook */}
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={Astro.url.href} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
 		<meta
-			name="description"
-			content="esta pagina web va a ser mi primera prueba administrando bases de datos"
+			property="og:image"
+			content="https://4x7wmndu4ovjzjdr.public.blob.vercel-storage.com/images/fetchSQL/logo-FD1A2yzvBWniRbfYPaEuTEm11pyenC.svg"
 		/>
 
+		{/* Twitter */}
+		<meta property="twitter:card" content="summary_large_image" />
+		<meta property="twitter:url" content={Astro.url.href} />
+		<meta property="twitter:title" content={title} />
+		<meta property="twitter:description" content={description} />
+		<meta
+			property="twitter:image"
+			content="https://4x7wmndu4ovjzjdr.public.blob.vercel-storage.com/images/fetchSQL/logo-FD1A2yzvBWniRbfYPaEuTEm11pyenC.svg"
+		/>
 		<ClientRouter />
 	</head>
 	<body
 		id="home"
-		class="bg-slate-100 dark:bg-neutral-900 text-slate-900 dark:text-white font-ui"
+		class="pt-0 grid grid-rows-[auto_1fr_auto] mx-auto min-h-screen h-fit selection:bg-sky-300 relative"
 	>
-		<Header />
-		<main
-			id="main"
-			class="p-4 sm:p-8 mx-auto relative h-[calc(90vh-0.5rem)] sm:h-[calc(90vh-2rem)] transition-all overflow-hidden"
+		<header
+			class="flex sticky top-0 z-10 items-center p-4 backdrop-blur-sm min-h-20 bg-neutral-700/50 drop-shadow-xl/15"
 		>
-			<DialogCierre />
+			<a
+				href="/"
+				class="inline-block z-10 text-4xl font-semibold text-slate-50"
+				>Fetchers</a
+			>
+
+			<nav
+				class="hidden sm:flex absolute right-0 left-0 justify-center items-center p-4 w-full transition-all gap-5 *:capitalize font-medium"
+			>
+				<a
+					href="comunidad"
+					class="relative font-medium transition-colors text-slate-300 hover:text-slate-50 group"
+				>
+					Comunidad <span
+						class="absolute left-0 -bottom-1 w-0 h-0.5 transition-all duration-300 bg-secondary group-hover:w-full"
+					></span>
+				</a>
+				<a
+					href="documentacion"
+					class="relative font-medium transition-colors text-slate-300 hover:text-slate-50 group"
+				>
+					Documentacion <span
+						class="absolute left-0 -bottom-1 w-0 h-0.5 transition-all duration-300 bg-secondary group-hover:w-full"
+					></span>
+				</a>
+			</nav>
+
+			<nav
+				class="flex justify-center items-center gap-x-5 sm:hidden absolute -bottom-20 left-0 right-0 bg-neutral-700/50 backdrop-blur-sm min-h-20 *:h-fit"
+			>
+				<a
+					href="comunidad"
+					class="relative font-medium transition-colors text-slate-300 hover:text-slate-50 group"
+				>
+					Comunidad <span
+						class="absolute left-0 -bottom-1 w-0 h-0.5 transition-all duration-300 bg-secondary group-hover:w-full"
+					></span>
+				</a>
+				<a
+					href="documentacion"
+					class="relative font-medium transition-colors text-slate-300 hover:text-slate-50 group"
+				>
+					Documentacion <span
+						class="absolute left-0 -bottom-1 w-0 h-0.5 transition-all duration-300 bg-secondary group-hover:w-full"
+					></span>
+				</a>
+			</nav>
+
+			<SignedOut>
+				<div
+					class="flex z-10 gap-4 items-center drop-shadow-xl ms-auto"
+				>
+					<SignInButton
+						mode="modal"
+						class="inline-block px-4 py-3 font-medium bg-orange-500 rounded transition-all cursor-pointer hover:bg-orange-500/80"
+					>
+						Iniciar sesión
+					</SignInButton>
+				</div>
+			</SignedOut>
+
+			<SignedIn>
+				<div
+					class="flex z-10 items-center p-1 rounded scale-125 h-fit me-1 ms-auto"
+				>
+					<UserButton showName />
+				</div>
+			</SignedIn>
+		</header>
+
+		<section class="p-4 max-w-screen-xl mx-auto">
 			<slot />
-		</main>
+		</section>
+
+		<footer
+			class="flex flex-col justify-center items-center p-4 bg-neutral-700 drop-shadow-xl/15"
+		>
+			<small class="block text-base w-fit ms-auto text-slate-100">
+				Tienes el privilegio de ver la <a
+					href="documentacion"
+					class="text-orange-500 underline">documentación</a
+				> que probablemente nadie lee.
+			</small>
+		</footer>
 	</body>
 </html>

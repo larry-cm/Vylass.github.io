@@ -1,0 +1,116 @@
+---
+import { IconDotsMenu } from "@/assets/Icons";
+import Image from "astro/components/Image.astro";
+
+interface Props {
+    id: string;
+    imageUser: string;
+    firstName: string;
+    title: string;
+    description: string;
+    delay: string;
+    badge: boolean;
+    inscripcionDate: string;
+    imagePost: string;
+}
+const {
+    imageUser,
+    id,
+    badge,
+    inscripcionDate,
+    firstName,
+    title,
+    delay,
+    description,
+    imagePost,
+} = Astro.props;
+// const x = sessionStorage.getItem("jsj");
+---
+
+<style define:vars={{ delay }}>
+    .slide-in-top {
+        animation: slide 0.5s ease-out forwards;
+        animation-delay: var(--delay);
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    @keyframes slide {
+        0% {
+        }
+        100% {
+            transform: translateY(0px);
+            opacity: 1;
+        }
+    }
+</style>
+<script>
+    function applySlide() {
+        if (!sessionStorage.getItem("animado")) {
+            sessionStorage.setItem("animado", "true");
+            document
+                .querySelectorAll("[data-anima]")
+                .forEach((element) => element.classList.add("slide-in-top"));
+        }
+    }
+
+    window.addEventListener("DOMContentLoaded", applySlide);
+    document.addEventListener("astro:page-load", applySlide);
+</script>
+
+<article class="w-full h-fit snap-center max-w-80 mx-auto max-[450px]:mx-auto">
+    <a href={`${firstName}-${id.slice(-5)}`}>
+        <div
+            class="relative flex flex-col bg-fondo shadow-sm rounded-md w-full"
+        >
+            <div class="relative h-full m-4 text-white rounded">
+                {
+                    badge && (
+                        <div class="absolute bottom-1 left-1 rounded bg-secondary/80 backdrop-blur-md py-0.5 px-1.5 border border-transparent text-xs text-white transition-all shadow-xs w-20 text-center capitalize">
+                            Reciente
+                        </div>
+                    )
+                }
+
+                <img
+                    class="rounded"
+                    src={imagePost ||
+                        "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80"}
+                    alt="card-image"
+                />
+            </div>
+            <div class="p-4 pt-4">
+                <h6 class="mb-2 text-slate-100 text-xl font-semibold">
+                    {title || "Website Review Check"}
+                </h6>
+                <p class="text-slate-300 leading-normal font-light">
+                    {
+                        description ||
+                            " The place is close to Barceloneta Beach and bus stop just 2 min by walk and near to &quot;Naviglio&quot;  where you can enjoy the main night life in Barcelona."
+                    }
+                </p>
+            </div>
+
+            <div class="flex items-center justify-between p-4">
+                <div class="flex items-center">
+                    <Image
+                        width={100}
+                        height={100}
+                        loading="lazy"
+                        alt={firstName || "Tania Andrew"}
+                        src={imageUser ||
+                            "https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"}
+                        class="relative inline-block h-8 w-8 rounded-full"
+                    />
+                    <div class="flex flex-col ml-3 text-sm">
+                        <span class="text-slate-100 font-semibold"
+                            >{firstName || "Lewis Daniel"}</span
+                        >
+                        <span class="text-slate-300">
+                            {inscripcionDate || "January 10, 2024"}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </a>
+</article>

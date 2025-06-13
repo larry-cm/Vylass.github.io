@@ -1,78 +1,3 @@
-const IconDay = (props) => (
-    <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width={20}
-        height={20}
-        fill="none"
-        strokeWidth={2}
-        color="currentColor"
-        viewBox="0 0 24 24"
-        {...props}
-    >
-        <path
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12ZM22 12h1M12 2V1M12 23v-1M20 20l-1-1M20 4l-1 1M4 20l1-1M4 4l1 1M1 12h1"
-        />
-    </svg>
-)
-
-const IconNight = (props) => (
-    <svg
-        strokeWidth={2}
-        fill="none"
-        stroke="currentColor"
-        className="inline w-5 h-5"
-        viewBox="0 0 24 24"
-        {...props}
-    >
-        <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={1.5}
-            d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 1 0 21 12.79z"
-        />
-    </svg>
-)
-
-const IconInfo = (props) => (
-    <svg
-        {...props}
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-    >
-        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-        <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
-        <path d="M12 9v4" />
-        <path d="M12 16v.01" />
-    </svg>
-);
-
-const IconAlert = (props) => (
-    <svg
-        {...props}
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-    >
-        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-        <path d="M19.875 6.27c.7 .398 1.13 1.143 1.125 1.948v7.284c0 .809 -.443 1.555 -1.158 1.948l-6.75 4.27a2.269 2.269 0 0 1 -2.184 0l-6.75 -4.27a2.225 2.225 0 0 1 -1.158 -1.948v-7.285c0 -.809 .443 -1.554 1.158 -1.947l6.75 -3.98a2.33 2.33 0 0 1 2.25 0l6.75 3.98h-.033z" />
-        <path d="M12 8v4" />
-        <path d="M12 16h.01" />
-    </svg>
-);
 
 const IconFacebook = (props) => (
     <svg
@@ -111,7 +36,7 @@ const IconTwitter = (props) => (
         fill="currentColor"
         {...props}
     >
-        <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/>
+        <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
     </svg>
 );
 
@@ -130,52 +55,112 @@ const IconGitHub = (props) => (
     </svg>
 );
 
-const IconOther = (props) => (
+const IconNavigate = (props) => (
     <svg
-        aria-hidden="true"
-        viewBox="0 0 24 24"
+
         fill="currentColor"
+        aria-label="Explorar"
         {...props}
     >
+        <title>{"Explorar"}</title>
+        <path
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={1.5}
+            d="m13.941 13.953-6.36 2.471 2.479-6.368 6.36-2.471-2.479 6.368z"
+        />
         <path
             fillRule="evenodd"
-            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10c5.51 0 10-4.48 10-10S17.51 2 12 2zm6.605 4.61a8.502 8.502 0 011.93 5.314c-.281-.054-3.101-.629-5.943-.271-.065-.141-.12-.293-.184-.445a25.416 25.416 0 00-.564-1.236c3.145-1.28 4.577-3.124 4.761-3.362zM12 3.475c2.17 0 4.154.813 5.662 2.148-.152.216-1.443 1.941-4.48 3.08-1.399-2.57-2.95-4.675-3.189-5A8.687 8.687 0 0112 3.475zm-3.633.803a53.896 53.896 0 013.167 4.935c-3.992 1.063-7.517 1.04-7.896 1.04a8.581 8.581 0 014.729-5.975zM3.453 12.01v-.26c.37.01 4.512.065 8.775-1.215.25.477.477.965.694 1.453-.109.033-.228.065-.336.098-4.404 1.42-6.747 5.303-6.942 5.629a8.522 8.522 0 01-2.19-5.705zM12 20.547a8.482 8.482 0 01-5.239-1.8c.152-.315 1.888-3.656 6.703-5.337.022-.01.033-.01.054-.022a35.318 35.318 0 011.823 6.475 8.4 8.4 0 01-3.341.684zm4.761-1.465c-.086-.52-.542-3.015-1.659-6.084 2.679-.423 5.022.271 5.314.369a8.468 8.468 0 01-3.655 5.715z"
-            clipRule="evenodd"
+            d="m10.06 10.056 3.889 3.889-6.368 2.479 2.479-6.368z"
         />
-    </svg>
-);
-
-const IconMediaList = (props) => (
-    <svg
-        {...props}
-        fill="none"
-        strokeWidth={1.5}
-        color="currentColor"
-        viewBox="0 0 24 24"
-    >
-        <path
+        <circle
+            cx={12.001}
+            cy={12.005}
+            r={10.5}
+            fill="none"
             stroke="currentColor"
             strokeLinecap="round"
             strokeLinejoin="round"
-            d="M21 7.6v12.8a.6.6 0 0 1-.6.6H7.6a.6.6 0 0 1-.6-.6V7.6a.6.6 0 0 1 .6-.6h12.8a.6.6 0 0 1 .6.6Z"
-        />
-        <path
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M18 4H4.6a.6.6 0 0 0-.6.6V18M7 16.8l5.444-1.8L21 18M16.5 13a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Z"
+            strokeWidth={1.5}
         />
     </svg>
 )
+
+const IconPage = (props) => (
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        xmlSpace="preserve"
+        viewBox="0 0 100.642 100.642"
+        {...props}
+    >
+        <path
+            d="M25.95 41.827 9.606 30.902a.664.664 0 0 0-1.03.551v19.859c0 .221.11.428.294.55l16.345 10.926a.67.67 0 0 0 .68.033.662.662 0 0 0 .35-.583v-19.86a.665.665 0 0 0-.295-.551zm0 25.162L9.606 56.064a.66.66 0 0 0-1.03.55v19.858c0 .222.11.429.294.552L25.215 87.95a.662.662 0 0 0 1.03-.55V67.54a.666.666 0 0 0-.295-.551zM45.571 53.4l-16.344-9.932a.662.662 0 0 0-1.006.566v19.859c0 .221.11.427.294.551l16.344 10.925a.662.662 0 0 0 1.03-.551V53.966a.666.666 0 0 0-.318-.566zm.023 26.17L29.25 68.646a.66.66 0 0 0-1.03.55v19.859c0 .222.11.428.294.551l16.344 10.926a.664.664 0 0 0 .68.033.663.663 0 0 0 .35-.584V80.12c0-.22-.11-.427-.294-.55zM84.82 30.872a.66.66 0 0 0-.673.021L67.405 41.487a.66.66 0 0 0-.308.572l.396 20.19a.662.662 0 0 0 1.03.538l16.345-10.926a.659.659 0 0 0 .294-.55V31.452a.662.662 0 0 0-.342-.58zm-.008 25.158a.66.66 0 0 0-.68.034L67.788 66.989a.66.66 0 0 0-.295.55v19.86a.663.663 0 0 0 1.031.55l16.345-10.926a.663.663 0 0 0 .294-.552V56.614a.665.665 0 0 0-.351-.584zM65.181 43.456a.666.666 0 0 0-.67.011l-16.343 9.932a.66.66 0 0 0-.319.565v20.854a.661.661 0 0 0 1.031.551l16.344-10.925a.663.663 0 0 0 .295-.551v-19.86a.661.661 0 0 0-.338-.577zm-20.752-13.66a.663.663 0 0 0-.324-.585l-15.337-9.11a.662.662 0 0 0-.633-.023l-17.108 8.498a.661.661 0 0 0-.061 1.151l15.285 9.724a.668.668 0 0 0 .666.026l17.161-9.111a.663.663 0 0 0 .351-.57zm-13.378-9.829 14.987 8.73a.668.668 0 0 0 .649.01l16.167-8.779a.662.662 0 0 0-.02-1.175l-15.007-7.455a.662.662 0 0 0-.573-.008l-16.148 7.504a.66.66 0 0 0-.055 1.173zM63.2 41.065a.662.662 0 0 0-.351-.574l-16.152-8.614a.661.661 0 0 0-.626.002l-15.995 8.664a.66.66 0 0 0-.347.578.667.667 0 0 0 .339.583l16.244 9.061a.653.653 0 0 0 .653-.004l15.903-9.11a.664.664 0 0 0 .332-.586zM91.945.28a.661.661 0 0 0-.611-.277L73.132 1.971a.661.661 0 0 0-.517.354l-8.349 16.162a.661.661 0 0 0 .649.963l18.526-1.649a.664.664 0 0 0 .537-.37L92 .95a.664.664 0 0 0-.055-.67zM65.169 68.611a.661.661 0 0 0-.681.034L48.144 79.57a.66.66 0 0 0-.295.55v19.86a.662.662 0 0 0 1.031.551l16.344-10.926a.661.661 0 0 0 .295-.551V69.195a.664.664 0 0 0-.35-.584z"
+
+        />
+    </svg>
+)
+
+const IconUpload = (props) => (
+    <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        {...props}
+    >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />
+        <path d="M7 9l5 -5l5 5" />
+        <path d="M12 4l0 12" />
+    </svg>
+)
+
+const IconAlert = (props) => (
+    <svg xmlns="http://www.w3.org/2000/svg" {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" ><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 9v4" /><path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z" /><path d="M12 16h.01" /></svg>
+)
+
+const IconChecked = (props) => (
+    <svg
+        {...props}
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth={1.5}
+        stroke="currentColor"
+    >
+        <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="m4.5 12.75 6 6 9-13.5"
+        ></path>
+    </svg>
+)
+
+const IconError = (props) => (
+    <svg xmlns="http://www.w3.org/2000/svg" {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M12 9v4" /><path d="M12 16v.01" /></svg>
+)
+
+const IconShare = (props) => (
+    <svg xmlns="http://www.w3.org/2000/svg" {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" ><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M13 4v4c-6.575 1.028 -9.02 6.788 -10 12c-.037 .206 5.384 -5.962 10 -6v4l8 -7l-8 -7z" /></svg>
+)
+
+const IconDotsMenu = (props) => (
+    <svg xmlns="http://www.w3.org/2000/svg" {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M5 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M19 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
+)
 export {
-    IconNight,
-    IconDay,
-    IconInfo,
-    IconAlert,
     IconInstagram,
     IconFacebook,
     IconTwitter,
     IconGitHub,
-    IconOther,
-    IconMediaList,
+    IconUpload,
+    IconNavigate,
+    IconPage,
+    IconAlert,
+    IconChecked,
+    IconError,
+    IconShare,
+    IconDotsMenu
 };

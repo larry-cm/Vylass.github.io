@@ -1,37 +1,47 @@
 ---
-import "@styles/global.css";
-import "@styles/loading.css";
 import Layout from "@/layouts/Layout.astro";
-import Home from "@components/casa/Home.astro";
-import DashBoardIndex from "@components/casa/DashBoardIndex.astro";
-
-const userSession = Astro.cookies.get("sessionIniciada")?.value;
-
-const userImg = Astro.cookies.get("imagenUsuario")?.value;
-const userName = Astro.cookies.get("usuario")?.value;
+// export const prerender = true;
+// import DashBoardIndex from "@components/casa/DashBoardIndex.astro";
+// import LoginMaterial from "@/components/library/LoginMaterial";
+import {
+	SignedIn,
+	SignedOut,
+	SignInButton,
+	// UserButton,
+} from "@clerk/astro/components";
 ---
 
-<Layout title="Búsquedas de MySQL || FetchToMySQL">
-	{
-		userSession === "true" ? (
-			<DashBoardIndex
-				linkCursos={[
-					"T_j60n1zgu0",
-					"QBLbXgeXMU8",
-					"2qgs7buSnHQ",
-					"VcxXipZg1-0",
-					"VcxXipZg1-1",
-				]}
-				userRegister="12-05-2005"
-				userDesc="Desarrollador apasionado por la tecnología, el aprendizaje continuo y la creación de soluciones innovadoras."
-				userImg={userImg ?? ""}
-				userName={userName ?? ""}
-				numeroCelular="12"
-				urlLinkedIn="sas"
-				urlGitHub="sa"
-			/>
-		) : (
-			<Home />
-		)
-	}
+<Layout title="Esta pagina es rica en búsqueda y publica || FetchToMySQL">
+	<section class="block mt-24 h-fit">
+		<h2 class="text-4xl font-extrabold text-white text-balance mb-8">
+			App para posts y comunicación entre desarrolladores ¡o al menos eso
+			intentamos!
+		</h2>
+		<SignedOut>
+			<p class="text-xl font-normal text-slate-200">
+				Una vez que te hayas vinculado, tendrás acceso a la creación de
+				publicaciones.
+			</p>
+			<SignInButton
+				mode="modal"
+				class="inline-block px-4 py-3 mt-4 font-medium bg-orange-500 rounded transition-all cursor-pointer hover:bg-orange-500/80"
+			>
+				Iniciar sesión
+			</SignInButton>
+		</SignedOut>
+
+		<SignedIn>
+			<div class="flex flex-col sm:flex-row items-center gap-5">
+				<p class="text-xl font-normal text-slate-200 py-3">
+					Enhorabuena, ya estás vinculado.
+				</p>
+				<a
+					href="/comunidad"
+					class="block px-4 py-3 font-medium bg-orange-500 rounded transition-colors cursor-pointer hover:bg-orange-500/80 w-fit"
+				>
+					¡Crea tu primera publicación!
+				</a>
+			</div>
+		</SignedIn>
+	</section>
 </Layout>

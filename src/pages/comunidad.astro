@@ -1,0 +1,115 @@
+---
+import Layout from "@/layouts/Layout.astro";
+// import UploadIcon from "public/svg/upload.svg";
+// import FilePlusIcon from "public/svg/file-plus.svg";
+import Cards from "@/components/Cards.astro";
+import { IconFacebook, IconGitHub, IconInstagram } from "@/assets/Icons";
+import FormPost from "@/components/FormPost";
+
+const { redirectToSignIn } = await Astro.locals.auth();
+const user = await Astro.locals.currentUser();
+if (!user) return redirectToSignIn();
+
+const fetchTurso = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+const { firstName, lastName, id, hasImage, imageUrl } = user;
+---
+
+<Layout title="🔐 Pagina privada || MySQL || FetchToMySQL">
+    <header class="block mt-16 space-y-4 w-full h-fit relative">
+        <h2 class="text-2xl text-balance sm:text-4xl font-bold text-white">
+            Bienvenido {firstName || ""}, Crea y comparte publicaciones entre
+            desarrolladores.
+        </h2>
+        <p
+            class="text-base sm:text-xl font-normal text-slate-200 dark:text-slate-300"
+        >
+            Es esta parte de la comunidad, es donde podras compartir tus
+            proyectos, ideas y experiencias.
+        </p>
+    </header>
+    <div class="flex mt-20 flex-col sm:flex-row pb-12">
+        <section
+            class="mb-4 pe-0 sm:p-4 sm:pe-0 flex flex-col items-center gap-4"
+            role="form"
+            aria-label="Formulario para crear una publicacion"
+        >
+            <!-- cuadro para publicar -->
+            <FormPost
+                client:visible
+                userId={id}
+                hasImage={hasImage}
+                imageUrl={imageUrl || ""}
+                firstName={firstName || ""}
+                lastName={lastName || ""}
+            />
+            <!-- aviso -->
+            <article
+                class="sm:order-2 order-1 bg-neutral-900/80 p-4 rounded max-w-80 sm:max-w-xs shadow-2xl space-y-[0.5lh]"
+            >
+                <h2 class="text-lg font-semibold">
+                    Estoy trabajando en esta parte para la comunidad
+                </h2>
+                <p>
+                    Somos un grupo pequeño conformado por una sola persona por
+                    el momento.
+                </p>
+                <p>
+                    Pero estoy aceptando colaboracion, me gustaria mucho
+                    trabajar en grupo ya que principal mente practico solo.
+                </p>
+                <div>
+                    <strong class="font-semibold">Contacto</strong>
+                    <div class="flex gap-5 mt-4">
+                        <a
+                            target="_blank"
+                            href="https://www.facebook.com/profile.php?id=100063723084114"
+                            class="p-2 bg-neutral-800/80 opacity-90 transition rounded cursor-pointer group hover:opacity-100 hover:bg-neutral-800"
+                            ><IconFacebook
+                                className="size-6 max-w-6 group-hover:scale-110 transition duration-300"
+                            /></a
+                        >
+                        <a
+                            target="_blank"
+                            href="https://github.com/larry-cm"
+                            class="p-2 bg-neutral-800/80 opacity-90 transition rounded cursor-pointer group hover:opacity-100 hover:bg-neutral-800"
+                            ><IconGitHub
+                                className="size-6 max-w-6 group-hover:scale-110 transition duration-300"
+                            /></a
+                        >
+                        <a
+                            target="_blank"
+                            href="https://www.instagram.com/sonia.ceballo.503/"
+                            class="p-2 bg-neutral-800/80 opacity-90 transition rounded cursor-pointer group hover:opacity-100 hover:bg-neutral-800"
+                            ><IconInstagram
+                                className="size-6 max-w-6 group-hover:scale-110 transition duration-300"
+                            /></a
+                        >
+                    </div>
+                </div>
+            </article>
+        </section>
+        <!-- grid de publicaciones -->
+        <section
+            class="w-full grid min-[450px]:grid-cols-2 sm:grid-cols-[repeat(auto-fill,minmax(220px,1fr))] h-[47.5rem] overflow-auto sm:justify-items-center gap-4 sm:m-4 min-[450px]:pe-4 snap-y sm:snap-normal relative"
+            aria-label="Publicaciones recientes"
+            role="region"
+        >
+            {
+                fetchTurso
+                    .slice(0, 10)
+                    .map((tursoCard, i) => (
+                        <Cards
+                            badge={i < 4 ? true : false}
+                            id={id || "0"}
+                            imagePost=""
+                            imageUser={imageUrl || ""}
+                            firstName={firstName || ""}
+                            title="Titulo de la publicacion"
+                            delay={i !== 0 ? `${i + 1}00ms` : "0s"}
+                            description="salskdlaksdlas asldkalsdkalsdklaskdlaks kasldk alskdl aksdlka sas;dkasld k as;l dka;sldk ;las lasd;l ka;sldka;lsdk ;alskd"
+                        />
+                    ))
+            }
+        </section>
+    </div>
+</Layout>

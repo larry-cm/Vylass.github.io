@@ -1,5 +1,8 @@
 {
     "cSpell.words": [
         "boton"
-    ]
+    ],
+    "cSpell.enabledFileTypes": {
+        "astro": false
+    }
 }
