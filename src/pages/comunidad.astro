@@ -151,7 +151,7 @@ const posts = Astro.locals.posts;
                 role="banner"
             >
                 <div
-                    class="size-full bg-fondo/85 col-start-1 -col-end-1 row-start-1 -row-end-1 scale-70 group-hover:scale-100 z-0 group-hover:z-10 transition duration-200 animate-bezier-back-in opacity-0 group-hover:opacity-100 group-hover:saturate-200 backdrop-blur-xs absolute"
+                    class="size-full bg-fondo/85 col-start-1 -col-end-1 row-start-1 -row-end-1 translate-y-5 group-hover:translate-y-0 z-0 group-hover:z-10 transition duration-200 animate-bezier-back-in opacity-0 group-hover:opacity-100 group-hover:saturate-200 backdrop-blur-xs"
                 >
                     <div class="p-4 flex flex-col size-full justify-between">
                         <header>
@@ -159,8 +159,15 @@ const posts = Astro.locals.posts;
                                 aria-label="Mini menu de las imagenes"
                                 class="flex h-fit gap-5"
                             >
+                                <ButtonMenu
+                                    urls={[
+                                        "https://larry1sf.github.io/Proyecto-adidas/src/index",
+                                        "https://discord.gg/Q4DhgHJW",
+                                        "https://github.com/larry1sf/Proyecto-adidas/archive/refs/heads/main.zip",
+                                    ]}
+                                    client:visible
+                                />
                                 <ButtonStart />
-                                <ButtonMenu client:visible />
                             </menu>
                             <h3
                                 class="text-3xl font-medium text-slate-100 text-center mt-8"
@@ -181,8 +188,15 @@ const posts = Astro.locals.posts;
                                 con otros desarrolladores aunque no fue
                                 presencial fue buena experiencia.
                             </p>
+                            <p>
+                                Alli realize tanto este como otros proyectos con
+                                los que me forme y hasta ahora sigo practicando.
+                            </p>
                             <small
-                                >Todo el diseño fue implementado por mi.</small
+                                >Todo el diseño fue implementado por <a
+                                    href="https://github.com/larry-cm"
+                                    class="font-normal underline">@Larry-cm</a
+                                >.</small
                             >
                         </div>
                     </div>

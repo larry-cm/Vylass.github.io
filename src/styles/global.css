@@ -28,7 +28,7 @@
     .group-hover\:animate-blurred-fade-in {
         &:is(:where(.group):hover *) {
             @media (hover: hover) {
-                animation: blurred-fade-in 0.4s ease-in-out both;
+                animation: blurred-fade-in 0.3s ease-in-out both;
             }
         }
     }
