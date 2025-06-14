@@ -22,8 +22,17 @@ export default defineConfig({
   },
   output: 'server',
   adapter: vercel({ imageService: true }),
+  experimental: {
+    responsiveImages: true
+  },
   image: {
-    remotePatterns: [{ protocol: "https" }],
-    domains: ['']
+    // Ejemplo: Permite la optimización de imágenes remotas desde un solo dominio
+    domains: ['astro.build'],
+    remotePatterns: [{
+      protocol: 'https',
+      hostname: '**.public.blob.vercel-storage.com',
+    }, {
+      protocol: 'https', hostname: 'img.clerk.com'
+    }]
   },
 });
