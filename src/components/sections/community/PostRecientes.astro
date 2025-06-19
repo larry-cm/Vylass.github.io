@@ -1,0 +1,43 @@
+---
+import { dateUserFormat, formatId } from "@/utils/Formats";
+import { Card } from "@/components/CardSlider";
+
+interface Props {
+  postsInitial: Array<{
+    username: string;
+    userId: string;
+    postId: string;
+    title: string;
+    userUrl: string;
+    content: string;
+    imgUrl: string;
+    postDate: string;
+  }>;
+}
+const { postsInitial } = Astro.props;
+const lang = Astro.locals.lang;
+const dates = (date: string) => dateUserFormat({ timeString: date, lang });
+---
+
+<section
+  class="w-full grid sm:grid-cols-[repeat(auto-fill,minmax(250px,1fr))] z-10 gap-4 snap-y md:snap-none relative sm:pe-4 h-160 overflow-auto sm:h-full"
+  aria-label="Publicaciones recientes"
+  role="region"
+>
+  {
+    postsInitial?.map(
+      ({ postId, username, imgUrl, title, content, postDate }) => (
+        <article>
+          <Card
+            postDate={postDate}
+            title={title}
+            content={content}
+            username={username}
+            postUrl={imgUrl}
+            ruta={formatId({ name: `/comunidad/${username}`, postId })}
+          />
+        </article>
+      ),
+    )
+  }
+</section>

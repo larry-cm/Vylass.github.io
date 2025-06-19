@@ -8,11 +8,12 @@
     --font-display: system-ui;
     --color-error: #ff4e3a;
     --color-success: #2b9875;
-    --color-fondo: #1a1a1a;
     ---color-primary: #ddd;
     --color-secondary: #C94005;
-    --color-fondo-suave: #ffc46d;
+    --color-fondo: #1a1a1a;
+    --color-fondo-claro:#383838;
 }
+
 
 @starting-style {
     dialog::backdrop {
@@ -31,6 +32,12 @@
                 animation: blurred-fade-in 0.3s ease-in-out both;
             }
         }
+    }
+    .text-break {
+        word-break: break-word;
+        overflow-wrap: break-word;
+        white-space: normal;
+        max-width: 100%;
     }
 }
 
@@ -67,12 +74,6 @@
         }
     }
 
-    .text-break {
-        word-break: break-word;
-        overflow-wrap: break-word;
-        white-space: normal;
-        max-width: 100%;
-    }
-
+    
 
 }

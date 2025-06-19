@@ -1,0 +1,74 @@
+---
+import BentoCard from "@/components/BentoCard.astro";
+---
+
+<h3
+  class="w-full text-4xl my-8 sm:mt-16 space-y-[.5lh] max-[450px]:max-w-80 mx-auto sm:max-w-full sm:mx-0"
+>
+  <p class="font-semibold">¡La aventura continúa!</p>
+  <p class="mt-2 text-xl font-light">
+    Actualmente estoy desarrollando varios proyectos emocionantes.
+  </p>
+  <p class="mt-1 text-xl font-light">
+    Te invito a explorar un adelanto de lo que viene
+  </p>
+</h3>
+
+<section class="w-full p-4 rounded-md sm:mb-8 bg-fondo">
+  <div
+    class="grid grid-cols-1 grid-rows-3 md:grid-cols-4 md:grid-rows-4 h-96 sm:h-168 w-full place-items-center gap-4 *:rounded-md *:shadow-md max-[450px]:*:mx-auto *:mx-0 max-[450px]:*:max-w-80 *:overflow-hidden *:select-none *:cursor-pointer *:size-full"
+  >
+    <article
+      aria-label="una de mis primeras paginas webs."
+      class="row-span-1 col-span-1 md:row-span-full md:col-span-2 group bg-[url(/imgs/adidas-project.webp)] bg-cover bg-no-repeat"
+    >
+      <BentoCard titleCard="AdiClone" />
+    </article>
+
+    <article
+      class="col-span-1 row-span-1 md:col-span-2 md:row-span-2 group bg-[url(/imgs/animeInfo-project.webp)] bg-cover bg-no-repeat"
+    >
+      <BentoCard titleCard="AniInfo">
+        <Fragment slot="body-card">
+          <p>
+            Es un proyecto en el que puedes mirar si sigues produciéndolo y en
+            que capitulo van estar al momento!
+          </p>
+          <p>
+            Pero no se queda solo ahi, nosotros mostramos los últimos capítulos
+            y en donde puedes verlos. por el momento no te los enseñamos todos
+            ya que llegan a no ser estables pero trabajamos por ello.
+          </p>
+          <p>
+            Mientras tanto puedes disfrutar de la información que te brindamos y
+            verlos en los sitios que te recomendamos o si esta disponible en
+            nuestro sitio.
+          </p>
+        </Fragment>
+      </BentoCard>
+    </article>
+
+    <article
+      class="col-span-1 row-span-1 md:col-span-2 md:row-span-2 group bg-[url(/imgs/rick-project.png)] bg-cover bg-no-repeat"
+    >
+      <BentoCard titleCard="Universo de rick y morty">
+        <Fragment slot="body-card">
+          <p>
+            ¡creamos un universo alterno en el que puedes ver los últimos
+            capítulos y estar enterado de todo!
+          </p>
+          <p>
+            Aquí encontrarás información detallada sobre los todos los
+            personajes de la serie, incluyendo resúmenes, detalles clave y
+            curiosidades que no te puedes perder.
+          </p>
+          <p>
+            También te proporcionamos enlaces confiables a las plataformas donde
+            puedes ver cada capítulo. Todo organizado para que sigas la historia
+            fácilmente y sin perderte ningún detalle.
+          </p>
+        </Fragment>
+      </BentoCard>
+    </article>
+  </div>
+</section>

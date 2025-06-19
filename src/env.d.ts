@@ -17,11 +17,19 @@ declare namespace App {
     lang: string;
     posts?: Array<{
       username: string;
+      userId: string;
+      postId: string;
       title: string;
       userUrl: string;
       content: string;
       imgUrl: string;
       postDate: string;
     }>;
+    urls?: {
+      github: string;
+      download: string;
+      discord: string;
+      project: string;
+    };
   }
 }

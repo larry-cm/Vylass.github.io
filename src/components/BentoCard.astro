@@ -1,0 +1,97 @@
+---
+import { IconDownload, IconGitHub, IconGo, IconSupport } from "@/assets/Icons";
+interface Props {
+  titleCard: string;
+}
+import { ButtonMenu } from "@/components/Buttons";
+
+import { IconExternalLink } from "@/assets/Icons";
+import ButtonStart from "@/assets/ButtonStart.astro";
+const { titleCard } = Astro.props;
+const { github, discord, download, project } = Astro.locals?.urls || {};
+---
+
+<div
+  class="z-0 flex flex-col justify-between col-start-1 row-start-1 p-4 transition duration-200 translate-y-5 rounded-md opacity-0 size-full bg-slate-950/60 -col-end-1 -row-end-1 group-hover:translate-y-0 group-hover:z-10 animate-bezier-back-in group-hover:opacity-100 group-hover:backdrop-blur-xs"
+>
+  <header>
+    <menu
+      aria-label="Mini menu de las imágenes"
+      class="flex gap-5 h-fit animate-fade-in animate-delay-300"
+    >
+      <ButtonMenu position="top-18 " client:visible>
+        <a
+          rel="noopener noreferrer"
+          href={github}
+          class="rounded hover:bg-fondo-claro min-w-full w-full py-2 px-3 hover:-translate-y-0.5 hover:shadow-md text-start transition-all duration-300 flex items-center h-fit shadow-2xs group"
+        >
+          <IconGitHub
+            className="size-5 flex items-center me-3 mt-0.5 group-hover:scale-110"
+          />
+          Ver en GitHub
+        </a>
+
+        <a
+          rel="noopener noreferrer"
+          href={discord}
+          class="mt-2 rounded hover:bg-fondo-claro min-w-full w-full py-2 px-3 hover:-translate-y-0.5 hover:shadow-md text-start transition-all duration-300 flex items-center h-fit group"
+        >
+          <IconSupport
+            className="flex items-center size-5 me-3 group-hover:scale-110"
+          />
+          Comunícame
+        </a>
+
+        <a
+          rel="noopener noreferrer"
+          href={download}
+          class="mt-2 rounded hover:bg-fondo-claro min-w-full w-full py-2 px-3 hover:-translate-y-0.5 hover:shadow-md text-start transition-all duration-300 flex items-center h-fit group"
+        >
+          <IconDownload
+            className="flex items-center scale-105 size-5 me-3 group-hover:scale-110"
+          />
+          Descargar proyecto
+        </a>
+      </ButtonMenu>
+
+      <ButtonStart />
+
+      <a
+        rel="noopener noreferrer"
+        href={project || "https://larry1sf.github.io/Proyecto-adidas"}
+        target="_blank"
+        class="p-2 transition-all duration-300 rounded ms-auto group/link bg-fondo hover:bg-fondo-claro"
+      >
+        <IconExternalLink
+          className="size-5 w-5 group-hover/link:scale-110 transition duration-300"
+        />
+      </a>
+    </menu>
+
+    <h3 class="my-4 mt-8 text-3xl font-medium text-center text-slate-100">
+      {titleCard || "Adidas Colombia"}
+    </h3>
+  </header>
+
+  <div
+    class="space-y-[1lh] -z-1 text-lg font-light group-hover:animate-blurred-fade-in duration-100"
+  >
+    <slot name="body-card">
+      <p>
+        Este proyecto fue desarrollado como parte de un curso de programación
+        que realicé con el objetivo de fortalecer mis conocimientos y adquirir
+        más experiencia práctica.
+      </p>
+      <p>
+        Durante el proceso, tuve la oportunidad de colaborar con otros
+        desarrolladores que también estaban aprendiendo. Aunque todo fue de
+        manera remota, fue una buena experiencia, ya que compartimos ideas,
+        dudas y consejos que aportaron mucho al resultado final.
+      </p>
+      <p>
+        Este proyecto es solo uno de varios que desarrollé en ese periodo, todos
+        pensados para mejorar mis habilidades y avanzar en mi formación.
+      </p>
+    </slot>
+  </div>
+</div>

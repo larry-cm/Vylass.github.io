@@ -1,0 +1,156 @@
+---
+import { IconFullScreen, IconX } from "@/assets/Icons";
+import Image from "astro/components/Image.astro";
+import { ToastBar, Toaster } from "react-hot-toast";
+
+interface Props {
+  post: number;
+  userName: string;
+  imageUrl: string;
+}
+
+const { post, userName } = Astro.props;
+const { imageUrl } = Astro.props;
+---
+
+<article
+  role="banner"
+  class="relative shadow-md"
+  aria-label={`foto de la publicación numero ${post} del usuario ${userName}`}
+>
+  <Image
+    width={100}
+    height={100}
+    loading="eager"
+    src={imageUrl}
+    alt={`publicada por el usuario ${userName} en la red`}
+    class="object-cover h-full rounded-md bg-fondo backdrop-blur-2xl w-3xl md:w-4xl aspect-video"
+  />
+  <div class="absolute flex gap-5 top-4 right-4">
+    <script>
+      const thisScript = document.currentScript;
+      // console.log(thisScript);
+      const dialog = document.querySelector("#dialog") as HTMLDialogElement;
+      const btnOpen = document.querySelector("#goView");
+      btnOpen?.addEventListener("click", () => {
+        dialog.showModal();
+      });
+
+      const btnClose = document.querySelector("#closeModal");
+      btnClose?.addEventListener("click", () => {});
+      const mutaModal = new MutationObserver((mutation) => {
+        mutation.forEach((e) => {
+          console.log(e.type);
+          // document.body.classList.toggle("overflow-hidden");
+          document.body.classList.add("overflow-hidden", "h-dvh");
+          if (!dialog.hasAttribute("open")) {
+            document.body.classList.remove(
+              "overflow-hidden",
+              "h-dvh",
+              "escalando",
+            );
+          }
+        });
+      });
+      const config = {
+        attributes: true,
+        childList: true,
+      };
+      mutaModal.observe(dialog, config);
+    </script>
+
+    <dialog
+      id="dialog"
+      class="fixed m-auto max-w-7xl h-fit min-w-96 escalando"
+      closedby="any"
+    >
+      <section class="aspect-video">
+        <p
+          class="grid items-center grid-cols-1 mx-8 mt-8 text-center text-slate-200"
+        >
+          <span class="self-center w-full row-start-1"
+            >Presiona a fuera si quieres salir, o dale a la x</span
+          >
+          <button
+            class="self-end row-start-1 p-2 text-2xl border rounded w-fit top-3 right-8 bg-error border-fondo-claro"
+            id="closeModal"><IconX className="size-6 min-w-6" /></button
+          >
+        </p>
+        <img
+          src={imageUrl}
+          class="object-cover p-8 size-full"
+          alt="modal para la imagen completa"
+        />
+      </section>
+    </dialog>
+    <button
+      id="goView"
+      class="p-2 rounded shadow-md cursor-pointer bg-fondo hover:bg-fondo-claro group"
+      type="button"
+    >
+      <IconFullScreen
+        className="size-5 min-w-5 group-hover:scale-110 transition duration-300"
+      />
+    </button>
+
+    <!-- <ButtonMenu position="top-14 right-0" client:visible>
+      <a
+        rel="noopener noreferrer"
+        href={github || "sin acción"}
+        class="rounded hover:bg-fondo-claro min-w-full text-nowrap py-2 px-3 hover:-translate-y-0.5 hover:shadow-md w-full text-start transition-all duration-300 flex items-center h-fit shadow-2xs"
+      >
+        <IconGitHub className="size-5 min-w-5 flex items-center me-3 mt-0.5" />
+        Ver en GitHub
+      </a>
+
+      <a
+        rel="noopener noreferrer"
+        href={discord || "sin acción"}
+        class="mt-2 rounded hover:bg-fondo-claro min-w-full text-nowrap py-2 px-3 hover:-translate-y-0.5 hover:shadow-md w-full text-start transition-all duration-300 flex items-center h-fit"
+      >
+        <IconSupport className="flex items-center size-5 min-w-5 me-3 " />
+        Comunícame
+      </a>
+
+      <a
+        rel="noopener noreferrer"
+        href={download || "sin accion"}
+        class="mt-2 rounded hover:bg-fondo-claro min-w-full text-nowrap py-2 px-3 hover:-translate-y-0.5 hover:shadow-md w-full text-start transition-all duration-300 flex items-center h-fit"
+      >
+        <IconDownload
+          className="flex items-center scale-105 size-5 min-w-5 me-3 "
+        />
+        Descargar
+      </a>
+    </ButtonMenu> -->
+  </div>
+</article>
+
+<style>
+  .escalando {
+    transform: scale(0);
+    animation: scaleAni 0.3s ease 1 both;
+  }
+  .escaleDown {
+    transform: scale(1);
+    animation: scaleAniReverse 0.3s ease 1 both;
+  }
+  @starting-style {
+    .escalando {
+      transform: scale(0);
+    }
+    .escaleDown {
+      transform: scale(1);
+    }
+  }
+  @keyframes scaleAni {
+    to {
+      transform: scale(1);
+    }
+  }
+  @keyframes scaleAniReverse {
+    to {
+      transform: scale(0);
+    }
+  }
+</style>

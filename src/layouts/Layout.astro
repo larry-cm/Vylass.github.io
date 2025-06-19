@@ -1,6 +1,7 @@
 ---
 import "@styles/global.css";
 import "@styles/loading.css";
+
 import { ClientRouter } from "astro:transitions";
 import {
 	UserButton,
@@ -8,6 +9,8 @@ import {
 	SignInButton,
 	SignedOut,
 } from "@clerk/astro/components";
+import Image from "astro/components/Image.astro";
+import { IconDiscord, IconGitHub, IconLinkedIn } from "@/assets/Icons";
 
 interface Props {
 	title: string;
@@ -63,14 +66,12 @@ const {
 	<body
 		transition:animate="fade"
 		id="home"
-		class="pt-0 grid grid-rows-[auto_1fr_auto] mx-auto min-h-screen h-fit selection:bg-sky-300 relative"
+		class="pt-0 grid grid-rows-[auto_1fr_auto] mx-auto min-h-screen h-fit selection:bg-orange-300 selection:text-black relative"
 	>
 		<header
-			class="sticky top-0 z-10 flex items-center p-8 backdrop-blur-sm min-h-20 bg-neutral-700/50 drop-shadow-xl/15"
+			class="sticky top-0 flex items-center justify-between p-8 max-h-24 z-100 backdrop-blur-sm min-h-20 bg-fondo/90 drop-shadow-xl/15"
 		>
-			<a
-				href="/"
-				class="z-10 inline-block text-4xl font-semibold text-slate-50"
+			<a href="/" class="z-10 inline-block text-4xl font-semibold text-slate-50"
 				>Fetchers</a
 			>
 
@@ -78,24 +79,24 @@ const {
 				class="hidden sm:flex absolute right-0 left-0 justify-center items-center p-4 w-full transition-all gap-5 *:capitalize font-medium"
 			>
 				<a
-					href="comunidad"
-					class="relative font-medium transition-colors text-slate-300 hover:text-slate-50 group"
+					href="/comunidad"
+					class="relative font-medium transition duration-300 text-slate-300 hover:text-slate-50 hover:scale-105 group"
 				>
 					Comunidad <span
-						class="absolute left-0 -bottom-1 w-0 h-0.5 transition-all duration-300 bg-secondary group-hover:w-full"
+						class="absolute left-0 -bottom-1 w-0 h-0.5 transition-all duration-300 bg-secondary group-hover:w-full group-hover:scale-110"
 					></span>
 				</a>
 				<a
-					href="documentacion"
-					class="relative font-medium transition-colors text-slate-300 hover:text-slate-50 group"
+					href="/doc"
+					class="relative font-medium transition duration-300 text-slate-300 hover:text-slate-50 hover:scale-105 group"
 				>
-					Documentacion <span
-						class="absolute left-0 -bottom-1 w-0 h-0.5 transition-all duration-300 bg-secondary group-hover:w-full"
+					Documentación <span
+						class="absolute left-0 -bottom-1 w-0 h-0.5 transition-all duration-300 bg-secondary group-hover:w-full group-hover:scale-110"
 					></span>
 				</a>
 			</nav>
 
-			<nav
+			<!-- <nav
 				class="flex justify-center items-center gap-x-5 sm:hidden absolute -bottom-20 left-0 right-0 bg-neutral-700/50 backdrop-blur-sm min-h-20 *:h-fit"
 			>
 				<a
@@ -110,43 +111,280 @@ const {
 					href="documentacion"
 					class="relative font-medium transition-colors text-slate-300 hover:text-slate-50 group"
 				>
-					Documentacion <span
+					Documentación <span
 						class="absolute left-0 -bottom-1 w-0 h-0.5 transition-all duration-300 bg-secondary group-hover:w-full"
 					></span>
 				</a>
-			</nav>
+			</nav> -->
 
-			<SignedOut>
+			<SignedOut isStatic>
 				<SignInButton
 					mode="modal"
-					class="z-10 flex items-center gap-4 drop-shadow-xl ms-auto px-4 py-3 font-medium transition-all bg-orange-500 rounded cursor-pointer hover:bg-orange-500/80"
+					class="z-10 flex items-center gap-4 px-4 py-3 font-medium transition-all bg-orange-500 rounded cursor-pointer drop-shadow-xl ms-auto hover:bg-orange-500/80"
 				>
 					Iniciar sesión
 				</SignInButton>
 			</SignedOut>
 
-			<SignedIn>
-				<div
-					class="z-10 flex items-center p-1 scale-115 rounded h-fit me-1 ms-auto"
-				>
+			<SignedIn isStatic>
+				<div class="z-10 flex items-center p-1 scale-110 rounded h-fit me-1">
 					<UserButton showName />
 				</div>
 			</SignedIn>
 		</header>
 
-		<section class="max-w-screen-xl p-8 mx-auto">
+		<main class="p-8 mx-auto max-w-7xl">
 			<slot />
-		</section>
+		</main>
 
-		<footer
-			class="flex flex-col items-center justify-center p-4 bg-neutral-700 drop-shadow-xl/15"
-		>
-			<small class="block text-base w-fit ms-auto text-slate-100">
-				Tienes el privilegio de ver la <a
-					href="documentacion"
-					class="text-orange-500 underline">documentación</a
-				> que probablemente nadie lee.
-			</small>
+		<footer class="text-white bg-fondo" role="contentinfo">
+			<div class="px-8 mx-auto max-w-7xl">
+				<!-- Main Footer Content -->
+				<div class="grid grid-cols-1 gap-8 py-12 md:grid-cols-2 lg:grid-cols-4">
+					<!-- Company Info -->
+					<section aria-labelledby="company-heading">
+						<h2 id="company-heading" class="text-xl font-bold">
+							Larry Ceballos
+						</h2>
+						<Image
+							src="logo.svg"
+							width={100}
+							height={100}
+							alt="foto del creador de la pagina web"
+							loading="lazy"
+							class="object-cover p-4 rounded size-32"
+						/>
+						<p class="mt-4 text-sm leading-relaxed text-gray-300">
+							Creamos soluciones innovadoras para impulsar tu negocio hacia el
+							futuro digital.
+						</p>
+						<div
+							class="flex mt-4 space-x-4"
+							role="list"
+							aria-label="Redes sociales"
+						>
+							<a
+								rel="noopener noreferrer"
+								href="https://twitter.com"
+								target="_blank"
+								rel="noopener noreferrer"
+								aria-label="Síguenos en Twitter (se abre en nueva ventana)"
+								class="inline-flex items-center justify-center w-10 h-10 text-gray-300 transition-colors rounded outline-none hover:text-white bg-neutral-800/80 group hover:bg-neutral-800"
+							>
+								<span class="text-xl" aria-hidden="true">
+									<IconGitHub
+										className="w-5 size-5 group-hover:scale-110 transition duration-300 group-hover:text-secondary"
+									/>
+								</span>
+							</a>
+
+							<a
+								rel="noopener noreferrer"
+								href="https://linkedin.com"
+								target="_blank"
+								rel="noopener noreferrer"
+								aria-label="Síguenos en LinkedIn (se abre en nueva ventana)"
+								class="inline-flex items-center justify-center w-10 h-10 text-gray-300 transition-colors rounded outline-none hover:text-white bg-neutral-800/80 group hover:bg-neutral-800"
+							>
+								<span aria-hidden="true">
+									<IconLinkedIn
+										className="w-5 size-5 group-hover:scale-110 transition duration-300 group-hover:text-secondary"
+									/>
+								</span>
+							</a>
+
+							<a
+								rel="noopener noreferrer"
+								href="https://instagram.com"
+								target="_blank"
+								rel="noopener noreferrer"
+								aria-label="Síguenos en Instagram (se abre en nueva ventana)"
+								class="inline-flex items-center justify-center w-10 h-10 text-gray-300 transition-colors rounded outline-none hover:text-white bg-neutral-800/80 group hover:bg-neutral-800"
+							>
+								<span aria-hidden="true">
+									<IconDiscord
+										className="w-5 size-5 group-hover:scale-110 transition duration-300 group-hover:text-secondary"
+									/>
+								</span>
+							</a>
+						</div>
+					</section>
+
+					<!-- navegación rápida -->
+					<nav aria-labelledby="quick-links-heading">
+						<h2 id="quick-links-heading" class="text-lg font-semibold">
+							Enlaces Rápidos
+						</h2>
+						<ul class="mt-4 space-y-3" role="list">
+							<li>
+								<a
+									href="/"
+									class="flex text-sm transition-colors rounded outline-none w-fit text-slate-300 hover:text-white"
+									aria-label="Ir a la página de inicio"
+								>
+									<Image
+										src="/svg/home.svg"
+										alt="inicio del sitio web"
+										width={20}
+										height={20}
+										loading="lazy"
+										class="size-5 me-3"
+									/> Inicio
+								</a>
+							</li>
+							<li>
+								<a
+									href="/comunidad"
+									class="flex text-sm transition-colors rounded outline-none w-fit text-slate-300 hover:text-white"
+									aria-label="Ir a la página de inicio"
+								>
+									<Image
+										src="/svg/world.svg"
+										alt="inicio del sitio web"
+										width={20}
+										height={20}
+										loading="lazy"
+										class="size-5 me-3"
+									/> Comunidad
+								</a>
+							</li>
+							<li>
+								<a
+									href="/doc"
+									class="flex text-sm transition-colors rounded outline-none w-fit text-slate-300 hover:text-white"
+									aria-label="Conoce más sobre nuestra empresa"
+								>
+									<Image
+										src="/svg/doc.svg"
+										alt="documentación del sitio web"
+										width={20}
+										height={20}
+										loading="lazy"
+										class="size-5 me-3"
+									/>
+									Documentación
+								</a>
+							</li>
+						</ul>
+					</nav>
+
+					<!-- información de contacto -->
+					<section aria-labelledby="contact-heading">
+						<h2 id="contact-heading" class="text-lg font-semibold">Contacto</h2>
+						<address class="mt-4 space-y-3 not-italic">
+							<div class="flex items-center space-x-3">
+								<span class="flex-shrink-0 text-gray-400" aria-hidden="true">
+									<Image
+										height={20}
+										width={20}
+										class="size-5"
+										src="/svg/pin.svg"
+										alt="ubicados en ..."
+									/>
+								</span>
+								<span class="text-sm text-slate-300"
+									>Calle 39-20 carrera 19, Ciudad Bucaramanga, País Colombia</span
+								>
+							</div>
+							<div class="flex items-center space-x-3">
+								<span class="flex-shrink-0" aria-hidden="true">
+									<Image
+										width={20}
+										height={20}
+										class="size-5"
+										src="/svg/phone.svg"
+										alt="numero de celular"
+									/>
+								</span>
+								<a
+									rel="noopener noreferrer"
+									href="tel:+573024512965"
+									class="text-sm transition-colors rounded outline-none text-slate-300 hover:text-white"
+									aria-label="Llamar al teléfono +57 302 451-2965"
+								>
+									+57 (302) 451-2965
+								</a>
+							</div>
+							<div class="flex items-center space-x-3">
+								<span class="flex-shrink-0" aria-hidden="true">
+									<Image
+										width={20}
+										height={20}
+										loading="lazy"
+										src="/svg/email.svg"
+										alt="correo electrónico"
+										class="size-5"
+									/>
+								</span>
+								<a
+									rel="noopener noreferrer"
+									href="mailto:larryycel@gmail.com"
+									class="text-sm transition-colors rounded outline-none text-slate-300 hover:text-white"
+									aria-label="Enviar email a larryycel@gmail.com"
+								>
+									larryycel@gmail.com
+								</a>
+							</div>
+						</address>
+					</section>
+
+					<!-- Comunicación rápida -->
+					<section aria-labelledby="newsletter-heading">
+						<h2 id="newsletter-heading" class="text-lg font-semibold">
+							Contratarme ahora
+						</h2>
+						<p class="mt-4 text-sm text-slate-300">
+							Creemos una pagina web juntos en donde pongamos volar la
+							imaginación!
+						</p>
+						<!-- endpoint para crear un mensaje para discord. -->
+						<form class="mt-4 space-y-2" aria-labelledby="newsletter-heading">
+							<label for="newsletter-email" class="sr-only">
+								Creemos una pagina web juntos
+							</label>
+							<input
+								id="contacto-email"
+								type="text"
+								placeholder="¿Como quieres la pagina?"
+								required
+								autocomplete="none"
+								aria-describedby="newsletter-description"
+								class="w-full px-3 py-2 rounded outline-none text-primary placeholder-slate-400 bg-neutral-800/80"
+							/>
+							<p id="newsletter-description" class="sr-only">
+								Ingresa tu email para suscribirte a nuestro newsletter
+							</p>
+							<button
+								type="submit"
+								class="w-full px-4 py-2 font-medium transition-colors rounded outline-none cursor-pointer bg-secondary text-primary hover:bg-secondary/90"
+								aria-describedby="newsletter-description"
+							>
+								Contactarme
+							</button>
+						</form>
+					</section>
+				</div>
+
+				<!-- Bottom Footer -->
+				<div class="py-6 border-t border-slate-800">
+					<div
+						class="flex flex-col items-center justify-between space-y-4 md:flex-row md:space-y-0"
+					>
+						<p class="text-sm text-slate-400">
+							<span aria-label="Copyright">©</span> 2025 Fetchers.
+						</p>
+
+						<p class="text-sm text-slate-400">
+							Ahi una documentación disponible de como esta segmentado el<a
+								href="doc"
+								class="text-orange-500 underline"
+							>
+								sitio.</a
+							>
+						</p>
+					</div>
+				</div>
+			</div>
 		</footer>
 	</body>
 </html>

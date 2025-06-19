@@ -20,7 +20,7 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-  output: 'server',
+  output: "server",
   adapter: vercel({ imageService: true }),
   experimental: {
     responsiveImages: true

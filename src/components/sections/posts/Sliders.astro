@@ -1,0 +1,31 @@
+---
+import type { resSQL } from "@/types/type";
+import { CardSlider } from "@components/CardSlider.tsx";
+
+interface Props {
+  id: string;
+  cardUser: resSQL[];
+  cardRecommended: resSQL[];
+}
+const { id: username, cardUser, cardRecommended } = Astro.props;
+---
+
+<div class="relative w-full mt-8 space-y-4 sm:mt-16">
+  <article class="w-full overflow-x-hidden h-100">
+    <CardSlider
+      title={`Mas publicaciones de ${username.replaceAll("_", " ")}`}
+      cards={cardUser}
+      cardsPerView={4}
+      client:visible
+    />
+  </article>
+
+  <article class="w-full overflow-x-hidden h-100">
+    <CardSlider
+      title={`Publicaciones recomendadas `}
+      cards={cardRecommended}
+      cardsPerView={4}
+      client:load
+    />
+  </article>
+</div>

@@ -1,0 +1,113 @@
+---
+import { turso } from "@/utils/configTurso";
+import Layout from "@/layouts/Layout.astro";
+import Info from "@components/sections/posts/Info.astro";
+import Sliders from "@components/sections/posts/Sliders.astro";
+import PostImage from "@components/sections/posts/PostImage.astro";
+import { formatId } from "@/utils/Formats";
+export const getStaticPaths = async () => {
+  const getPaths = async () => {
+    const response = await turso.execute(`
+ SELECT
+  users.user_name,
+  post.post_id
+FROM
+  users,
+  post
+WHERE
+  users.user_id = post.user_id
+ORDER BY
+  post_id;
+  `);
+    return response;
+  };
+  const { rows } = await getPaths();
+  return rows.map(({ user_name, post_id }: any) => ({
+    params: {
+      id: formatId({
+        name: user_name,
+      }),
+      post: post_id,
+    },
+  }));
+};
+export const prerender = true;
+import type { resSQL } from "@/types/type";
+
+const { id: userName = "", post = 30 } = Astro.params;
+const postActual = Number(post);
+const { rows } = await turso.execute({
+  sql: "SELECT post_id,post_url,post_title,post_content,post_date,user_url,post.user_id from post,users where post_id = ? and post.user_id = users.user_id;",
+  args: [postActual],
+});
+
+const first = rows.map((row: any) => ({
+  postUrl: row.post_url,
+  title: row.post_title,
+  content: row.post_content,
+  postDate: row.post_date,
+  userUrl: row.user_url,
+  userId: row.user_id,
+}));
+const {
+  postUrl,
+  title,
+  content,
+  postDate,
+  userUrl,
+  userId = "",
+} = first[0] as unknown as resSQL;
+
+const postUser = await turso.execute({
+  sql: "SELECT p.post_id,p.post_title,p.post_content,p.post_date,p.post_url,u.user_name,u.user_id FROM post p, users u where u.user_id = ? and p.user_id = u.user_id order by p.post_id;",
+  args: [userId],
+});
+const cardUser = postUser.rows
+  .map((row) => ({
+    username: row.user_name,
+    postDate: row.post_date,
+    content: row.post_content,
+    title: row.post_title,
+    postUrl: row.post_url,
+    postId: row.post_id,
+  }))
+  .filter((e) => Number(e.postId) !== postActual) as unknown as resSQL[];
+
+const postRecommended = await turso.execute({
+  sql: "SELECT u.user_name,u.user_id,p.post_id,p.post_title,p.post_content,p.post_date,p.post_url FROM users u, post p where u.user_id = p.user_id GROUP BY u.user_id, u.user_name ORDER BY p.post_date desc,count(p.post_id) DESC LIMIT 10;",
+});
+const cardRecommended = postRecommended.rows
+  .map((row) => ({
+    username: row.user_name,
+    postDate: row.post_date,
+    content: row.post_content,
+    title: row.post_title,
+    postUrl: row.post_url,
+    postId: row.post_id,
+  }))
+  .filter((e) => Number(e.postId) !== postActual) as unknown as resSQL[];
+---
+
+<Layout
+  title={`publicación ${userName}`}
+  description="pagina dinámica para cada publicación"
+>
+  <section class="flex flex-col gap-5 lg:flex-row">
+    <Info
+      userName={userName}
+      userUrl={userUrl || import.meta.env.BASE_URL}
+      postDate={postDate}
+      title={title}
+      content={content}
+    />
+    <PostImage post={postActual} imageUrl={postUrl} userName={userName} />
+  </section>
+
+  <section>
+    <Sliders
+      id={userName}
+      cardUser={cardUser}
+      cardRecommended={cardRecommended}
+    />
+  </section>
+</Layout>
