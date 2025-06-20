@@ -13,14 +13,18 @@ if (!user) return redirectToSignIn();
 
 const { firstName, lastName, id, hasImage, imageUrl, primaryEmailAddress } =
     user;
-
+const [github] = user.externalAccounts.filter((count) =>
+    count.provider.includes("github"),
+);
+// console.log(github);
 await turso.execute(
-    "INSERT OR IGNORE INTO users (user_id, user_name, user_email, user_url) VALUES (?, ?, ?, ?)",
+    "INSERT OR IGNORE INTO users (user_id, user_name, user_email, user_url,user_username) VALUES (?, ?, ?, ?,?)",
     [
         id,
         `${firstName || ""} ${lastName || ""}`,
         primaryEmailAddress?.emailAddress || "",
-        hasImage ? imageUrl : import.meta.env.SECRET_IMG_DEFAULT,
+        hasImage ? imageUrl : import.meta.env.PUBLIC_IMG_DEFAULT,
+        `https://github.com/${github.username}`,
     ],
 );
 

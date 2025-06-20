@@ -3,7 +3,7 @@ import type { APIRoute } from "astro";
 import { turso } from "@/utils/configTurso";
 
 const token = import.meta.env.SECRET_BLOB_READ_WRITE_TOKEN
-const urlDefault = import.meta.env.SECRET_IMG_DEFAULT
+const urlDefault = import.meta.env.PUBLIC_IMG_DEFAULT
 
 export const POST: APIRoute = async ({ request, locals, redirect }) => {
     const { searchParams } = new URL(request.url)

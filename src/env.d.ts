@@ -4,7 +4,7 @@
 interface ImportMetaEnv {
   readonly SECRET_ASTRO_DB_REMOTE_URL: string;
   readonly SECRET_ASTRO_DB_APP_TOKEN: string;
-  readonly SECRET_IMG_DEFAULT: string;
+  readonly PUBLIC_IMG_DEFAULT: string;
   // más variables de entorno...
 }
 
