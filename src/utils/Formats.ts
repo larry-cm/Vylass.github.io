@@ -1,3 +1,5 @@
+import type { ExternalAccount, SocialLinks } from "@/types/type";
+
 export const formatId = ({
   name,
   postId
@@ -21,3 +23,27 @@ export const dateUserFormat = ({
     timeZone: "UTC",
     hour12: true,
   });
+
+export const providerConfig: Record<
+  ExternalAccount['provider'],
+  {
+    key: keyof SocialLinks;
+    build: (account: ExternalAccount) => string | null;
+  }
+> = {
+  oauth_github: {
+    key: 'githubLink',
+    build: ({ username }) =>
+      username ? `https://github.com/${username}` : null,
+  },
+  oauth_discord: {
+    key: 'discordLink',
+    build: ({ externalId }) =>
+      externalId ? `https://discord.com/users/${externalId}` : null,
+  },
+  oauth_linkedin_oidc: {
+    key: 'linkedinLink',
+    build: ({ externalId }) =>
+      externalId ? `https://www.linkedin.com/in/${externalId}` : null,
+  },
+};

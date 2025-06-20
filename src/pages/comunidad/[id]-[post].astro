@@ -5,6 +5,8 @@ import Info from "@components/sections/posts/Info.astro";
 import Sliders from "@components/sections/posts/Sliders.astro";
 import PostImage from "@components/sections/posts/PostImage.astro";
 import { formatId } from "@/utils/Formats";
+import type { resSQL, SocialLinks } from "@/types/type";
+
 export const getStaticPaths = async () => {
   const getPaths = async () => {
     const response = await turso.execute(`
@@ -32,15 +34,14 @@ ORDER BY
   }));
 };
 export const prerender = true;
-import type { resSQL } from "@/types/type";
 
 const { id: userName = "", post = 30 } = Astro.params;
 const postActual = Number(post);
+
 const { rows } = await turso.execute({
   sql: "SELECT post_id,post_url,post_title,post_content,post_date,user_url,post.user_id from post,users where post_id = ? and post.user_id = users.user_id;",
   args: [postActual],
 });
-
 const first = rows.map((row: any) => ({
   postUrl: row.post_url,
   title: row.post_title,
@@ -57,6 +58,19 @@ const {
   userUrl,
   userId = "",
 } = first[0] as unknown as resSQL;
+
+const socialLinkTurso = await turso.execute({
+  sql: "select github,linkedind,discord from social_media sm,users u where u.social_media_id = sm.social_media_id and u.user_id = ?",
+  args: [userId],
+});
+const [mediaLinks] = (socialLinkTurso.rows as any[]).map(
+  ({ github, linkedind, discord }) =>
+    ({
+      githubLink: github,
+      discordLink: discord,
+      linkedinLink: linkedind,
+    }) as SocialLinks,
+);
 
 const postUser = await turso.execute({
   sql: "SELECT p.post_id,p.post_title,p.post_content,p.post_date,p.post_url,u.user_name,u.user_id FROM post p, users u where u.user_id = ? and p.user_id = u.user_id order by p.post_id;",
@@ -94,6 +108,7 @@ const cardRecommended = postRecommended.rows
 >
   <section class="flex flex-col gap-5 lg:flex-row">
     <Info
+      mediaLinks={mediaLinks}
       userName={userName}
       userUrl={userUrl || import.meta.env.BASE_URL}
       postDate={postDate}

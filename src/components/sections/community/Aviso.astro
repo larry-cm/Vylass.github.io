@@ -1,5 +1,10 @@
 ---
 import { SocialMedia } from "@/components/Buttons";
+import type { SocialLinks } from "@/types/type";
+interface Props {
+  mediaLinks: SocialLinks;
+}
+const { mediaLinks } = Astro.props;
 ---
 
 <!-- aviso -->
@@ -49,6 +54,6 @@ import { SocialMedia } from "@/components/Buttons";
         /></a
       >
     </div> -->
-    <SocialMedia />
+    <SocialMedia mediaLinks={mediaLinks} />
   </div>
 </article>

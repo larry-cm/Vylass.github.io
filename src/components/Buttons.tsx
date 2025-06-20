@@ -1,5 +1,8 @@
-import { IconDiscord, IconDotsMenu, IconGitHub, IconLinkedIn, } from "@/assets/Icons"
-import { useState, type ReactNode } from "react"
+import { IconAlert, IconDiscord, IconDotsMenu, IconGitHub, IconLinkedIn, } from "@/assets/Icons"
+import ToastPage from "@/library/ToastPage"
+import type { SocialLinks } from "@/types/type"
+import React, { useState, type ReactNode } from "react"
+import toast from "react-hot-toast"
 
 function DropMenu({ children, handleClose, position }: { handleClose: () => void, children: ReactNode, position?: string }) {
     return (
@@ -11,7 +14,7 @@ function DropMenu({ children, handleClose, position }: { handleClose: () => void
     )
 }
 
-export function ButtonMenu({ children, position }: { children: ReactNode, position?: string }) {
+export function ButtonMenu({ children, position }: { children: ReactNode, position?: string, }) {
 
     const [openMenu, setOpenMenu] = useState(false)
     const handleClose = () => {
@@ -38,33 +41,67 @@ export function ButtonMenu({ children, position }: { children: ReactNode, positi
     )
 }
 
-export function SocialMedia({ colors }: { colors?: string }) {
+export function SocialMedia({ colors, mediaLinks }: { colors?: string, mediaLinks: SocialLinks }) {
     return (
         <div className="flex gap-5 " role="list">
-            <a
-                rel="noopener noreferrer"
-                target="_blank"
-                href="https://www.linkedin.com/in/larry-moncada-264762305/"
-                className={`p-2 border-fondo-claro border transition rounded cursor-pointer  opacity-90 group hover:opacity-100 ${colors || 'bg-fondo hover:bg-fondo-claro'}`}
-            ><IconLinkedIn
+            <ButtonMedia mediaLinks={mediaLinks.linkedinLink || ''} >
+                <IconLinkedIn
                     className="transition duration-300 size-6 max-w-6 group-hover:scale-110 group-hover:text-orange-500"
-                /></a>
-            <a
-                rel="noopener noreferrer"
-                target="_blank"
-                href="https://github.com/larry-cm"
-                className={`p-2 border-fondo-claro border transition rounded cursor-pointer  opacity-90 group hover:opacity-100 ${colors || 'bg-fondo hover:bg-fondo-claro'}`}
-            ><IconGitHub
+                /></ButtonMedia>
+            <ButtonMedia mediaLinks={mediaLinks.githubLink || ''}>
+                <IconGitHub
                     className="transition duration-300 size-6 max-w-6 group-hover:scale-110 group-hover:text-orange-500"
-                /></a>
-            <a
-                rel="noopener noreferrer"
-                target="_blank"
-                href="https://discord.gg/Q4DhgHJW"
-                className={`p-2 border-fondo-claro border transition rounded cursor-pointer  opacity-90 group hover:opacity-100 ${colors || 'bg-fondo hover:bg-fondo-claro'}`}
-            ><IconDiscord
+                /></ButtonMedia>
+            <ButtonMedia
+                mediaLinks={mediaLinks.discordLink || ""}>
+                <IconDiscord
                     className="transition duration-300 size-6 max-w-6 group-hover:scale-110 group-hover:text-orange-500"
-                /></a>
+                /></ButtonMedia>
         </div>
+    )
+}
+function ButtonMedia({ children, mediaLinks, colors }: { mediaLinks: string, colors?: string, children: any }) {
+    return (
+        <>
+            {
+                mediaLinks ? (
+                    <a
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        href={mediaLinks}
+                        className={`p-2 border-fondo-claro border transition rounded cursor-pointer  opacity-90 group hover:opacity-100 ${colors || 'bg-fondo hover:bg-fondo-claro'}`}
+                    >
+                        {children}
+                    </a>
+                ) :
+                    (
+                        <ButtonNoRed >
+                            {children}
+                        </ButtonNoRed>
+                    )
+            }
+
+
+        </>
+    )
+}
+
+function ButtonNoRed({ children }: { children: React.ReactNode }) {
+    const notify = () => toast('El usuario no tiene esta red vinculada', {
+        icon: <IconAlert className='size-10 min-w-10 text-secondary' />
+    });
+
+    return (
+        <article>
+
+            <button
+                type="button"
+                onClick={notify}
+                className={`p-2 border-fondo-claro border transition rounded cursor-pointer  opacity-90 group hover:opacity-100 bg-fondo hover:bg-fondo-claro`}
+            >
+                {children}
+            </button>
+            <ToastPage />
+        </article>
     )
 }

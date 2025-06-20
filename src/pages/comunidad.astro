@@ -13,20 +13,6 @@ if (!user) return redirectToSignIn();
 
 const { firstName, lastName, id, hasImage, imageUrl, primaryEmailAddress } =
     user;
-const [github] = user.externalAccounts.filter((count) =>
-    count.provider.includes("github"),
-);
-// console.log(github);
-await turso.execute(
-    "INSERT OR IGNORE INTO users (user_id, user_name, user_email, user_url,user_username) VALUES (?, ?, ?, ?,?)",
-    [
-        id,
-        `${firstName || ""} ${lastName || ""}`,
-        primaryEmailAddress?.emailAddress || "",
-        hasImage ? imageUrl : import.meta.env.PUBLIC_IMG_DEFAULT,
-        `https://github.com/${github.username}`,
-    ],
-);
 
 const result = await turso.execute(`
       SELECT
@@ -83,7 +69,13 @@ const posts = result.rows.map((row: any) => ({
             firstName={firstName || ""}
             imageUrl={imageUrl}
         >
-            <Aviso />
+            <Aviso
+                mediaLinks={{
+                    githubLink: import.meta.env.PUBLIC_GITHUB,
+                    linkedinLink: import.meta.env.PUBLIC_LINKEDIN,
+                    discordLink: import.meta.env.PUBLIC_DISCORD,
+                }}
+            />
         </FormPost>
         <!-- grid de publicaciones recientes-->
         <PostRecientes postsInitial={posts} />

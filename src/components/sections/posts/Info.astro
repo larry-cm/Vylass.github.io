@@ -1,5 +1,6 @@
 ---
 import { SocialMedia } from "@/components/Buttons";
+import type { ExternalAccount, SocialLinks } from "@/types/type";
 const formatDate = (date: Date) =>
   date.toLocaleTimeString(Astro.locals.lang, {
     timeZone: "UTC",
@@ -13,8 +14,9 @@ interface Props {
   postDate: string;
   title: string;
   content: string;
+  mediaLinks: SocialLinks;
 }
-const { userName, userUrl, postDate, title, content } = Astro.props;
+const { userName, userUrl, postDate, title, content, mediaLinks } = Astro.props;
 ---
 
 <article
@@ -38,7 +40,7 @@ const { userName, userUrl, postDate, title, content } = Astro.props;
           alt={`foto del perfil del usuario `}
         />
 
-        <SocialMedia />
+        <SocialMedia client:visible mediaLinks={mediaLinks} />
       </header>
 
       <h3 class="line-clamp-2">

@@ -2,6 +2,7 @@ import { IconUpload, IconAlert, IconError, IconChecked } from '@/assets/Icons'
 import toast, { Toaster, ToastBar } from 'react-hot-toast'
 import React, { useEffect, useRef, useState, type ReactNode } from 'react'
 import { Loading } from '@components/Loading'
+import ToastPage from '@/library/ToastPage'
 const imgDefault = import.meta.env.PUBLIC_IMG_DEFAULT
 
 export default function FormPost({ userId, imageUrl, firstName, children }: {
@@ -278,63 +279,7 @@ export default function FormPost({ userId, imageUrl, firstName, children }: {
             <div
                 data-anima
                 className="flex flex-col order-2 w-full gap-5 p-4 rounded-md shadow-md justify-self-center bg-fondo sm:max-w-63">
-                <Toaster
-                    position="bottom-right"
-                    // reverseOrder={true}
-                    gutter={8}
-                    containerClassName="absolute"
-                    toastOptions={{
-                        // opciones por defecto
-                        className: 'relative',
-                        duration: 2000,
-                        removeDelay: 2500,
-                        style: {
-                            border: '1px solid #f1f2f3',
-                            background: '#363636',
-                            color: '#fff',
-                            borderRadius: '6px',
-                        },
-
-                        // opciones por tipos de respuestas
-                        success: {
-                            style: {
-                                background: '#1a1a1a',
-                                color: '#D1D7DE',
-                            }
-                        },
-                        error: {
-                            duration: 4000,
-                            style: {
-                                background: '#1a1a1a',
-                                color: '#D1D7DE'
-                            },
-
-                        }
-                    }}
-                >
-                    {
-                        (t) => (
-                            <ToastBar position='bottom-right' toast={t}>
-                                {({ icon, message }) => (
-                                    <>
-                                        {icon}
-                                        {message}
-                                        {
-                                            t.type !== "loading" && (
-                                                <button
-                                                    aria-label={`cerrar la notificación ${message}`}
-                                                    className='flex items-center px-2 my-auto mb-auto text-3xl transition-colors duration-300 rounded cursor-pointer text-slate-300/80 hover:text-slate-300 size-fit hover:bg-neutral-800'
-                                                    onClick={() => toast.dismiss(t.id)}>
-                                                    <span className='-translate-y-0.5 relative block size-fit'>&times;</span>
-                                                </button>
-                                            )
-                                        }
-                                    </>
-                                )}
-                            </ToastBar>
-                        )
-                    }
-                </Toaster>
+                <ToastPage />
                 {
                     uploadImage && <Loading />
                 }

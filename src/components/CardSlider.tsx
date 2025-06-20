@@ -11,7 +11,7 @@ export function Card({ title, content, postDate, username, userUrl, postUrl, bad
   return (
     <a
       href={ruta || '#'}
-      className="z-20 block overflow-hidden transition-all duration-300 border rounded-md cursor-pointer border-fondo-claro bg-fondo h-80 hover:border-orange-500 group hover:shadow-md hover:shadow-orange-900/10">
+      className="z-20 block h-full overflow-hidden transition-all duration-300 border rounded-md cursor-pointer border-fondo-claro bg-fondo min-h-80 hover:border-orange-500 group hover:shadow-md hover:shadow-orange-900/10">
       {/* Card Image/Illustration */}
       <picture className="relative rounded-t-md block w-full p-4 sm:p-6 h-1/2 aspect-video bg-radial-[at_50%_65%] from-secondary/60 via-secondary/20  to-secondary/10 overflow-hidden z-10">
         {/* tips o aviso */}
